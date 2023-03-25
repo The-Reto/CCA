@@ -89,24 +89,30 @@ class GOL {
         }
         std::cout << "\u2501\u251b\n";
     }
+    
+    bool* get_board() {
+        return board;
+    }
 };
 
 class GOL_CRYPTO: public GOL {
     protected:
     unsigned int seed;
     
-    void apply_seed() {
+    bool* create_seed_map() {
+        bool* map = new bool [sizex * sizey];
         std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
         for (int i = sizex/5; i < sizex; i++) { //adding noise
             for (int j = sizey/4; j < sizey/2; j++) {
-                set(i,j, get(i,j)^s[(i*j+j) % (sizeof( int )*CHAR_BIT)]);
+                map[j * sizex + i] = s[(i*j+j) % (sizeof( int )*CHAR_BIT)];
             }
         }
+        return map;
     }
     
     void set_rules(bool choice) {
-        bool survive_[18] = {0,0,1,1,0,1,0,0,0, 0,0,1,0,1,1,1,0,1}; //
-        bool create_[18] =  {0,0,1,0,1,1,0,0,0, 0,0,1,0,1,0,1,0,1}; //
+        bool survive_[18] = {0,0,1,1,0,1,0,0,0, 0,0,1,0,1,1,1,0,1};
+        bool create_[18] =  {0,0,1,0,1,1,0,0,0, 0,0,1,0,1,0,1,0,1};
         for (int i = 0 + choice*9; i < 9 + choice*9; i++) {
             survive[i] = survive_[i];
             create[i] = create_[i];
@@ -117,32 +123,36 @@ class GOL_CRYPTO: public GOL {
     GOL_CRYPTO(int sizex_, int sizey_, unsigned int seed_) : GOL(sizex_, sizey_, seed_) {
         seed = (seed_ + 3141592) % INT_MAX;
 
-        set_rules(false);
-        apply_seed();
+        set_rules(seed % 2);
+        apply_xormap(create_seed_map(), sizex, sizey);
         steps(5*sizex*sizey); // distribute seed
     }
     
-    GOL_CRYPTO() : GOL(32, 32, 0) {
-        seed = (3141592) % INT_MAX;
-
-        set_rules(false);
-        apply_seed();
-        steps(5*sizex*sizey); // distribute seed
+    GOL_CRYPTO() : GOL(32,32,0) {
+        GOL_CRYPTO(32, 32, 0);
     }
     
-    unsigned int rand_bits() {
+    std::bitset<sizeof( int )*CHAR_BIT> rand_bits() {
         unsigned int ret = 0;
-        for (int i = 0; i < sizex; i++) {
+        for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
             ret |= get(3*i+seed, seed/3) << (sizex - i - 1);
         }
         step();
         seed = (seed ^ ret);
         set_rules(ret % 2);
-        return ret;
+        return std::bitset<sizeof( int )*CHAR_BIT>(ret);
     }
     
     unsigned int get_seed() {
         return seed;
+    }
+    
+    void apply_xormap(bool * map, int x, int y) {
+        for (int i = 0; i < x; i++) { //adding noise
+            for (int j = 0; j < y; j++) {
+                set(i,j, get(i,j)^map[j * x + i]);
+            }
+        }
     }
 };
 
@@ -156,15 +166,15 @@ class GOL_RNG {
     }
     
     unsigned int rand_int(unsigned int max = INT_MAX) {
-        return system.rand_bits() % max;
+        return system.rand_bits().to_ulong() % max;
     }
     
     bool rand_bit() {
-        return rand_int() % 2;
+        return system.rand_bits()[0];
     }
     
     float uniform() {
-        std::bitset bits = std::bitset<sizeof( int )*CHAR_BIT>(system.rand_bits());
+        std::bitset bits = system.rand_bits();
         float ret = 0.0;
         float add = 0.5;
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
@@ -175,15 +185,26 @@ class GOL_RNG {
     }
 };
 
+#define RANGE 25
+
 int test(int seed) {
     GOL_RNG test(seed);
     
     int samples = 20000;
-    int count[2] = {0};
+    unsigned int count[RANGE] = {0};
+    
     for (int i = 0; i < samples; i++) {
-         count[test.rand_bit()]++;
+        count[test.rand_int(RANGE)] += 1;
     }
-    std::cout << count[0] << ", " << count[1] << std::endl;
+    int res = 0;
+    for (int i = 1; i < RANGE; i++) {
+        res += count[i];
+    }
+    count[0] = samples - res;
+    for (int i = 0; i < RANGE; i++) {
+        std::cout << count[i] << "\t";
+    }
+    std::cout << std::endl;
     
     return test.rand_int();
 }
@@ -191,7 +212,11 @@ int test(int seed) {
 int main()
 {
     unsigned int seed = 31415;
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < RANGE; i++) {
+        std::cout << i << "\t";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < 20; i++) {
         seed = test(seed);
     }
 }
