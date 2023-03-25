@@ -121,12 +121,13 @@ class GOL_CRYPTO: public GOL {
         apply_seed();
         steps(5*sizex*sizey); // distribute seed
     }
-};
+    
+    GOL_CRYPTO() : GOL(32, 32, 0) {
+        seed = (3141592) % INT_MAX;
 
-class GOL_RNG: public GOL_CRYPTO {
-    public:
-    GOL_RNG(unsigned int seed_) : GOL_CRYPTO(32, 32, seed_) {
-
+        set_rules(false);
+        apply_seed();
+        steps(5*sizex*sizey); // distribute seed
     }
     
     unsigned int rand_bits() {
@@ -140,12 +141,30 @@ class GOL_RNG: public GOL_CRYPTO {
         return ret;
     }
     
-    unsigned int rand_int(unsigned int max) {
-        return rand_bits() % max;
+    unsigned int get_seed() {
+        return seed;
+    }
+};
+
+class GOL_RNG {
+    
+    GOL_CRYPTO system;
+
+    public:
+    GOL_RNG(unsigned int seed_) {
+        system = GOL_CRYPTO(32, 32, seed_);
+    }
+    
+    unsigned int rand_int(unsigned int max = INT_MAX) {
+        return system.rand_bits() % max;
+    }
+    
+    bool rand_bit() {
+        return rand_int() % 2;
     }
     
     float uniform() {
-        std::bitset bits = std::bitset<sizeof( int )*CHAR_BIT>(rand_bits());
+        std::bitset bits = std::bitset<sizeof( int )*CHAR_BIT>(system.rand_bits());
         float ret = 0.0;
         float add = 0.5;
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
@@ -160,13 +179,13 @@ int test(int seed) {
     GOL_RNG test(seed);
     
     int samples = 20000;
-    int count[2] = {0,0};
+    int count[2] = {0};
     for (int i = 0; i < samples; i++) {
-         count[test.rand_int(2)]++;
+         count[test.rand_bit()]++;
     }
     std::cout << count[0] << ", " << count[1] << std::endl;
     
-    return test.rand_int(3200);
+    return test.rand_int();
 }
 
 int main()
