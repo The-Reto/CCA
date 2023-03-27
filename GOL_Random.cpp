@@ -6,6 +6,47 @@
 #include <thread>
 
 
+template <int sizex, int sizey> class BitBoard{
+    int len;
+    std::bitset< sizex * sizey > board();
+    const int neighbour_mask[8] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    
+    int xy_to_l(int x, int y) {
+        while (x < 0) {x += sizex;}
+        while (y < 0) {y += sizey;}
+        x = x % sizex;
+        y = y % sizey;
+        return y * sizex + x;
+    }
+    
+    bool get(int index) {
+        while (index < 0) {index += len;}
+        index = index % len;
+        return board[index];
+    }
+    
+    public:
+    BitBoard() {
+        len = sizex * sizey;
+    }
+    
+    bool get(int x, int y) {
+        return board[ xy_to_l(x,y) ];
+    }
+    
+    void set(int x, int y, bool val) {
+        board[ xy_to_l(x,y) ] = val;
+    }
+    
+    int count_neighbours(int x, int y) {
+        int neighbours = 0;
+        int l = xy_to_l(x,y);
+        for (int i = 0; i <= 8; i++) {
+            neighbours += get( l + neighbour_mask[i] );
+        }
+        return neighbours;
+    }
+};
 
 class GOL {
     protected:
