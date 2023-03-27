@@ -162,7 +162,7 @@ class GOL_RNG {
 
     public:
     GOL_RNG(unsigned int seed_) {
-        system = GOL_CRYPTO(32, 32, seed_);
+        system = GOL_CRYPTO(32, 7, seed_);
     }
     
     unsigned int rand_int(unsigned int max = INT_MAX) {
@@ -174,48 +174,32 @@ class GOL_RNG {
     }
     
     float uniform() {
+    	int sign_mask = ~(3 << 30);
+    	int exp_mask = (127 << 23);
         std::bitset bits = system.rand_bits();
-        float ret = 0.0;
-        float add = 0.5;
-        for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-            ret += bits[i] * add;
-            add /= 2;
-        }
-        return ret;
+
+    	bits &= sign_mask;
+    	bits |= exp_mask; 
+
+        return *reinterpret_cast<float *>(&bits) - 1.0;
     }
 };
-
-#define RANGE 25
 
 int test(int seed) {
     GOL_RNG test(seed);
     
-    int samples = 20000;
-    unsigned int count[RANGE] = {0};
+    int samples = 10;
     
     for (int i = 0; i < samples; i++) {
-        count[test.rand_int(RANGE)] += 1;
+        std::cout << test.uniform() << ", " << test.uniform() << std::endl;
     }
-    int res = 0;
-    for (int i = 1; i < RANGE; i++) {
-        res += count[i];
-    }
-    count[0] = samples - res;
-    for (int i = 0; i < RANGE; i++) {
-        std::cout << count[i] << "\t";
-    }
-    std::cout << std::endl;
-    
     return test.rand_int();
 }
 
 int main()
 {
     unsigned int seed = 31415;
-    for (int i = 0; i < RANGE; i++) {
-        std::cout << i << "\t";
-    }
-    std::cout << std::endl;
+
     for (int i = 0; i < 20; i++) {
         seed = test(seed);
     }
