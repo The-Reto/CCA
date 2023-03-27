@@ -4,11 +4,12 @@
 #include <cstring>
 #include <chrono>
 #include <thread>
+#include <stdexcept>
 
 
 template <int sizex, int sizey> class BitBoard{
     int len;
-    std::bitset< sizex * sizey > board();
+    std::bitset< sizex * sizey > board;
     const int neighbour_mask[8] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
     
     int xy_to_l(int x, int y) {
@@ -25,13 +26,34 @@ template <int sizex, int sizey> class BitBoard{
         return board[index];
     }
     
+    void set(int index, bool val) {
+        while (index < 0) {index += len;}
+        index = index % len;
+        board[index] = val;
+    }
+    
     public:
     BitBoard() {
         len = sizex * sizey;
     }
     
+    BitBoard& operator = (const BitBoard& other) {
+        board = other.board;
+        return *this;
+    }
+    
+    std::bitset<sizex*sizey> get() {
+        return board;
+    }
+    
     bool get(int x, int y) {
         return board[ xy_to_l(x,y) ];
+    }
+    
+    void set(std::bitset<sizex*sizey> map) {
+        for (int i = 0; i<len; i++) {
+            set(i, map[i]);
+        }
     }
     
     void set(int x, int y, bool val) {
@@ -41,17 +63,19 @@ template <int sizex, int sizey> class BitBoard{
     int count_neighbours(int x, int y) {
         int neighbours = 0;
         int l = xy_to_l(x,y);
-        for (int i = 0; i <= 8; i++) {
+        for (int i = 0; i < 8; i++) {
             neighbours += get( l + neighbour_mask[i] );
         }
         return neighbours;
     }
+    
+    const int get_sizex() {return sizex;}
+    const int get_sizey() {return sizey;}
 };
 
 template <int sizex, int sizey> class GOL {
     protected:
-    BitBoard<sizex, sizey>  board;
-    BitBoard<sizex, sizey> buff_board;
+    BitBoard<sizex, sizey>  board,  b_board;
     bool survive[9] = {0,0,1,1,0,0,0,0,0};
     bool create[9] =  {0,0,0,1,0,0,0,0,0};
     
@@ -59,18 +83,22 @@ template <int sizex, int sizey> class GOL {
     GOL(unsigned int seed) {
         std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-            board[i] = s[i];
+            board.set(5,i+3, s[i]);
         }
+    }
+    
+    void test() {
+        std::cout << board.count_neighbours(5,4);
     }
     
     void step() {
         for (int i = 0; i < sizex; i++) {
             for (int j = 0; j < sizey; j++) {
                 int neighbours = board.count_neighbours(i,j);
-                buff_board.set(i,j) = board.get(i,j) * survive[neighbours] + (1 -  board.get(i,j)) * create[neighbours];
+                b_board.set(i, j, board.get(i,j) * survive[neighbours] + (1 -  board.get(i,j)) * create[neighbours] );
             }
         }
-        memcpy(board, buff_board, sizeof(BitBoard<sizex, sizey>));
+        board.set(b_board.get());
     }
     
     void steps(int steps){
@@ -90,9 +118,11 @@ template <int sizex, int sizey> class GOL {
             for (int j = 0; j < sizey; j++) {
                 if (board.get(i,j)) {
                     std::cout << "\u25A0 ";
+                    //std::cout << board.count_neighbours(i, j) << " ";
                 }
                 else {
                     std::cout << "\u25A2 ";
+                    //std::cout << board.count_neighbours(i, j) << " ";
                 }
             }
             std::cout << " \u2503\n";
@@ -124,6 +154,15 @@ int test(int seed) {
 int main()
 {
     unsigned int seed = 31415;
+    
+    GOL<32,32> gol(11111111);
+    
+    gol.print();
+    gol.step();
+    gol.print();
+    gol.step();
+    gol.print();
+    gol.step();
 
     for (int i = 0; i < 20; i++) {
         seed = test(seed);
