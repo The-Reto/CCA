@@ -44,7 +44,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     std::bitset<sizeof( int )*CHAR_BIT> rand_bits() {
         std::bitset<sizeof( int )*CHAR_BIT> ret;
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-            ret[i] = this->board.get(3*i, sizex/3);
+            ret[i] = this->board.get(i, sizex/3);
         }
         this->step();
         seed.set(seed.get() ^ this->board.get());
