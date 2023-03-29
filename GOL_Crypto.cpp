@@ -27,6 +27,12 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
             this->create[i] = create_[i];
         }
     }
+    
+    void step() {
+    	GOL<sizex,sizey>::step();
+    	seed_map = seed_map ^ this->board;
+    	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
+    }
 
     public:
     GOL_CRYPTO(unsigned int seed_) : GOL<sizex,sizey>(seed_) {
@@ -34,7 +40,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
  
         seed_map = create_seed_map(seed);
         set_rules();
-        apply_xormap(seed_map, sizex, sizey);
+        apply_xormap(seed_map);
         this->steps(std::max(sizex, sizey)); // distribute seed
     }
     
@@ -52,22 +58,12 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
         return ret;
     }
     
-    void step() {
-    	GOL<sizex,sizey>::step();
-    	seed_map = seed_map ^ this->board;
-    	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
-    }
-    
     unsigned int get_seed() {
         return seed;
     }
     
-    void apply_xormap(BitBoard< sizex, sizey> map, int x, int y) {
-        for (int i = 0; i < x; i++) { //adding noise
-            for (int j = 0; j < y; j++) {
-                this->board.set(i,j, this->board.get(i,j)^map.get(j * x + i));
-            }
-        }
+    void apply_xormap(BitBoard< sizex, sizey> map) {
+	this->board = this->board^map;
     }
 };
 #endif
