@@ -1,9 +1,17 @@
 #ifndef GOL_CRYPTO_CPP
 #define GOL_CRYPTO_CPP
 
+#include <exception>
 #include "GOL.cpp"
 
+class too_few_bits_exception: public std::exception {
+    virtual const char* what() const throw() {
+        return "Requested more random bits than the system can supply in one go";
+    }
+}tfbexc;
+
 template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
+
     protected:
     BitBoard< sizex, sizey> seed_map;
     unsigned int seed;
@@ -41,16 +49,17 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
 	GOL_CRYPTO(0);
     }
     
-    std::bitset<sizeof( int )*CHAR_BIT> rand_bits() {
+    template<int len> std::bitset<len> rand_bits() {
+        if (len > std::max(sizex, sizey)) {throw tfbexc;}
     	const static int multipliers[5] = {3,5,7,11,13};
-        std::bitset<sizeof( int )*CHAR_BIT> ret;
+        std::bitset<len> ret;
         int shift = seed % sizex*sizey;
         int multi = multipliers[seed%5];
-        for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
+        for (int i = 0; i < len; i++) {
             ret[i] = this->board.get(multi*i+shift);
         }
         this->step();       
-        seed = (seed+ret.to_ulong()) % INT_MAX;
+        seed = ( seed + *reinterpret_cast<unsigned int *>(&ret) ) % INT_MAX;
         return ret;
     }
     
