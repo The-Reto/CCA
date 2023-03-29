@@ -27,7 +27,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
 
     public:
     GOL_CRYPTO(unsigned int seed_) : GOL<sizex,sizey>(seed_) {
-    	static bool survive_[9] = {0,0,1,1,0,1,0,0,0};
+    	static bool survive_[9] = {0,0,0,1,0,1,0,0,0};
     	static bool create_[9] =  {0,0,1,0,1,1,0,0,0};
         seed = (seed_ + 3141592) % INT_MAX;
  
@@ -42,9 +42,12 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     }
     
     std::bitset<sizeof( int )*CHAR_BIT> rand_bits() {
+    	const static int multipliers[5] = {3,5,7,11,13};
         std::bitset<sizeof( int )*CHAR_BIT> ret;
+        int shift = seed % sizex*sizey;
+        int multi = multipliers[seed%5];
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-            ret[i] = this->board.get(i + seed);
+            ret[i] = this->board.get(multi*i+shift);
         }
         this->step();       
         seed = (seed+ret.to_ulong()) % INT_MAX;
