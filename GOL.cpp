@@ -21,13 +21,11 @@ template <int sizex, int sizey> class GOL {
     }
     
     void step() {
-        for (int i = 0; i < sizex; i++) {
-            for (int j = 0; j < sizey; j++) {
-                int neighbours = board.count_neighbours(i,j);
-                b_board.set(i, j, board.get(i,j) * survive[neighbours] + (1 -  board.get(i,j)) * create[neighbours] );
-            }
+        for (int i = 0; i < sizex*sizey; i++) {
+            int neighbours = board.count_neighbours(i);
+            b_board.set(i, board.get(i) * survive[neighbours] + (1 -  board.get(i)) * create[neighbours] );
         }
-        board.set(b_board.get());
+        board = b_board;
     }
     
     void steps(int steps){
