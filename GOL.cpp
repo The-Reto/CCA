@@ -20,10 +20,6 @@ template <int sizex, int sizey> class GOL {
         }
     }
     
-    void test() {
-        std::cout << board.count_neighbours(5,4);
-    }
-    
     void step() {
         for (int i = 0; i < sizex; i++) {
             for (int j = 0; j < sizey; j++) {
