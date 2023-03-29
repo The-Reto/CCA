@@ -21,17 +21,16 @@ template <int sizex, int sizey> class GOL {
     }
     
     void step() {
+        int neighbours = 0;
         for (int i = 0; i < sizex*sizey; i++) {
-            int neighbours = board.count_neighbours(i);
+            neighbours = board.count_neighbours(i);
             b_board.set(i, board.get(i) * survive[neighbours] + (1 -  board.get(i)) * create[neighbours] );
         }
         board = b_board;
     }
     
     void steps(int steps){
-        for (int i = 0; i < steps; i++) {
-            step();
-        }
+        for (int i = 0; i < steps; i++) { step(); }
     }
     
     void print() {
@@ -45,11 +44,9 @@ template <int sizex, int sizey> class GOL {
             for (int j = 0; j < sizey; j++) {
                 if (board.get(i,j)) {
                     std::cout << "\u25A0 ";
-                    //std::cout << board.count_neighbours(i, j) << " ";
                 }
                 else {
                     std::cout << "\u25A2 ";
-                    //std::cout << board.count_neighbours(i, j) << " ";
                 }
             }
             std::cout << " \u2503\n";
@@ -61,7 +58,7 @@ template <int sizex, int sizey> class GOL {
         std::cout << "\u2501\u251b\n";
     }
     
-    bool* get_board() {
+    BitBoard<sizex, sizey> get_board() {
         return board;
     }
 };
