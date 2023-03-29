@@ -45,11 +45,17 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     std::bitset<sizeof( int )*CHAR_BIT> rand_bits() {
         std::bitset<sizeof( int )*CHAR_BIT> ret;
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-            ret[i] = this->board.get(i, sizey/2);
+            ret[i] = this->board.get(i + seed);
         }
-        this->step();
-        //seed_map.set(seed_map.get() ^ this->board.get());
-        return std::bitset<sizeof( int )*CHAR_BIT>(ret);
+        this->step();       
+        seed = (seed+ret.to_ulong()) % INT_MAX;
+        return ret;
+    }
+    
+    void step() {
+    	GOL<sizex,sizey>::step();
+    	seed_map = seed_map ^ this->board;
+    	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
     }
     
     unsigned int get_seed() {
