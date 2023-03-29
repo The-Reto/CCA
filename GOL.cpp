@@ -14,7 +14,6 @@ template <int sizex, int sizey> class GOL {
     
     public:
     GOL(unsigned int seed) {
-        std::cout << "Init GOL..." << std::endl;
         std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
             board.set(5,i+3, s[i]);

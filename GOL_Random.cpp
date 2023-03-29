@@ -6,7 +6,6 @@ class GOL_RNG {
 
     public:
     GOL_RNG(unsigned int seed_) {
-        std::cout << "Init GOL_RNG..." << std::endl;
         system = GOL_CRYPTO<32,32>(seed_);
     }
     
@@ -33,22 +32,23 @@ class GOL_RNG {
 int test(int seed) {
     GOL_RNG test(seed);
     
-    int samples = 2;
+    int samples = 2000;
+    int results[2] = {0,0};
     
     for (int i = 0; i < samples; i++) {
-        std::cout << test.uniform() << ", " << test.uniform() << std::endl;
+        results[test.rand_bit()]++;
     }
+    std::cout << results[0] << " " << results[1];
     return test.rand_int();
 }
 
 int main()
 {
-    unsigned int seed = 31415;
+    int seed = 31415;
     
-    GOL_RNG test(seed);
-    std::cout << test.uniform() << ", " << test.uniform() << std::endl;
+    for(int i = 0; i < 20; i++) {
+        seed = test(seed);
+        std::cout << std::endl;
+    }
 
-    //for (int i = 0; i < 2; i++) {
-        //seed = test(seed);
-    //}
 }

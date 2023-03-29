@@ -19,6 +19,8 @@ template <int sizex, int sizey> class BitBoard{
         return y * sizex + x;
     }
     
+    public:
+    
     bool get(int index) {
         while (index < 0) {index += len;}
         index = index % len;
@@ -31,7 +33,6 @@ template <int sizex, int sizey> class BitBoard{
         board[index] = val;
     }
     
-    public:
     BitBoard() {
         len = sizex * sizey;
         for (int i = 0; i < Moore_len; i++) {
