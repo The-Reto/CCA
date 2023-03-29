@@ -1,4 +1,5 @@
 #include "GOL_Crypto.cpp"
+#include <cmath>
 
 class GOL_RNG {
     
@@ -27,26 +28,32 @@ class GOL_RNG {
 
         return *reinterpret_cast<float *>(&bits) - 1.0;
     }
+    
 };
 
 int test(int seed) {
+    static const int range = 20;
     GOL_RNG test(seed);
     
-    int samples = 2000;
-    int results[2] = {0,0};
+    int samples = range*10000;
+    int results[range] = {0};
     
     for (int i = 0; i < samples; i++) {
-        results[test.rand_bit()]++;
+        int index = std::floor(test.uniform() * range);
+        results[index]++;
     }
-    std::cout << results[0] << " " << results[1];
+    for (int i =0; i < range; i++) {
+        std::cout << results[i] << " ";
+        if (results[i] < 10000) {std::cout << " ";}
+    }
     return test.rand_int();
 }
 
 int main()
 {
-    int seed = 31414;
+    int seed = 22051996;
     
-    for(int i = 0; i < 20; i++) {
+    for(int i = 0; i < 5; i++) {
         seed = test(seed);
         std::cout << std::endl;
     }
