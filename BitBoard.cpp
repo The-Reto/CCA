@@ -49,6 +49,11 @@ template <int sizex, int sizey> class BitBoard{
         return *this;
     }
     
+    BitBoard& operator^(const BitBoard& other) {
+    	board ^= other.board;
+    	return *this;
+    }
+    
     std::bitset<sizex*sizey> get() {
         return board;
     }
