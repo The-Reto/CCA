@@ -9,8 +9,11 @@
 
 template <int sizex, int sizey> class BitBoard{
     int len;
-    std::bitset< sizex * sizey > board;
-    const int neighbour_mask[8] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    std::bitset< sizex * sizey > board, neighbour_mask;
+    const static int Moore_len = 8, vNeumann_len = 4;
+    const int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    const int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
+
     
     int xy_to_l(int x, int y) {
         while (x < 0) {x += sizex;}
@@ -35,10 +38,17 @@ template <int sizex, int sizey> class BitBoard{
     public:
     BitBoard() {
         len = sizex * sizey;
+        for (int i = 0; i < Moore_len; i++) {
+            int index = Moore_Neighbours[i];
+		    while (index < 0) {index += len;}
+		    index = index % len;
+            neighbour_mask[index] = true;
+        }
     }
     
     BitBoard& operator = (const BitBoard& other) {
         board = other.board;
+        neighbour_mask = other.neighbour_mask;
         return *this;
     }
     
@@ -46,7 +56,7 @@ template <int sizex, int sizey> class BitBoard{
         return board;
     }
     
-    bool get(int x, int y) {
+    inline bool get(int x, int y) {
         return board[ xy_to_l(x,y) ];
     }
     
@@ -60,17 +70,14 @@ template <int sizex, int sizey> class BitBoard{
         board[ xy_to_l(x,y) ] = val;
     }
     
-    int count_neighbours(int x, int y) {
-        int neighbours = 0;
-        int l = xy_to_l(x,y);
-        for (int i = 0; i < 8; i++) {
-            neighbours += get( l + neighbour_mask[i] );
-        }
-        return neighbours;
+    inline int count_neighbours(int l) {
+        return (board & ( (neighbour_mask << l) | (neighbour_mask >> (len - l)) )).count();
     }
     
-    const int get_sizex() {return sizex;}
-    const int get_sizey() {return sizey;}
+    inline int count_neighbours(int x, int y) { return count_neighbours(xy_to_l(x,y)); }
+    
+    const inline int get_sizex() {return sizex;}
+    const inline int get_sizey() {return sizey;}
 };
 
 template <int sizex, int sizey> class GOL {
@@ -155,7 +162,7 @@ int main()
 {
     unsigned int seed = 31415;
     
-    GOL<32,32> gol(11111111);
+    GOL<32,32> gol(415003079);
     
     gol.print();
     gol.step();
