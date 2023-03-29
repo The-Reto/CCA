@@ -2,11 +2,11 @@
 
 class GOL_RNG {
     
-    GOL_CRYPTO<32,16> system;
+    GOL_CRYPTO<32,8> system;
 
     public:
     GOL_RNG(unsigned int seed_) {
-        system = GOL_CRYPTO<32,16>(seed_);
+        system = GOL_CRYPTO<32,8>(seed_);
     }
     
     unsigned int rand_int(unsigned int max = INT_MAX) {
@@ -18,8 +18,8 @@ class GOL_RNG {
     }
     
     float uniform() {
-    	int sign_mask = ~(3 << 30);
-    	int exp_mask = (127 << 23);
+    	const static int sign_mask = ~(3 << 30);
+    	const static int exp_mask = (127 << 23);
         std::bitset bits = system.rand_bits();
 
     	bits &= sign_mask;
@@ -44,7 +44,7 @@ int test(int seed) {
 
 int main()
 {
-    int seed = 31415;
+    int seed = 31414;
     
     for(int i = 0; i < 20; i++) {
         seed = test(seed);
