@@ -6,7 +6,7 @@ class GOL_RNG {
 
     public:
     GOL_RNG(unsigned int seed_) {
-        system = GOL_CRYPTO<32,32>(seed_);
+        system = GOL_CRYPTO<32,16>(seed_);
     }
     
     unsigned int rand_int(unsigned int max = INT_MAX) {
