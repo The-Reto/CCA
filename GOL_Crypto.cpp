@@ -5,7 +5,8 @@
 
 template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     protected:
-    BitBoard< sizex, sizey> seed;
+    BitBoard< sizex, sizey> seed_map;
+    unsigned int seed;
     
     BitBoard< sizex, sizey> create_seed_map(unsigned int seed) {
         BitBoard< sizex, sizey> map;
@@ -18,22 +19,22 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
         return map;
     }
     
-    void set_rules(bool choice) {
-        const static bool survive_[18] = {0,0,1,1,0,1,0,0,0, 0,0,1,0,1,1,1,0,1};
-        const static bool create_[18] =  {0,0,1,0,1,1,0,0,0, 0,0,1,0,1,0,1,0,1};
-        for (int i = 0 + choice*9; i < 9 + choice*9; i++) {
-            this->survive[i - choice*9] = survive_[i];
-            this->create[i - choice*9] = create_[i];
+    void set_rules() {
+        const static bool survive_[18] = {0,0,1,1,0,1,0,0,0};
+        const static bool create_[18] =  {0,0,1,0,1,1,0,0,0};
+        for (int i = 0; i < 9; i++) {
+            this->survive[i] = survive_[i];
+            this->create[i] = create_[i];
         }
     }
 
     public:
     GOL_CRYPTO(unsigned int seed_) : GOL<sizex,sizey>(seed_) {
-        seed_ = (seed_ + 3141592) % INT_MAX;
+        seed = (seed_ + 3141592) % INT_MAX;
  
-        seed = create_seed_map(seed_);
-        set_rules(seed.get(23,65));
-        apply_xormap(seed, sizex, sizey);
+        seed_map = create_seed_map(seed);
+        set_rules();
+        apply_xormap(seed_map, sizex, sizey);
         this->steps(std::max(sizex, sizey)); // distribute seed
     }
     
@@ -44,11 +45,10 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     std::bitset<sizeof( int )*CHAR_BIT> rand_bits() {
         std::bitset<sizeof( int )*CHAR_BIT> ret;
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-            ret[i] = this->board.get(i, 4);
+            ret[i] = this->board.get(i, sizey/2);
         }
         this->step();
-        seed.set(seed.get() ^ this->board.get());
-        set_rules(ret[0]);
+        //seed_map.set(seed_map.get() ^ this->board.get());
         return std::bitset<sizeof( int )*CHAR_BIT>(ret);
     }
     
