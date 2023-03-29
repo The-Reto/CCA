@@ -20,6 +20,13 @@ template <int sizex, int sizey> class GOL {
         }
     }
     
+    void set_rules(bool survive_[9], bool create_[9]){
+        for (int i = 0; i < 9; i++) {
+            survive[i] = survive_[i];
+            create[i] = create_[i];
+        }
+    }
+    
     void step() {
         int neighbours = 0;
         for (int i = 0; i < sizex*sizey; i++) {
