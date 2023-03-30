@@ -8,7 +8,7 @@ class too_few_bits_exception: public std::exception {
     virtual const char* what() const throw() {
         return "Requested more random bits than the system can supply in one go";
     }
-}tfbexc;
+};
 
 template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
 
@@ -25,12 +25,6 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
             }
         }
         return map;
-    }
-    
-    void step() {
-    	GOL<sizex,sizey>::step();
-    	seed_map = seed_map ^ this->board;
-    	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
     }
 
     public:
@@ -50,7 +44,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     }
     
     template<int len> std::bitset<len> rand_bits() {
-        if (len > std::max(sizex, sizey)) {throw tfbexc;}
+        if (len > std::max(sizex, sizey)) {throw too_few_bits_exception();}
     	const static int multipliers[5] = {3,5,7,11,13};
         std::bitset<len> ret;
         int shift = seed % sizex*sizey;
@@ -69,6 +63,12 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     
     void apply_xormap(BitBoard< sizex, sizey> map) {
 	this->board = this->board^map;
+    }
+    
+    void step() {
+    	GOL<sizex,sizey>::step();
+    	seed_map = seed_map ^ this->board;
+    	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
     }
 };
 #endif

@@ -21,7 +21,7 @@ int test(int seed) {
 
 void demo() {
     GOL_RNG a(3141591), b(22051996), c(16091999);
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 10; i++) {
         std::cout << a.rand_int(100) << " " << b.rand_int(100) << " " << c.rand_int(100) << " " << std::endl;
     }
 }
