@@ -15,6 +15,29 @@ template <int a, int b> class BitBoard{
         return y * sizex + x;
     }
     
+    void set_up_moore_neigbours() {
+        const static int Moore_len = 8, vNeumann_len = 4;
+        const static int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+        const static int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
+        const static int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+        //const static int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
+
+        for (int i = 0; i < Moore_len; i++) {
+            int index = Moore_Neighbours[i];
+            while (index < 0) {index += len;}
+            index = index % len;
+            neighbour_mask[index] = true;
+            index = Moore_Neighbours_EdgeR[i];
+            while (index < 0) {index += len;}
+            index = index % len;
+            neighbour_mask_edgeR[index] = true;
+            index = Moore_Neighbours_EdgeL[i];
+            while (index < 0) {index += len;}
+            index = index % len;
+            neighbour_mask_edgeL[index] = true;
+        }
+    }
+    
     public:
     
     bool get(int index) {
@@ -35,26 +58,7 @@ template <int a, int b> class BitBoard{
         neighbour_mask_edgeR = boost::dynamic_bitset<>(len);
         neighbour_mask_edgeL = boost::dynamic_bitset<>(len);
         
-        const static int Moore_len = 8, vNeumann_len = 4;
-        const static int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-        const static int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
-        const static int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-        const static int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
-
-        for (int i = 0; i < Moore_len; i++) {
-            int index = Moore_Neighbours[i];
-            while (index < 0) {index += len;}
-            index = index % len;
-            neighbour_mask[index] = true;
-            index = Moore_Neighbours_EdgeR[i];
-            while (index < 0) {index += len;}
-            index = index % len;
-            neighbour_mask_edgeR[index] = true;
-            index = Moore_Neighbours_EdgeL[i];
-            while (index < 0) {index += len;}
-            index = index % len;
-            neighbour_mask_edgeL[index] = true;
-        }
+        set_up_moore_neigbours();
     }
     
     BitBoard() : BitBoard(a,b) {}
