@@ -4,7 +4,7 @@
 #include <iostream>
 #include <bitset>
 #include <climits>
-#include "BitBoard.cpp"
+#include "BitBoard.h"
 
 template <int sizex, int sizey> class GOL {
     protected:
