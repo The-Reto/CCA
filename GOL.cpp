@@ -8,13 +8,15 @@
 
 template <int sizex, int sizey> class GOL {
     protected:
-    BitBoard<sizex, sizey>  board,  b_board;
+    BitBoard  board,  b_board;
     bool survive[9] = {0,0,1,1,0,0,0,0,0};
     bool create[9] =  {0,0,0,1,0,0,0,0,0};
     
     public:
     GOL(unsigned int seed) {
         std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
+        board = BitBoard(sizex, sizey);
+        b_board = BitBoard(sizex, sizey);
         for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
             board.set(5,i+3, s[i]);
         }
@@ -65,7 +67,7 @@ template <int sizex, int sizey> class GOL {
         std::cout << "\u2501\u251b\n";
     }
     
-    BitBoard<sizex, sizey> get_board() {
+    BitBoard get_board() {
         return board;
     }
 };
