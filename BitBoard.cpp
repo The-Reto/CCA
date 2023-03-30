@@ -5,9 +5,11 @@
 
 template <int sizex, int sizey> class BitBoard{
     int len;
-    std::bitset< sizex * sizey > board, neighbour_mask;
+    std::bitset< sizex * sizey > board, neighbour_mask, neighbour_mask_edgeR, neighbour_mask_edgeL;
     const static int Moore_len = 8, vNeumann_len = 4;
     const int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    const int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
+    const int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
     const int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
 
     
@@ -37,9 +39,17 @@ template <int sizex, int sizey> class BitBoard{
         len = sizex * sizey;
         for (int i = 0; i < Moore_len; i++) {
             int index = Moore_Neighbours[i];
-		    while (index < 0) {index += len;}
-		    index = index % len;
+            while (index < 0) {index += len;}
+            index = index % len;
             neighbour_mask[index] = true;
+            index = Moore_Neighbours_EdgeR[i];
+            while (index < 0) {index += len;}
+            index = index % len;
+            neighbour_mask_edgeR[index] = true;
+            index = Moore_Neighbours_EdgeL[i];
+            while (index < 0) {index += len;}
+            index = index % len;
+            neighbour_mask_edgeL[index] = true;
         }
     }
     
@@ -73,7 +83,9 @@ template <int sizex, int sizey> class BitBoard{
     }
     
     inline int count_neighbours(int l) {
-        return (board & ( (neighbour_mask << l) | (neighbour_mask >> (len - l)) )).count();
+        if (l % sizex == 0) {return (board & ( (neighbour_mask_edgeR << l) | (neighbour_mask_edgeR >> (len - l)) )).count();}
+        else if (l % sizex == sizex-1) {return (board & ( (neighbour_mask_edgeL << l) | (neighbour_mask_edgeL >> (len - l)) )).count();}
+        else {return (board & ( (neighbour_mask << l) | (neighbour_mask >> (len - l)) )).count();}
     }
     
     inline int count_neighbours(int x, int y) { return count_neighbours(xy_to_l(x,y)); }
