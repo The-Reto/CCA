@@ -96,5 +96,30 @@ class BitBoard{
     const inline int get_sizex() {return sizex;}
     const inline int get_sizey() {return sizey;}
     
+    void visualize() {
+        std::cout << "\u250f\u2501";
+        for (int i = 0; i < sizey; i++) {
+            std::cout << "\u2501\u2501";
+        }
+        std::cout << "\u2501\u2513\n";
+        for (int i = 0; i < sizex; i++) {
+            std::cout << "\u2503 ";
+            for (int j = 0; j < sizey; j++) {
+                if (get(i,j)) {
+                    std::cout << "\u25A0 ";
+                }
+                else {
+                    std::cout << "\u25A2 ";
+                }
+            }
+            std::cout << " \u2503\n";
+        }
+        std::cout << "\u2517\u2501";
+        for (int i = 0; i < sizey; i++) {
+            std::cout << "\u2501\u2501";
+        }
+        std::cout << "\u2501\u251b\n";
+    }
+    
 };
 #endif
