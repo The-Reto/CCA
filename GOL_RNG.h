@@ -4,7 +4,7 @@
 
 class GOL_RNG {
     
-    GOL_CRYPTO<32,32> system;
+    GOL_CRYPTO system;
 
     public:
     GOL_RNG(unsigned int seed_);

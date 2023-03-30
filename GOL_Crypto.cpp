@@ -10,7 +10,7 @@ class too_few_bits_exception: public std::exception {
     }
 };
 
-template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
+class GOL_CRYPTO: public GOL {
 
     protected:
     BitBoard seed_map;
@@ -28,7 +28,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     }
 
     public:
-    GOL_CRYPTO(unsigned int seed_) : GOL<sizex,sizey>(seed_) {
+    GOL_CRYPTO(int sx, int sy,unsigned int seed_) : GOL(sx,sy,seed_) {
     	static bool survive_[9] = {0,0,0,1,0,1,0,0,0};
     	static bool create_[9] =  {0,0,1,0,1,1,0,0,0};
         seed = seed_;
@@ -39,9 +39,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
         this->steps(std::max(sizex, sizey)); // distribute seed
     }
     
-    GOL_CRYPTO() : GOL<sizex,sizey>(0) {
-	GOL_CRYPTO(0);
-    }
+    GOL_CRYPTO() : GOL_CRYPTO(1,1,0) {}
     
     template<int len> std::bitset<len> rand_bits() {
         if (len > std::max(sizex, sizey)) {throw too_few_bits_exception();}
@@ -66,7 +64,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     }
     
     void step() {
-    	GOL<sizex,sizey>::step();
+    	GOL::step();
     	seed_map = seed_map ^ this->board;
     	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
     }

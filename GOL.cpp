@@ -6,14 +6,15 @@
 #include <climits>
 #include "BitBoard.h"
 
-template <int sizex, int sizey> class GOL {
+class GOL {
     protected:
+    int sizex, sizey;
     BitBoard  board,  b_board;
     bool survive[9] = {0,0,1,1,0,0,0,0,0};
     bool create[9] =  {0,0,0,1,0,0,0,0,0};
     
     public:
-    GOL(unsigned int seed) {
+    GOL(int sx, int sy, unsigned int seed) : sizex(sx), sizey(sy) {
         std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
         board = BitBoard(sizex, sizey);
         b_board = BitBoard(sizex, sizey);
@@ -21,6 +22,10 @@ template <int sizex, int sizey> class GOL {
             board.set(5,i+3, s[i]);
         }
     }
+    
+    GOL(unsigned int seed) : GOL(1,1,seed) {}
+    
+    GOL() : GOL(1,1,0) {}
     
     void set_rules(bool survive_[9], bool create_[9]){
         for (int i = 0; i < 9; i++) {

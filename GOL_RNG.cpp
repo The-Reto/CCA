@@ -2,7 +2,7 @@
 #include "GOL_RNG.h"
 
 GOL_RNG::GOL_RNG(unsigned int seed_) {
-    system = GOL_CRYPTO<32,32>(seed_);
+    system = GOL_CRYPTO(32,32,seed_);
 }
 
 int GOL_RNG::rand_int(unsigned int max) {

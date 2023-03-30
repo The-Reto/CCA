@@ -30,7 +30,16 @@ int main()
 {
     int seed = 22051996;
     
-    demo();
+    //demo();
+    
+    GOL_CRYPTO test(24,24,2048+1024+512);
+    test.print();
+    test.step();
+    test.print();
+    test.step();
+    test.print();
+    test.step();
+    test.print();
     
     //for(int i = 0; i < 5; i++) {
     //    seed = test(seed);
