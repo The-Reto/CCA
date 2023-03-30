@@ -2,7 +2,7 @@
 #include "GOL_RNG.h"
 
 GOL_RNG::GOL_RNG(unsigned int seed_) {
-    system = GOL_CRYPTO(32,32,seed_);
+    system = GOL_CRYPTO(64,8,seed_);
 }
 
 int GOL_RNG::rand_int(unsigned int max) {
@@ -15,6 +15,16 @@ long GOL_RNG::rand_long(unsigned int max) {
 
 bool GOL_RNG::rand_bit() {
     return system.rand_bits<1>()[0];
+}
+
+double GOL_RNG::rand_double() {
+	const static long sign_mask = ~((long) 3 << 62);
+	const static long exp_mask = ((long) 1023 << 52);
+    std::bitset bits = system.rand_bits<64>();
+	bits &= sign_mask;
+	bits |= exp_mask; 
+
+    return *reinterpret_cast<double *>(&bits) - 1.0;
 }
 
 float GOL_RNG::rand_float() {

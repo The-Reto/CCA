@@ -17,6 +17,8 @@ class GOL_RNG {
     
     float rand_float();
     
+    double rand_double();
+    
     void test();
     
 };
