@@ -31,7 +31,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
     GOL_CRYPTO(unsigned int seed_) : GOL<sizex,sizey>(seed_) {
     	static bool survive_[9] = {0,0,0,1,0,1,0,0,0};
     	static bool create_[9] =  {0,0,1,0,1,1,0,0,0};
-        seed = (seed_ + 3141592) % INT_MAX;
+        seed = seed_;
  
         seed_map = create_seed_map(seed);
         this->set_rules(survive_, create_);
