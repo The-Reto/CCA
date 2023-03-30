@@ -1,6 +1,6 @@
 #ifndef GOL_RNG_H
 #define GOL_RNG_H
-#include "GOL_Crypto.cpp"
+#include "GOL_Crypto.h"
 
 class GOL_RNG {
     
