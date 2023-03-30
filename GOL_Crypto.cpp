@@ -36,8 +36,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
         seed_map = create_seed_map(seed);
         this->set_rules(survive_, create_);
         apply_xormap(seed_map);
-        //this->steps(std::max(sizex, sizey)); // distribute seed
-        std::cout << "yap" << std::endl;
+        this->steps(std::max(sizex, sizey)); // distribute seed
     }
     
     GOL_CRYPTO() : GOL<sizex,sizey>(0) {
