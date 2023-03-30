@@ -1,7 +1,7 @@
 #ifndef GOL_CRYPTO_CPP
 #define GOL_CRYPTO_CPP
 
-#include "GOL_Crypto.h"
+#include "../headers/GOL_Crypto.h"
 
 BitBoard GOL_CRYPTO::create_seed_map(unsigned int seed) {
     BitBoard map(sizex, sizey);

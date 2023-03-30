@@ -1,5 +1,5 @@
 #include <cmath>
-#include "GOL_RNG.h"
+#include "../headers/GOL_RNG.h"
 
 GOL_RNG::GOL_RNG(unsigned int seed_) {
     system = GOL_CRYPTO(64,8,seed_);

@@ -1,7 +1,7 @@
 #ifndef GOL_CPP
 #define GOL_CPP
 
-#include "GOL.h"
+#include "../headers/GOL.h"
 
 GOL::GOL(int sx, int sy, unsigned int seed) : sizex(sx), sizey(sy) {
     std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);

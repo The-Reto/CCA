@@ -1,5 +1,5 @@
 #include <iostream>
-#include "BitBoard.h"
+#include "../headers/BitBoard.h"
 
 int BitBoard::xy_to_l(int x, int y) {
     while (x < 0) {x += sizex;}
