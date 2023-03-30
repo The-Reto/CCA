@@ -3,15 +3,9 @@
 
 #include <boost/dynamic_bitset.hpp>
 
-template <int sizex, int sizey> class BitBoard{
-    int len;
+template <int a, int b> class BitBoard{
+    int len, sizex, sizey;
     boost::dynamic_bitset<> board, neighbour_mask, neighbour_mask_edgeR, neighbour_mask_edgeL;
-    const static int Moore_len = 8, vNeumann_len = 4;
-    const int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-    const int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
-    const int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-    const int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
-
     
     int xy_to_l(int x, int y) {
         while (x < 0) {x += sizex;}
@@ -35,12 +29,18 @@ template <int sizex, int sizey> class BitBoard{
         board[index] = val;
     }
     
-    BitBoard() {
-        len = sizex * sizey;
+    BitBoard(int sx, int sy): sizex(sx), sizey(sy), len(sx * sy) {
         board = boost::dynamic_bitset<>(len);
         neighbour_mask = boost::dynamic_bitset<>(len);
         neighbour_mask_edgeR = boost::dynamic_bitset<>(len);
         neighbour_mask_edgeL = boost::dynamic_bitset<>(len);
+        
+        const static int Moore_len = 8, vNeumann_len = 4;
+        const static int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+        const static int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
+        const static int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+        const static int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
+
         for (int i = 0; i < Moore_len; i++) {
             int index = Moore_Neighbours[i];
             while (index < 0) {index += len;}
@@ -56,6 +56,8 @@ template <int sizex, int sizey> class BitBoard{
             neighbour_mask_edgeL[index] = true;
         }
     }
+    
+    BitBoard() : BitBoard(a,b) {}
     
     BitBoard& operator = (const BitBoard& other) {
         board = other.board;
