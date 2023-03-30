@@ -13,11 +13,11 @@ class too_few_bits_exception: public std::exception {
 template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
 
     protected:
-    BitBoard< sizex, sizey> seed_map;
+    BitBoard seed_map;
     unsigned int seed;
     
-    BitBoard< sizex, sizey> create_seed_map(unsigned int seed) {
-        BitBoard< sizex, sizey> map;
+    BitBoard create_seed_map(unsigned int seed) {
+        BitBoard map(sizex, sizey);
         std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
         for (int i = sizex/5; i < sizex; i++) { //adding noise
             for (int j = sizey/4; j < sizey/2; j++) {
@@ -36,7 +36,8 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
         seed_map = create_seed_map(seed);
         this->set_rules(survive_, create_);
         apply_xormap(seed_map);
-        this->steps(std::max(sizex, sizey)); // distribute seed
+        //this->steps(std::max(sizex, sizey)); // distribute seed
+        std::cout << "yap" << std::endl;
     }
     
     GOL_CRYPTO() : GOL<sizex,sizey>(0) {
@@ -61,7 +62,7 @@ template <int sizex, int sizey> class GOL_CRYPTO: public GOL< sizex, sizey> {
         return seed;
     }
     
-    void apply_xormap(BitBoard< sizex, sizey> map) {
+    void apply_xormap(BitBoard map) {
 	this->board = this->board^map;
     }
     

@@ -17,9 +17,9 @@ class BitBoard{
     
     void set_up_moore_neigbours() {
         const static int Moore_len = 8, vNeumann_len = 4;
-        const static int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-        const static int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
-        const static int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+        const int Moore_Neighbours[Moore_len] = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+        const int Moore_Neighbours_EdgeR[Moore_len] = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
+        const int Moore_Neighbours_EdgeL[Moore_len] = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
         //const static int vNeumann_Neighbours[vNeumann_len] = { -sizex, -1, 1, sizex };
         for (int i = 0; i < Moore_len; i++) {
             int index = Moore_Neighbours[i];
@@ -62,15 +62,6 @@ class BitBoard{
     
     BitBoard() : BitBoard(1,1) {}
     
-    BitBoard& operator = (const BitBoard& other) {
-        board = other.board;
-        neighbour_mask = other.neighbour_mask;
-        len = other.len;
-        sizex = other.sizex;
-        sizey = other.sizey;
-        return *this;
-    }
-    
     BitBoard& operator^(const BitBoard& other) {
     	board ^= other.board;
     	return *this;
@@ -104,5 +95,6 @@ class BitBoard{
     
     const inline int get_sizex() {return sizex;}
     const inline int get_sizey() {return sizey;}
+    
 };
 #endif
