@@ -22,12 +22,14 @@ Treats seeds different and uses a different rule set; also provides a function t
 ### GOL-RNG
 Game of Life Random Number Generator - inherits from C-GOL. 
 Provides RNG functionality such as random integer, random float, random bit, etc.
+### GOL-Hash
+Game of Life Hashing - inherits from C-GOL. 
+Provides hashing functionality.
 
 ## Folder Structure
 ### Source
 The source files are split up between the header folder (containing the headers) and the src folder (containing the source files).
-### Libraries
-The Makefile provided will move the compiled library files in here.
 ### Tests & Demos
 In the tests folder there are various test programms testing and demonstrating the various functionalities.
-
+### Libraries & Excecutables
+The Makefile provided will move the compiled library files to a lib folder and the compiled excecutables to a exces folder.
