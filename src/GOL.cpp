@@ -3,12 +3,10 @@
 
 #include "../headers/GOL.h"
 
-GOL::GOL(const int sx, const int sy, const unsigned int seed) : sizex(sx), sizey(sy) {
+GOL::GOL(const int sx, const int sy, const unsigned int seed) : sizex(sx), sizey(sy), board_index(0), boards({BitBoard(sizex, sizey), BitBoard(sizex, sizey)}) {
     std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
-    board = BitBoard(sizex, sizey);
-    b_board = BitBoard(sizex, sizey);
     for (int i = 0; i < sizeof( int )*CHAR_BIT; i++) {
-        board.set(5,i+3, s[i]);
+        boards[board_index].set(0,i, s[i]);
     }
 }
 
@@ -26,25 +24,23 @@ void GOL::set_rules(const bool survive_[9], const bool create_[9]){
 void GOL::n_step(const int index, const int max) {
     int neighbours = 0, val = 0;
     std::unique_lock<std::mutex> guard(m, std::defer_lock);
-    for (int i = index; i < sizex*sizey; i+=max) {
-        neighbours = board.count_neighbours(i);
-        val = board.get(i) * survive[neighbours] + (1 -  board.get(i)) * create[neighbours];
+    for (int i = index; i < sizex*sizey; i += max) {
+        neighbours = boards[board_index].count_neighbours(i);
+        val = boards[board_index].get(i) * survive[neighbours] + (1 -  boards[board_index].get(i)) * create[neighbours];
         guard.lock();
-        b_board.set(i, val);
+        boards[(board_index + 1) % 2].set(i, val);
         guard.unlock();
     }
 }
 
 void GOL::step() {
     const static int No_Threads = 4;
-    std::vector<std::thread> threads;
+    std::array<std::thread, No_Threads> threads;
     for(int i = 0; i < No_Threads; ++i) {
-        threads.push_back(std::thread(&GOL::n_step, this, i, No_Threads));
+        threads[i] = std::thread(&GOL::n_step, this, i, No_Threads);
     }
-    for(auto &t : threads) {
-        t.join();
-    }
-    board = b_board;
+    for(auto &t : threads) { t.join(); }
+    board_index = (board_index + 1) % 2;
 }
 
 void GOL::steps(int steps){
@@ -52,11 +48,11 @@ void GOL::steps(int steps){
 }
 
 void GOL::print() {
-    board.visualize();
+    boards[board_index].visualize();
 }
 
 BitBoard GOL::get_board() {
-    return board;
+    return boards[board_index];
 }
 
 GOL& GOL::operator=(const GOL& other) {
@@ -65,8 +61,7 @@ GOL& GOL::operator=(const GOL& other) {
         return *this;
     sizex = other.sizex;
     sizey = other.sizey;
-    board = other.board;
-    b_board = other.b_board;
+    boards = other.boards;
     set_rules(other.survive, other.create);
     return *this;
 }

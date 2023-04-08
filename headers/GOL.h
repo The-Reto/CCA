@@ -8,8 +8,8 @@
 
 class GOL {
     protected:
-    int sizex, sizey;
-    BitBoard  board,  b_board;
+    int sizex, sizey,board_index;
+    std::array<BitBoard,2>  boards;
     bool survive[9] = {0,0,1,1,0,0,0,0,0};
     bool create[9] =  {0,0,0,1,0,0,0,0,0};
     
