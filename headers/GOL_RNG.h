@@ -1,10 +1,10 @@
 #ifndef GOL_RNG_H
 #define GOL_RNG_H
-#include "GOL_Crypto.h"
+#include "C_GOL.h"
 
 class GOL_RNG {
     
-    GOL_CRYPTO system;
+    C_GOL system;
 
     public:
     GOL_RNG(unsigned int seed_);
