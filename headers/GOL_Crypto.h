@@ -27,19 +27,17 @@ class GOL_CRYPTO: public GOL {
     
     void apply_xormap(BitBoard map);
     
-    void step();
-    
     template<int len> std::bitset<len> rand_bits() {
         if (len > std::max(sizex, sizey)) {throw too_few_bits_exception();}
         const static int multipliers[5] = {3,5,7,11,13};
         std::bitset<len> ret;
-        int shift = seed % sizex*sizey;
-        int multi = multipliers[seed%5];
-        for (int i = 0; i < len; i++) {
-            ret[i] = this->board.get(multi*i+shift);
+        const int shift = seed % sizex*sizey;
+        const int multi = multipliers[seed%5];
+        for (int i = 0; i < len; ++i) {
+            ret[i] = this->boards[board_index].get(multi*i+shift);
         }
         this->step();       
-        seed = ( seed + *reinterpret_cast<unsigned int *>(&ret) ) % INT_MAX;
+        seed ^= ( seed + *reinterpret_cast<unsigned int *>(&ret) ) % INT_MAX;
         return ret;
     }	
 };

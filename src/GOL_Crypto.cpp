@@ -6,8 +6,8 @@
 BitBoard GOL_CRYPTO::create_seed_map(unsigned int seed) {
     BitBoard map(sizex, sizey);
     std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
-    for (int i = sizex/5; i < sizex; i++) { //adding noise
-        for (int j = sizey/4; j < sizey/2; j++) {
+    for (int i = sizex/5; i < sizex; ++i) { //adding noise
+        for (int j = sizey/4; j < sizey/2; ++j) {
             map.set(j * sizex + i, s[(i*j+j) % (sizeof( int )*CHAR_BIT)]);
         }
     }
@@ -32,10 +32,7 @@ unsigned int GOL_CRYPTO::get_seed() {
 }
 
 void GOL_CRYPTO::apply_xormap(BitBoard map) {
-this->board = this->board^map;
+    this->boards[board_index] = this->boards[board_index]^map;
 }
 
-void GOL_CRYPTO::step() {
-	GOL::step();
-}
 #endif
