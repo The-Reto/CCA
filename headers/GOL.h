@@ -1,9 +1,9 @@
 #ifndef GOL_H
 #define GOL_H
 
-#include <iostream>
 #include <bitset>
-#include <climits>
+#include <thread>
+#include <mutex>
 #include "BitBoard.h"
 
 class GOL {
@@ -13,6 +13,10 @@ class GOL {
     bool survive[9] = {0,0,1,1,0,0,0,0,0};
     bool create[9] =  {0,0,0,1,0,0,0,0,0};
     
+    private:
+    std::mutex m;
+    void n_step(int index, int max);
+    
     public:
     GOL(int sx, int sy, unsigned int seed);
     
@@ -20,13 +24,15 @@ class GOL {
     
     GOL();
     
-    void set_rules(bool survive_[9], bool create_[9]);
+    void set_rules(const bool survive_[9], const bool create_[9]);
     
     void step();
     
     void steps(int steps);
     
     void print();
+    
+    GOL& operator=(const GOL& other);
     
     BitBoard get_board();
 };

@@ -1,15 +1,14 @@
 #ifndef BITBOARD_H
 #define BITBOARD_H
 
+#include <iostream>
 #include <boost/dynamic_bitset.hpp>
 
 class BitBoard{
     int len, sizex, sizey;
-    boost::dynamic_bitset<> board, neighbour_mask, neighbour_mask_edgeR, neighbour_mask_edgeL;
+    boost::dynamic_bitset<> board;
     
     int xy_to_l(int x, int y);
-    
-    void set_up_moore_neigbours();
     
     public:
     

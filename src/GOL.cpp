@@ -16,18 +16,33 @@ GOL::GOL(unsigned int seed) : GOL(1,1,seed) {}
 
 GOL::GOL() : GOL(1,1,0) {}
 
-void GOL::set_rules(bool survive_[9], bool create_[9]){
+void GOL::set_rules(const bool survive_[9], const bool create_[9]){
     for (int i = 0; i < 9; i++) {
         survive[i] = survive_[i];
         create[i] = create_[i];
     }
 }
 
-void GOL::step() {
-    int neighbours = 0;
-    for (int i = 0; i < sizex*sizey; i++) {
+void GOL::n_step(int index, int max) {
+    int neighbours = 0, val = 0;
+    std::unique_lock<std::mutex> guard(m, std::defer_lock);
+    for (int i = index; i < sizex*sizey; i+=max) {
         neighbours = board.count_neighbours(i);
-        b_board.set(i, board.get(i) * survive[neighbours] + (1 -  board.get(i)) * create[neighbours] );
+        val = board.get(i) * survive[neighbours] + (1 -  board.get(i)) * create[neighbours];
+        guard.lock();
+        b_board.set(i, val);
+        guard.unlock();
+    }
+}
+
+void GOL::step() {
+    const static int No_Threads = 4;
+    std::vector<std::thread> threads;
+    for(int i = 0; i < No_Threads; i++) {
+        threads.push_back(std::thread(&GOL::n_step, this, i, No_Threads));
+    }
+    for(auto &t : threads) {
+        t.join();
     }
     board = b_board;
 }
@@ -42,5 +57,17 @@ void GOL::print() {
 
 BitBoard GOL::get_board() {
     return board;
+}
+
+GOL& GOL::operator=(const GOL& other) {
+    // Guard self assignment
+    if (this == &other)
+        return *this;
+    sizex = other.sizex;
+    sizey = other.sizey;
+    board = other.board;
+    b_board = other.b_board;
+    set_rules(other.survive, other.create);
+    return *this;
 }
 #endif
