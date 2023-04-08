@@ -20,10 +20,12 @@ void BitBoard::set_up_moore_neigbours() {
         while (index < 0) {index += len;}
         index = index % len;
         neighbour_mask[index] = true;
+        
         index = Moore_Neighbours_EdgeR[i];
         while (index < 0) {index += len;}
         index = index % len;
         neighbour_mask_edgeR[index] = true;
+        
         index = Moore_Neighbours_EdgeL[i];
         while (index < 0) {index += len;}
         index = index % len;
@@ -110,5 +112,5 @@ void BitBoard::visualize() {
     for (int i = 0; i < sizey; i++) {
         std::cout << "\u2501\u2501";
     }
-    std::cout << "\u2501\u251b\n";
+    std::cout << "\u2501\u251b" << std::endl;
 }
