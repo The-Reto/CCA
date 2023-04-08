@@ -22,11 +22,11 @@ class BitBoard{
     inline bool get(int x, int y);    
     boost::dynamic_bitset<> get();
     
-    void set(int index, bool val);    
-    void set(int x, int y, bool val);    
+    void set(const int index, const bool val);    
+    void set(const int x, const int y, const bool val);    
     void set(boost::dynamic_bitset<> map);
     
-    BitBoard(int sx, int sy);    
+    BitBoard(const int sx, const int sy);    
     BitBoard();    
     BitBoard& operator^(const BitBoard& other);
     

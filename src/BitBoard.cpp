@@ -2,26 +2,26 @@
 #include "../headers/BitBoard.h"
 
 int BitBoard::xy_to_l(int x, int y) {
-    while (x < 0) {x += sizex;}
-    while (y < 0) {y += sizey;}
+    if (x < 0) {x = -(-x % sizex) + sizex;}
+    if (y < 0) {y = -(-y % sizey) + sizey;}
     x = x % sizex;
     y = y % sizey;
     return y * sizex + x;
 }
 
 bool BitBoard::get(int index) {
-    while (index < 0) {index += len;}
+    if (index < 0) {index = -(-index % len) + len;}
     index = index % len;
     return board[index];
 }
 
-void BitBoard::set(int index, bool val) {
-    while (index < 0) {index += len;}
+void BitBoard::set(int index, const bool val) {
+    if (index < 0) {index = -(-index % len) + len;}
     index = index % len;
     board[index] = val;
 }
 
-BitBoard::BitBoard(int sx, int sy): sizex(sx), sizey(sy), len(sx * sy) {    
+BitBoard::BitBoard(const int sx, const int sy): sizex(sx), sizey(sy), len(sx * sy) {    
     board = boost::dynamic_bitset<>(len);
     neighbourhood = Neighbourhood::Moore;
 }
@@ -37,7 +37,7 @@ boost::dynamic_bitset<> BitBoard::get() {
     return board;
 }
 
-inline bool BitBoard::get(int x, int y) {
+inline bool BitBoard::get(const int x, const int y) {
     return board[ xy_to_l(x,y) ];
 }
 
@@ -47,7 +47,7 @@ void BitBoard::set(boost::dynamic_bitset<> map) {
     }
 }
 
-void BitBoard::set(int x, int y, bool val) {
+void BitBoard::set(const int x, const int y, const bool val) {
     board[ xy_to_l(x,y) ] = val;
 }
 

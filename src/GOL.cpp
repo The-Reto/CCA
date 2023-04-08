@@ -3,7 +3,7 @@
 
 #include "../headers/GOL.h"
 
-GOL::GOL(int sx, int sy, unsigned int seed) : sizex(sx), sizey(sy) {
+GOL::GOL(const int sx, const int sy, const unsigned int seed) : sizex(sx), sizey(sy) {
     std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
     board = BitBoard(sizex, sizey);
     b_board = BitBoard(sizex, sizey);
@@ -23,7 +23,7 @@ void GOL::set_rules(const bool survive_[9], const bool create_[9]){
     }
 }
 
-void GOL::n_step(int index, int max) {
+void GOL::n_step(const int index, const int max) {
     int neighbours = 0, val = 0;
     std::unique_lock<std::mutex> guard(m, std::defer_lock);
     for (int i = index; i < sizex*sizey; i+=max) {
@@ -38,7 +38,7 @@ void GOL::n_step(int index, int max) {
 void GOL::step() {
     const static int No_Threads = 4;
     std::vector<std::thread> threads;
-    for(int i = 0; i < No_Threads; i++) {
+    for(int i = 0; i < No_Threads; ++i) {
         threads.push_back(std::thread(&GOL::n_step, this, i, No_Threads));
     }
     for(auto &t : threads) {
