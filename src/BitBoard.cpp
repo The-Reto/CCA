@@ -89,14 +89,14 @@ void BitBoard::visualize() {
 
 int BitBoard::count_neigbours_moore(const int l){
     const std::vector<int> Moore_Neighbours = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-    const std::vector<int> Moore_Neighbours_EdgeR = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
-    const std::vector<int> Moore_Neighbours_EdgeL = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    const std::vector<int> Moore_Neighbours_EdgeR = { -2*sizex+1, -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex };
+    const std::vector<int> Moore_Neighbours_EdgeL = { -sizex+1, -1,1, sizex-1, sizex, sizex+1, 2*sizex-1, -sizex };
     int n = 0;
     if (l % sizex == 0) {
-        for (int index : Moore_Neighbours_EdgeR) {n += get(index+l);}
+        for (int index : Moore_Neighbours_EdgeL) {n += get(index+l);}
     }
     else if (l % sizex == sizex-1) {
-        for (int index : Moore_Neighbours_EdgeL) { n += get(index+l);}
+        for (int index : Moore_Neighbours_EdgeR) { n += get(index+l);}
     }
     else {
         for (int index : Moore_Neighbours) { n += get(index+l);}
