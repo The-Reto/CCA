@@ -23,6 +23,7 @@ void BitBoard::set(int index, bool val) {
 
 BitBoard::BitBoard(int sx, int sy): sizex(sx), sizey(sy), len(sx * sy) {    
     board = boost::dynamic_bitset<>(len);
+    neighbourhood = Neighbourhood::Moore;
 }
 
 BitBoard::BitBoard() : BitBoard(1,1) {}
@@ -50,24 +51,13 @@ void BitBoard::set(int x, int y, bool val) {
     board[ xy_to_l(x,y) ] = val;
 }
 
-int BitBoard::count_neighbours(int l) {
-    const std::vector<int> Moore_Neighbours = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-    const std::vector<int> Moore_Neighbours_EdgeR = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
-    const std::vector<int> Moore_Neighbours_EdgeL = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
-    int n = 0;
-    if (l % sizex == 0) {
-        for (int index : Moore_Neighbours_EdgeR) {n += get(index+l);}
-    }
-    else if (l % sizex == sizex-1) {
-        for (int index : Moore_Neighbours_EdgeL) { n += get(index+l);}
-    }
-    else {
-        for (int index : Moore_Neighbours) { n += get(index+l);}
-    }
-    return n;
+int BitBoard::count_neighbours(const int l) {
+    if (neighbourhood == Neighbourhood::Moore) {return count_neigbours_moore(l);}
+    else if (neighbourhood == Neighbourhood::vNeumann) {return count_neigbours_vNeumann(l);}
+    else {return -1;}
 }
 
-inline int BitBoard::count_neighbours(int x, int y) { return count_neighbours(xy_to_l(x,y)); }
+inline int BitBoard::count_neighbours(const int x, const int y) { return count_neighbours(xy_to_l(x,y)); }
 
 inline int BitBoard::get_sizex() {return sizex;}
 inline int BitBoard::get_sizey() {return sizey;}
@@ -95,4 +85,42 @@ void BitBoard::visualize() {
         std::cout << "\u2501\u2501";
     }
     std::cout << "\u2501\u251b" << std::endl;
+}
+
+int BitBoard::count_neigbours_moore(const int l){
+    const std::vector<int> Moore_Neighbours = { -sizex-1, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    const std::vector<int> Moore_Neighbours_EdgeR = { -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1, sizex+sizey };
+    const std::vector<int> Moore_Neighbours_EdgeL = { -sizex-sizey, -sizex, -sizex+1, -1, 1, sizex-1, sizex, sizex+1 };
+    int n = 0;
+    if (l % sizex == 0) {
+        for (int index : Moore_Neighbours_EdgeR) {n += get(index+l);}
+    }
+    else if (l % sizex == sizex-1) {
+        for (int index : Moore_Neighbours_EdgeL) { n += get(index+l);}
+    }
+    else {
+        for (int index : Moore_Neighbours) { n += get(index+l);}
+    }
+    return n;
+}
+
+int BitBoard::count_neigbours_vNeumann(const int l){
+    const std::vector<int> vNeumann_Neighbours = { -sizex, -1, 1, sizex };
+    const std::vector<int> vNeumann_Neighbours_EdgeR = { -sizex, sizex-1, 1, sizex };
+    const std::vector<int> vNeumann_Neighbours_EdgeL = { -sizex, -1, sizex+1, sizex };
+    int n = 0;
+    if (l % sizex == 0) {
+        for (int index : vNeumann_Neighbours_EdgeR) {n += get(index+l);}
+    }
+    else if (l % sizex == sizex-1) {
+        for (int index : vNeumann_Neighbours_EdgeL) { n += get(index+l);}
+    }
+    else {
+        for (int index : vNeumann_Neighbours) { n += get(index+l);}
+    }
+    return n;
+}
+
+void BitBoard::set_neighbourhood(const Neighbourhood n) {
+    neighbourhood = n;
 }
