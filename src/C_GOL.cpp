@@ -1,9 +1,9 @@
 #ifndef GOL_CRYPTO_CPP
 #define GOL_CRYPTO_CPP
 
-#include "../headers/GOL_Crypto.h"
+#include "../headers/C_GOL.h"
 
-BitBoard GOL_CRYPTO::create_seed_map(unsigned int seed) {
+BitBoard C_GOL::create_seed_map(unsigned int seed) {
     BitBoard map(sizex, sizey);
     std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
     for (int i = sizex/5; i < sizex; ++i) { //adding noise
@@ -14,7 +14,7 @@ BitBoard GOL_CRYPTO::create_seed_map(unsigned int seed) {
     return map;
 }
 
-GOL_CRYPTO::GOL_CRYPTO(int sx, int sy,unsigned int seed_) : GOL(sx,sy,seed_) {
+C_GOL::C_GOL(int sx, int sy,unsigned int seed_) : GOL(sx,sy,seed_) {
 	static bool survive_[9] = {0,0,0,1,0,1,0,0,0};
 	static bool create_[9] =  {0,0,1,0,1,1,0,0,0};
     seed = seed_;
@@ -25,13 +25,13 @@ GOL_CRYPTO::GOL_CRYPTO(int sx, int sy,unsigned int seed_) : GOL(sx,sy,seed_) {
     this->steps(std::max(sizex, sizey)); // distribute seed
 }
 
-GOL_CRYPTO::GOL_CRYPTO() : GOL_CRYPTO(1,1,0) {}
+C_GOL::C_GOL() : C_GOL(1,1,0) {}
 
-unsigned int GOL_CRYPTO::get_seed() {
+unsigned int C_GOL::get_seed() {
     return seed;
 }
 
-void GOL_CRYPTO::apply_xormap(BitBoard map) {
+void C_GOL::apply_xormap(BitBoard map) {
     this->boards[board_index] = this->boards[board_index]^map;
 }
 

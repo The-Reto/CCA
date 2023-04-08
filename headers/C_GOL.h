@@ -1,5 +1,5 @@
-#ifndef GOL_CRYPTO_H
-#define GOL_CRYPTO_H
+#ifndef C_GOL_H
+#define C_GOL_H
 
 #include <exception>
 #include "GOL.h"
@@ -10,7 +10,7 @@ class too_few_bits_exception: public std::exception {
     }
 };
 
-class GOL_CRYPTO: public GOL {
+class C_GOL: public GOL {
 
     protected:
     BitBoard seed_map;
@@ -19,9 +19,9 @@ class GOL_CRYPTO: public GOL {
     BitBoard create_seed_map(unsigned int seed);
 
     public:
-    GOL_CRYPTO(int sx, int sy,unsigned int seed_);
+    C_GOL(int sx, int sy,unsigned int seed_);
     
-    GOL_CRYPTO();
+    C_GOL();
     
     unsigned int get_seed();
     
