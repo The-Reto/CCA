@@ -47,6 +47,12 @@ void BitBoard::set(boost::dynamic_bitset<> map) {
     }
 }
 
+void BitBoard::set(boost::dynamic_bitset<unsigned char> map) {
+    for (int i = 0; i<len; i++) {
+        set(i, map[i]);
+    }
+}
+
 void BitBoard::set(const int x, const int y, const bool val) {
     board[ xy_to_l(x,y) ] = val;
 }

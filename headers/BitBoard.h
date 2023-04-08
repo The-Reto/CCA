@@ -25,6 +25,7 @@ class BitBoard{
     void set(const int index, const bool val);    
     void set(const int x, const int y, const bool val);    
     void set(boost::dynamic_bitset<> map);
+    void set(boost::dynamic_bitset<unsigned char> map);
     
     BitBoard(const int sx, const int sy);    
     BitBoard();    
