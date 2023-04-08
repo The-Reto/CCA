@@ -37,7 +37,5 @@ this->board = this->board^map;
 
 void GOL_CRYPTO::step() {
 	GOL::step();
-	seed_map = seed_map ^ this->board;
-	if (seed % 1024 == 0) {this->board = this->board ^ seed_map;}
 }
 #endif
