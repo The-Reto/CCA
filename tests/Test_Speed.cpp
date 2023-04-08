@@ -1,6 +1,5 @@
-#include <cmath>
 #include <chrono>
-#include "./headers/GOL_RNG.h"
+#include "../headers/GOL_RNG.h"
 
 void test_RNG() {
     using namespace std::chrono;

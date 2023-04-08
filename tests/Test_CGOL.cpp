@@ -1,8 +1,8 @@
 #include <chrono>
-#include "./headers/GOL_Crypto.h"
+#include "../headers/C_GOL.h"
 
 void test_GOL() {
-    GOL_CRYPTO test(32,32,0xefecafe1);
+    C_GOL test(32,32,0xefecafe1);
     system("clear");
     
     std::cout << "C-GOL Simulation \t Initial configuration" << "\n";

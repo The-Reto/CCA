@@ -1,5 +1,5 @@
 #include <cmath>
-#include "./headers/GOL_RNG.h"
+#include "../headers/GOL_RNG.h"
 
 int test(int seed) {
     static const int range = 20, avg=100;
@@ -49,7 +49,7 @@ int demo(unsigned int seed) {
 
 int main()
 {
-    int seed = 22051996;
+    unsigned long int seed = 22'3141592'1996;
     
     for(int i = 0; i < 3; i++) {
         std::cout << "Testing for seed: " << seed << std::endl;
