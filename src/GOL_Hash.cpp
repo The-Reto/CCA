@@ -8,7 +8,8 @@ void GOL_Hash::hashing() {
     hashed = true;
     BitBoard data(SIZE_X,SIZE_Y);
     auto fileSize = std::filesystem::file_size(path);
-    std::vector<char> buffer(HASH_SIZE);
+    const int bufferSize = std::min((int)fileSize, (int)HASH_SIZE);
+    std::vector<char> buffer(bufferSize);
     std::cout << "Starting to GOL-HASH a file of size " << fileSize << " bytes..." << std::endl;
     while (!input_stream.eof()) {
         input_stream.read(buffer.data(), buffer.size());

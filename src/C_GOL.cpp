@@ -31,7 +31,7 @@ unsigned int C_GOL::get_seed() {
     return seed;
 }
 
-void C_GOL::apply_xormap(BitBoard map) {
+void C_GOL::apply_xormap(BitBoard &map) {
     this->boards[board_index] = this->boards[board_index]^map;
 }
 

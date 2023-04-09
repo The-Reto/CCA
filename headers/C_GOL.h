@@ -25,7 +25,7 @@ class C_GOL: public GOL {
     
     unsigned int get_seed();
     
-    void apply_xormap(BitBoard map);
+    void apply_xormap(BitBoard &map);
     
     template<int len> std::bitset<len> rand_bits() {
         if (len > std::max(sizex, sizey)) {throw too_few_bits_exception();}
