@@ -75,7 +75,7 @@ void test_Hash() {
 
 void test_GOL() {
     using namespace std::chrono;
-    GOL test_GOL(32,32,132463548);
+    GOL test_GOL(64,8,132463548);
     const static int generations = 10000;
     std::cout << "Testing GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
@@ -89,7 +89,7 @@ void test_GOL() {
 
 void test_CGOL() {
     using namespace std::chrono;
-    C_GOL test_CGOL(32,32,132463548);
+    C_GOL test_CGOL(64,8,132463548);
     const static int generations = 10000;
     std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
