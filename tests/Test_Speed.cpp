@@ -1,5 +1,6 @@
 #include <chrono>
 #include "../headers/GOL_RNG.h"
+#include "../headers/GOL_Hash.h"
 
 void test_RNG() {
     using namespace std::chrono;
@@ -39,8 +40,38 @@ void test_RNG() {
     std::cout << std::endl;
 }
 
+void test_Hash() {
+    using namespace std::chrono;
+    GOL_Hash txt("test.txt");
+    GOL_Hash music("test.mp3");
+    GOL_Hash video("test.webm");
+    std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
+    
+    std::cout << "\ttext file - ";
+    auto start = steady_clock::now();
+    txt.get_Str_Hash();
+    auto end = steady_clock::now();
+    duration<double> duration = end - start;
+    std::cout << "\ttime: " << duration.count() << "s\n";
+    
+    std::cout << "\tmusic file - ";
+    start = steady_clock::now();
+    music.get_Str_Hash();
+    end = steady_clock::now();
+    duration = end - start;
+    std::cout << "\ttime: " << duration.count() << "s\n";
+    
+    std::cout << "\tvideo file - ";
+    start = steady_clock::now();
+    video.get_Str_Hash();
+    end = steady_clock::now();
+    duration = end - start;
+    std::cout << "\ttime: " << duration.count() << "s\n";
+}
+
 int main()
 {
-    test_RNG();
+    //test_RNG();
+    test_Hash();
 
 }
