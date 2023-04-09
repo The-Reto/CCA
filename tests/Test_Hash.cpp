@@ -4,8 +4,7 @@
 
 int main()
 {
-    std::ifstream file("test.txt", std::ios::binary);
-
-    GOL_Hash test(file);
+    GOL_Hash test("test.txt");
     test.get_Hash().visualize();
+    std::cout << test.get_Str_Hash() << std::endl;
 }

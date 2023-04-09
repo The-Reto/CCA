@@ -1,42 +1,44 @@
 #include "../headers/GOL_Hash.h"
 
-GOL_Hash::GOL_Hash(std::ifstream & input_s) : system(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y), input_stream(input_s), hashed(false), salted(false) {
+GOL_Hash::GOL_Hash(std::string _path) : gol_board(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y), input_stream(_path), path(_path), hashed(false), salted(false) {
     
 }
 
-void GOL_Hash::salted_hashing() {
-    hashed = true;
-    BitBoard data(SIZE_X,SIZE_Y);
-    std::vector<char> bytes(HASH_SIZE);
-    while (!input_stream.eof()) {
-        input_stream.read(bytes.data(), bytes.size());
-        data.set(boost::dynamic_bitset<unsigned char>(bytes.begin(), bytes.end()));
-        system.apply_xormap(data);
-        system.steps(SIZE_X / 4);
-        system.apply_xormap(salt);
-        system.steps(SIZE_X / 4);
-    }
-}
-
-void GOL_Hash::unsalted_hashing() {
-    hashed = true;
-    BitBoard data(SIZE_X,SIZE_Y);
-    std::vector<char> bytes(HASH_SIZE);
-    while (!input_stream.eof()) {
-        input_stream.read(bytes.data(), bytes.size());
-        data.set(boost::dynamic_bitset<unsigned char>(bytes.begin(), bytes.end()));
-        system.apply_xormap(data);
-        system.steps(SIZE_X / 2);
-    }
-}
-
 void GOL_Hash::hashing() {
-    if (salted) {salted_hashing();}
-    else {unsalted_hashing();}
+    hashed = true;
+    BitBoard data(SIZE_X,SIZE_Y);
+    auto fileSize = std::filesystem::file_size(path);
+    std::vector<char> buffer(HASH_SIZE);
+    std::cout << "Starting to GOL-HASH a file of size " << fileSize << " bytes..." << std::endl;
+    while (!input_stream.eof()) {
+        input_stream.read(buffer.data(), buffer.size());
+        data.set(boost::dynamic_bitset<unsigned char>(buffer.begin(), buffer.end()));
+        gol_board.apply_xormap(data);
+        gol_board.steps(BLOCK_STEPS);
+    }
+    if (salted) {gol_board.apply_xormap(salt);}
+    gol_board.steps(SALT_STEPS);
 }
 
 BitBoard GOL_Hash::get_Hash() {
-    if (hashed) {return system.get_board();}
+    if (hashed) {return gol_board.get_board();}
     hashing();
-    return system.get_board();
+    return gol_board.get_board();
+}
+
+std::string GOL_Hash::get_Str_Hash() {
+    if (!hashed) {hashing();}
+    std::string buffer;
+    boost::to_string(gol_board.get_board().get(), buffer);
+    std::stringstream reader(buffer);
+    std::stringstream result;
+
+    while (reader)
+    {
+        std::bitset<64> digit;
+        reader >> digit;
+        result << std::hex << digit.to_ulong();
+    }
+
+    return result.str();
 }

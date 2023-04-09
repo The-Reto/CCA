@@ -3,22 +3,22 @@
 #include "C_GOL.h"
 #include "BitBoard.h"
 #include <fstream>
+#include <filesystem>
+#include <boost/algorithm/hex.hpp>
 
 class GOL_Hash {
     
-    C_GOL system;
+    C_GOL gol_board;
     BitBoard salt;
-    std::ifstream &input_stream;
+    std::string path;
+    std::basic_ifstream<char> input_stream;
     bool hashed, salted;
-    const static short HASH_SIZE = 256, SIZE_X = 32, SIZE_Y = 64;
-    
-    void salted_hashing();
-    void unsalted_hashing();
+    const static short HASH_SIZE = 128, SIZE_X = 32, SIZE_Y = 32, BLOCK_STEPS = 4, SALT_STEPS = 64;
     
     void hashing();
     
     public:
-    GOL_Hash(std::ifstream & input_s);
+    GOL_Hash(std::string _path);
     
     auto get_input_stream();
     
