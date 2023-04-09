@@ -32,6 +32,10 @@ class GOL {
     
     void print();
     
+    void set(int index, bool val);
+    
+    bool get(int index);
+    
     GOL& operator=(const GOL& other);
     
     BitBoard get_board();

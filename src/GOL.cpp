@@ -43,8 +43,16 @@ void GOL::step() {
     board_index = (board_index + 1) % 2;
 }
 
-void GOL::steps(int steps){
-    for (int i = 0; i < steps; i++) { step(); }
+void GOL::steps(int steps) {
+    for (int i = 0; i < steps; ++i) { step(); }
+}
+
+void GOL::set(int index, bool val) {
+    boards[board_index].set(index, val);
+}
+
+bool GOL::get(int index) {
+    return boards[board_index].get(index);
 }
 
 void GOL::print() {
