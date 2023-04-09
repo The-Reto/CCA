@@ -1,6 +1,8 @@
 #include <chrono>
 #include "../headers/GOL_RNG.h"
 #include "../headers/GOL_Hash.h"
+#include "../headers/GOL.h"
+#include "../headers/C_GOL.h"
 
 void test_RNG() {
     using namespace std::chrono;
@@ -67,11 +69,42 @@ void test_Hash() {
     end = steady_clock::now();
     duration = end - start;
     std::cout << "\ttime: " << duration.count() << "s\n";
+    
+    std::cout << std::endl;
+}
+
+void test_GOL() {
+    using namespace std::chrono;
+    GOL test_GOL(32,32,132463548);
+    const static int generations = 10000;
+    std::cout << "Testing GOL Class by taking running a random setting for " << generations << " generations.\n";
+    auto start = steady_clock::now();
+    test_GOL.steps(generations);
+    auto end = steady_clock::now();
+    duration<double> duration = end - start;
+    std::cout << "\ttime: " << duration.count() << "s\n";
+    
+    std::cout << std::endl;
+}
+
+void test_CGOL() {
+    using namespace std::chrono;
+    C_GOL test_CGOL(32,32,132463548);
+    const static int generations = 10000;
+    std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
+    auto start = steady_clock::now();
+    test_CGOL.steps(generations);
+    auto end = steady_clock::now();
+    duration<double> duration = end - start;
+    std::cout << "\ttime: " << duration.count() << "s\n";
+    
+    std::cout << std::endl;
 }
 
 int main()
 {
-    //test_RNG();
+    test_GOL();
+    test_CGOL();
+    test_RNG();
     test_Hash();
-
 }
