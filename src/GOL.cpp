@@ -22,21 +22,35 @@ void GOL::set_rules(const bool survive_[9], const bool create_[9]){
     }
 }
 
-void GOL::n_step(const int index, boost::dynamic_bitset<>& _board) {
-    int neighbours = 0;
+void GOL::m_step(const int index, int max, boost::dynamic_bitset<>& _board) {
+    short neighbours = 0, ind = 0, i;
     _board.reset();
-    for (int i = index; i < len; i += No_Threads) {
-        neighbours = board.count_neighbours(i);
-        _board.set(i, board.get(i) * survive[neighbours] + (1 -  board.get(i)) * create[neighbours]);
+    for (i = index; i < len; i += max) {
+        neighbours = board.count_neigbours_moore(i);
+        if ((board.get(i) * survive[neighbours]) | (!board.get(i) * create[neighbours])) {_board.set(i, true);}
+    }
+}
+
+void GOL::o_step(boost::dynamic_bitset<>& _board) {
+    short neighbours = 0;
+    _board.reset();
+    for (int i = 0; i < len; ++i) {
+        neighbours = board.count_neigbours_moore(i);
+        if ((board.get(i) * survive[neighbours]) | (!board.get(i) * create[neighbours])) {_board.set(i, true);}
     }
 }
 
 void GOL::step() {
-    for(int i = 0; i < No_Threads; ++i) {
-        threads[i] = std::thread(&GOL::n_step, this, i, std::ref(new_boards[i]));
+    if (len > 1024) {
+        const int t = 4;
+        for(int i = 0; i < t; ++i) {
+            threads[i] = std::thread(&GOL::m_step, this, i, t, std::ref(new_boards[i]));
+        }
+        for (int i = 0; i < t; ++i) { threads[i].join(); new_boards[0] |= new_boards[i]; }
     }
-    for (auto &t : threads) { t.join(); }
-    for (const auto &b : new_boards) { new_boards[0] |= b; }
+    else {
+        o_step(new_boards[0]);
+    }
     board.set(new_boards[0]);
 }
 

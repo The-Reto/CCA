@@ -13,7 +13,7 @@ class GOL_Hash {
     std::string path;
     std::basic_ifstream<char> input_stream;
     bool hashed, salted;
-    const static short HASH_SIZE = 512, SIZE_X = 64, SIZE_Y = 64, BLOCK_STEPS = 4, SALT_STEPS = 256;
+    const static short SIZE_X = 64, SIZE_Y = 64, HASH_SIZE = SIZE_X * SIZE_Y / CHAR_BIT, BLOCK_STEPS = 1, SALT_STEPS = 256;
     
     void hashing();
     

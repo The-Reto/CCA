@@ -18,7 +18,8 @@ class GOL {
     bool create[9] =  {0,0,0,1,0,0,0,0,0};
     
     private:
-    void n_step(const int index, boost::dynamic_bitset<>& board);
+    void m_step(const int index, int max, boost::dynamic_bitset<>& board);
+    void o_step(boost::dynamic_bitset<>& board);
     
     public:
     GOL(int sx, int sy, unsigned int seed);

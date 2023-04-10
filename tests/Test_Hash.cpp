@@ -4,7 +4,7 @@
 
 int main()
 {
-    GOL_Hash test("test.txt");
+    GOL_Hash test("test.mp4");
     test.get_Hash().visualize();
     std::cout << test.get_Str_Hash() << std::endl;
 }

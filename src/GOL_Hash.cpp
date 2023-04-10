@@ -32,11 +32,12 @@ std::string GOL_Hash::get_Str_Hash() {
     std::stringstream reader(buffer);
     std::stringstream result;
 
+    std::bitset<64> digit;
     while (reader)
     {
-        std::bitset<64> digit;
         reader >> digit;
         result << std::hex << digit.to_ulong();
+        digit.reset();
     }
 
     return result.str();
