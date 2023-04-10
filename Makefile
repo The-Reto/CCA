@@ -17,10 +17,10 @@ TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_GOL
 Tests: $(TESTS)
 
 $(LIBS_PATH)%.o: $(SRC_PATH)%.cpp $(H_PATH)%.h
-	$(CC) $(LF) -o $@ $<
+	$(CC) $(LF) -o $@ -O3 $<
 	
 $(EXEC_PATH)Test_%.run: $(T_PATH)Test_%.cpp
-	$(CC) -o $@ $+
+	$(CC) -o $@ -O3 $+
 
 clean:
 	rm $(EXEC_PATH)*.run $(LIBS_PATH)*.o

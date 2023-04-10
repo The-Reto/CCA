@@ -11,7 +11,7 @@ class BitBoard{
     Neighbourhood neighbourhood;
     boost::dynamic_bitset<> board;
     
-    int xy_to_l(int x, int y);
+    const int xy_to_l(int x, int y) const;
     
     int count_neigbours_moore(const int l);
     int count_neigbours_vNeumann(const int l);
@@ -24,8 +24,9 @@ class BitBoard{
     
     void set(const int index, const bool val);    
     void set(const int x, const int y, const bool val);    
-    void set(boost::dynamic_bitset<> map);
-    void set(boost::dynamic_bitset<unsigned char> map);
+    void set(const boost::dynamic_bitset<> &map);
+    void set(const boost::dynamic_bitset<unsigned char> &map);
+    void reset();
     
     BitBoard(const int sx, const int sy);    
     BitBoard();    
@@ -36,8 +37,8 @@ class BitBoard{
     
     void set_neighbourhood(const Neighbourhood n);
     
-    int get_sizex();
-    int get_sizey();
+    const int get_sizex();
+    const int get_sizey();
     
     void visualize();
     

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../headers/BitBoard.h"
 
-int BitBoard::xy_to_l(int x, int y) {
+const int BitBoard::xy_to_l(int x, int y) const {
     if (x < 0) {x = -(-x % sizex) + sizex;}
     if (y < 0) {y = -(-y % sizey) + sizey;}
     x = x % sizex;
@@ -37,20 +37,24 @@ boost::dynamic_bitset<> BitBoard::get() {
     return board;
 }
 
-inline bool BitBoard::get(const int x, const int y) {
+bool BitBoard::get(const int x, const int y) {
     return board[ xy_to_l(x,y) ];
 }
 
-void BitBoard::set(boost::dynamic_bitset<> map) {
+void BitBoard::set(const boost::dynamic_bitset<>& map) {
     for (int i = 0; i<len; i++) {
         set(i, map[i]);
     }
 }
 
-void BitBoard::set(boost::dynamic_bitset<unsigned char> map) {
+void BitBoard::set(const boost::dynamic_bitset<unsigned char>& map) {
     for (int i = 0; i<len; i++) {
         set(i, map[i]);
     }
+}
+
+void BitBoard::reset() {
+    board.reset();
 }
 
 void BitBoard::set(const int x, const int y, const bool val) {
@@ -63,10 +67,10 @@ int BitBoard::count_neighbours(const int l) {
     else {return -1;}
 }
 
-inline int BitBoard::count_neighbours(const int x, const int y) { return count_neighbours(xy_to_l(x,y)); }
+int BitBoard::count_neighbours(const int x, const int y) { return count_neighbours(xy_to_l(x,y)); }
 
-inline int BitBoard::get_sizex() {return sizex;}
-inline int BitBoard::get_sizey() {return sizey;}
+const int BitBoard::get_sizex() {return sizex;}
+const int BitBoard::get_sizey() {return sizey;}
 
 void BitBoard::visualize() {
     std::cout << "\u250f\u2501";

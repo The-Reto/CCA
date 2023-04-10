@@ -1,8 +1,8 @@
 #include <cmath>
 #include "../headers/GOL_RNG.h"
 
-GOL_RNG::GOL_RNG(unsigned int seed_) {
-    system = C_GOL(64,8,seed_);
+GOL_RNG::GOL_RNG(unsigned int seed_) :     system(C_GOL(64,8,seed_)) {
+
 }
 
 int GOL_RNG::rand_int(unsigned int max) {

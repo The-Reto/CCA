@@ -20,9 +20,9 @@ C_GOL::C_GOL(int sx, int sy,unsigned int seed_) : GOL(sx,sy,seed_) {
     seed = seed_;
 
     seed_map = create_seed_map(seed);
-    this->set_rules(survive_, create_);
+    set_rules(survive_, create_);
     apply_xormap(seed_map);
-    this->steps(std::max(sizex, sizey)); // distribute seed
+    steps(std::max(sizex, sizey)); // distribute seed
 }
 
 C_GOL::C_GOL() : C_GOL(1,1,0) {}
@@ -32,7 +32,7 @@ unsigned int C_GOL::get_seed() {
 }
 
 void C_GOL::apply_xormap(BitBoard &map) {
-    this->boards[board_index] = this->boards[board_index]^map;
+    board = board^map;
 }
 
 #endif

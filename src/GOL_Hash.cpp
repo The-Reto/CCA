@@ -10,7 +10,6 @@ void GOL_Hash::hashing() {
     auto fileSize = std::filesystem::file_size(path);
     const int bufferSize = std::min((int)fileSize, (int)HASH_SIZE);
     std::vector<char> buffer(bufferSize);
-    std::cout << "Starting to GOL-HASH a file of size " << fileSize << " bytes..." << std::endl;
     while (!input_stream.eof()) {
         input_stream.read(buffer.data(), buffer.size());
         data.set(boost::dynamic_bitset<unsigned char>(buffer.begin(), buffer.end()));
@@ -22,8 +21,7 @@ void GOL_Hash::hashing() {
 }
 
 BitBoard GOL_Hash::get_Hash() {
-    if (hashed) {return gol_board.get_board();}
-    hashing();
+    if (!hashed) {hashing();}
     return gol_board.get_board();
 }
 

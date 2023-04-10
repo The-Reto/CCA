@@ -34,9 +34,9 @@ class C_GOL: public GOL {
         const int shift = seed % sizex*sizey;
         const int multi = multipliers[seed%5];
         for (int i = 0; i < len; ++i) {
-            ret[i] = this->boards[board_index].get(multi*i+shift);
+            ret[i] = board.get(multi*i+shift);
         }
-        this->step();       
+        step();       
         seed ^= ( seed + *reinterpret_cast<unsigned int *>(&ret) ) % INT_MAX;
         return ret;
     }	
