@@ -76,21 +76,21 @@ void test_Hash() {
 
 void test_GOL() {
     using namespace std::chrono;
-    GOL test_GOL(64,64,132463548);
+    GOL test_GOL(64,64,0xefecafe1);
     const static int generations = 10000;
     std::cout << "Testing GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
     test_GOL.steps(generations);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
+    test_GOL.print();
     std::cout << "\ttime: " << duration.count() << "s\n";
-    
     std::cout << std::endl;
 }
 
 void test_CGOL() {
     using namespace std::chrono;
-    C_GOL test_CGOL(64,8,132463548);
+    C_GOL test_CGOL(64,8,0xefecafe1);
     const static int generations = 10000;
     std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
