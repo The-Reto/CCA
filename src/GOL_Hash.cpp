@@ -17,7 +17,6 @@ void GOL_Hash::hashing() {
         gol_board.steps(BLOCK_STEPS);
     }
     if (salted) {gol_board.apply_xormap(salt);}
-    gol_board.steps(SALT_STEPS);
 }
 
 BitBoard GOL_Hash::get_Hash() {

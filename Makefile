@@ -3,6 +3,7 @@ CC = g++
 
 # Lib Flags
 LF = -c
+OPF = -O3
 
 # Paths
 LIBS_PATH = ./lib/
@@ -17,10 +18,10 @@ TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_GOL
 Tests: $(TESTS)
 
 $(LIBS_PATH)%.o: $(SRC_PATH)%.cpp $(H_PATH)%.h
-	$(CC) $(LF) -o $@ -O3 $<
+	$(CC) $(LF) -o $@ $(OPF) $<
 	
 $(EXEC_PATH)Test_%.run: $(T_PATH)Test_%.cpp
-	$(CC) -o $@ -O3 $+
+	$(CC) -o $@ $(OPF) $+
 
 clean:
 	rm $(EXEC_PATH)*.run $(LIBS_PATH)*.o
