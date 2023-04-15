@@ -55,21 +55,24 @@ void test_Hash() {
     txt.get_Str_Hash();
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    std::cout << "\ttime: " << duration.count() << "s \t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() / 10'204.0 << " microseconds per byte)\n";
+    std::chrono::microseconds durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ms/byte, "<< 512*durationMS.count() / 10'204.0 <<"ms/generation)\n";
     
     std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
     start = steady_clock::now();
     video.get_Str_Hash();
     end = steady_clock::now();
     duration = end - start;
-    std::cout << "\ttime: " << duration.count() << "s \t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() /  2'391'888.0 << " microseconds per byte)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ms/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ms/generation)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
     music.get_Str_Hash();
     end = steady_clock::now();
     duration = end - start;
-    std::cout << "\ttime: " << duration.count() << "s \t\t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() / 41'508'864.0 << " microseconds per byte)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t\t(" << durationMS.count() / 41'508'864.0  << "ms/byte, "<< 512*durationMS.count() / 41'508'864.0 <<"ms/generation)\n";
     
     std::cout << std::endl;
 }
@@ -84,20 +87,20 @@ void test_GOL() {
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     test_GOL.print();
-    std::cout << "\ttime: " << duration.count() << "s\n";
+    std::cout << "\ttime: " << duration.count() << "s\t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() / generations << "ms/generation)\n";
     std::cout << std::endl;
 }
 
 void test_CGOL() {
     using namespace std::chrono;
-    C_GOL test_CGOL(64,8,0xefecafe1);
+    GOL test_CGOL(64,64,0xefecafe1);
     const static int generations = 10000;
     std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
     test_CGOL.steps(generations);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    std::cout << "\ttime: " << duration.count() << "s\n";
+    std::cout << "\ttime: " << duration.count() << "s\t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() / generations << "ms/generation)\n";
     
     std::cout << std::endl;
 }

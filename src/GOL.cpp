@@ -19,10 +19,12 @@ void GOL::set_rules(const bool survive_[9], const bool create_[9]){
 }
 
 void GOL::m_step(const int index, const int max, boost::dynamic_bitset<unsigned char>& _board) {
-    short neighbours = 0;
+    short neighbours;
+    bool val;
     for (int i = index; i < len; i += max) {
+        val = board.get(i);
         board.count_neighbours(i, neighbours);
-        _board.set(i, (board.get(i) * survive[neighbours]) | (!board.get(i) * create[neighbours]));
+        _board.set(i, (val * survive[neighbours]) | (!val * create[neighbours]));
     }
 }
 

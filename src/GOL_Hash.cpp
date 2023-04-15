@@ -11,7 +11,7 @@ void GOL_Hash::hashing() {
     const int bufferSize = std::min((int)fileSize, (int)HASH_SIZE);
     std::vector<char> buffer(bufferSize);
     while (!input_stream.eof()) {
-        input_stream.read(buffer.data(), buffer.size());
+        input_stream.read(buffer.data(), bufferSize);
         data.set(boost::dynamic_bitset<unsigned char>(buffer.begin(), buffer.end()));
         gol_board.apply_xormap(data);
         gol_board.steps(BLOCK_STEPS);

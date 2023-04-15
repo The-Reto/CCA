@@ -9,7 +9,7 @@
 
 class GOL {
     static const int No_Threads = 4;
-    std::array<boost::dynamic_bitset<unsigned char>, No_Threads> new_boards;
+    std::array<boost::dynamic_bitset<unsigned char>, No_Threads+1> new_boards;
     std::array<std::thread, No_Threads> threads;
     protected:
     int sizex, sizey, len;
