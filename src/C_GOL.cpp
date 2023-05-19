@@ -4,17 +4,18 @@
 #include "../headers/C_GOL.h"
 
 BitBoard C_GOL::create_seed_map(unsigned int seed) {
+    const static int multipliers[5] = {5,127,2293,1427,503}; //Prime Number No. 3,31,314,225,96
     BitBoard map(sizex, sizey);
     std::bitset s = std::bitset<sizeof( int )*CHAR_BIT>(seed);
-    for (int i = sizex/5; i < sizex; ++i) { //adding noise
-        for (int j = sizey/4; j < sizey/2; ++j) {
-            map.set(j * sizex + i, s[(i*j+j) % (sizeof( int )*CHAR_BIT)]);
+    for (int i : multipliers) {
+        for (int j = 0; j < sizex*sizey; ++j) {
+            map.set(j*i, s[j]^map.get(j));
         }
     }
     return map;
 }
 
-C_GOL::C_GOL(int sx, int sy,unsigned int seed_) : GOL(sx,sy,seed_) {
+C_GOL::C_GOL(int sx, int sy,unsigned int seed_) : GOL(sx,sy,0) {
 	static bool survive_[9] = {0,0,0,1,0,1,0,0,0};
 	static bool create_[9] =  {0,0,1,0,1,1,0,0,0};
     seed = seed_;
