@@ -29,7 +29,7 @@ class C_GOL: public GOL {
     
     template<int len> std::bitset<len> rand_bits() {
         if (len > std::max(sizex, sizey)) {throw too_few_bits_exception();}
-        const static int multipliers[5] = {3,5,7,11,13};
+        const static int multipliers[5] = {7,11,13,17,19};
         std::bitset<len> ret;
         const int shift = seed % sizex*sizey;
         const int multi = multipliers[seed%5];
