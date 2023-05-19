@@ -17,6 +17,7 @@ void GOL_Hash::hashing() {
         gol_board.steps(BLOCK_STEPS);
     }
     if (salted) {gol_board.apply_xormap(salt);}
+    gol_board.steps(SALT_STEPS);
 }
 
 BitBoard GOL_Hash::get_Hash() {
@@ -26,18 +27,18 @@ BitBoard GOL_Hash::get_Hash() {
 
 std::string GOL_Hash::get_Str_Hash() {
     if (!hashed) {hashing();}
+    const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;";
     std::string buffer;
     boost::to_string(gol_board.get_board().get(), buffer);
     std::stringstream reader(buffer);
     std::stringstream result;
 
-    std::bitset<64> digit;
-    while (reader)
-    {
+    std::bitset<6> digit;
+    do {
         reader >> digit;
-        result << std::hex << digit.to_ulong();
+        result << symbols[digit.to_ulong()];
         digit.reset();
-    }
+    } while (reader);
 
     return result.str();
 }
