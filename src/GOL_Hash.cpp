@@ -1,14 +1,13 @@
 #include "../headers/GOL_Hash.h"
 
-GOL_Hash::GOL_Hash(std::string _path) : gol_board(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y), input_stream(_path), path(_path), hashed(false), salted(false) {
-    
+GOL_Hash::GOL_Hash(std::string _path) : gol_board(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y), input_stream(_path), hashed(false), salted(false) {
+    input_size = std::filesystem::file_size(_path);
 }
 
 void GOL_Hash::hashing() {
     hashed = true;
     BitBoard data(SIZE_X,SIZE_Y);
-    auto fileSize = std::filesystem::file_size(path);
-    const int bufferSize = std::min((int)fileSize, (int)HASH_SIZE);
+    const long bufferSize = std::min((int)input_size, (int)HASH_SIZE);
     std::vector<char> buffer(bufferSize);
     while (!input_stream.eof()) {
         input_stream.read(buffer.data(), bufferSize);
@@ -20,7 +19,12 @@ void GOL_Hash::hashing() {
     gol_board.steps(SALT_STEPS);
 }
 
-BitBoard GOL_Hash::get_Hash() {
+boost::dynamic_bitset<unsigned char> GOL_Hash::get_Hash() {
+    if (!hashed) {hashing();}
+    return gol_board.get_board().get();
+}
+
+BitBoard GOL_Hash::get_graph_Hash() {
     if (!hashed) {hashing();}
     return gol_board.get_board();
 }
