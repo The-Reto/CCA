@@ -23,8 +23,10 @@ Treats seeds different and uses a different rule set; also provides a function t
 Game of Life Random Number Generator - inherits from C-GOL. 
 Provides RNG functionality such as random integer, random float, random bit, etc.
 ### GOL-Hash
-Game of Life Hashing - inherits from C-GOL. 
+Game of Life Hashing. 
 Provides hashing functionality.
+### GOL-Keygen
+Key extention/streching class.
 
 ## Folder Structure
 ### Source
