@@ -45,9 +45,9 @@ void test_RNG() {
 
 void test_Hash() {
     using namespace std::chrono;
-    GOL_Hash txt("test.txt");
-    GOL_Hash music("test.mp3");
-    GOL_Hash video("test.webm");
+    GOL_Hash txt("test_data/test.txt");
+    GOL_Hash music("test_data/test.mp3");
+    GOL_Hash video("test_data/test.webm");
     std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
@@ -93,7 +93,7 @@ void test_GOL() {
 
 void test_CGOL() {
     using namespace std::chrono;
-    GOL test_CGOL(64,64,0xefecafe1);
+    C_GOL test_CGOL(64,64,0xefecafe1);
     const static int generations = 10000;
     std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
