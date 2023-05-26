@@ -13,7 +13,7 @@ T_PATH = ./tests/
 EXEC_PATH = ./execs/
 
 # Tests
-TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_GOL.run $(EXEC_PATH)Test_CGOL.run $(EXEC_PATH)Test_Hash.run
+TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_GOL.run $(EXEC_PATH)Test_CGOL.run $(EXEC_PATH)Test_Hash.run $(EXEC_PATH)Test_Keygen.run
 
 Tests: $(TESTS)
 
@@ -35,4 +35,6 @@ $(EXEC_PATH)Test_GOL.run:	 $(GOL)
 $(EXEC_PATH)Test_CGOL.run:	 $(CGOL)
 $(EXEC_PATH)Test_RNG.run:    $(CGOL) $(LIBS_PATH)GOL_RNG.o
 $(EXEC_PATH)Test_Hash.run:   $(CGOL) $(LIBS_PATH)GOL_Hash.o
+$(EXEC_PATH)Test_Keygen.run: $(CGOL) $(LIBS_PATH)GOL_Keygen.o
 $(EXEC_PATH)Test_Speed.run:  $(CGOL) $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)GOL_Hash.o
+
