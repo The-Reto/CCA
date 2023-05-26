@@ -24,7 +24,7 @@ class BitBoard{
     inline void set(const int index, const bool val) { board[(index % len + len) % len] = val;}
     inline void _set(const int index, const bool val) { board[index] = val;}
     inline void set(const int x, const int y, const bool val)  {board[ xy_to_l(x,y) ] = val;}
-    inline void set(const boost::dynamic_bitset<unsigned char> &map) {board = map;}
+    void set(const boost::dynamic_bitset<unsigned char> &map);
     
     inline void reset() { board.reset();}
     

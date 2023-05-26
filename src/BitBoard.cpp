@@ -65,6 +65,12 @@ void BitBoard::set_neighbourhood(const Neighbourhood n) {
     }
 }
 
+void BitBoard::set(const boost::dynamic_bitset<unsigned char> &map) {
+    for (int i = 0; i < map.size(); i++) {
+        board.set(i,map[i]);
+    }
+}
+
 BitBoard& BitBoard::operator=(const BitBoard& other) {
     if (this == &other) {return *this;}
     sizex = other.sizex;
