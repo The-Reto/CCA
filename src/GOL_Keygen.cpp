@@ -1,10 +1,10 @@
 #include "../headers/GOL_Keygen.h"
 
-GOL_Keygen::GOL_Keygen(boost::dynamic_bitset<unsigned char> key_) : key(key_), gol_board(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y, 3141592) {
+GOL_Keygen::GOL_Keygen(boost::dynamic_bitset<unsigned char> key_) : key(key_), gol_board(SIZE_X,SIZE_Y,0) {
     setup();
 }
 
-GOL_Keygen::GOL_Keygen(std::string key_) : gol_board(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y, 3141592) {
+GOL_Keygen::GOL_Keygen(std::string key_) : gol_board(SIZE_X,SIZE_Y,0) {
     for (unsigned char c : key_) { key.append(c);}
     setup();
 }
@@ -14,19 +14,22 @@ void GOL_Keygen::setup() {
     start.set(key);
     gol_board.apply_xormap(start);
     gol_board.steps(SIZE_X);
-    salt.steps(SIZE_X);
 }
 
-boost::dynamic_bitset<unsigned char> GOL_Keygen::get_streched_key(unsigned long len) {
-    boost::dynamic_bitset<unsigned char> temp = gol_board.get_board().get() ^ salt.get_board().get();
-    key.resize(len);
-    for (int i = 0; i < len; i++) {
-        key.set(i, temp[ (5*i) % (SIZE_X*SIZE_Y) ]);
-        if (i % (2*SIZE_X) == 0) {
-            gol_board.steps(5);
-            salt.steps(1);
-            temp = gol_board.get_board().get() ^ salt.get_board().get();
+boost::dynamic_bitset<unsigned char> GOL_Keygen::get_streched_key(unsigned long len) { 
+    gol_board.steps(BLOCK_STEPS);
+    key = gol_board.get_board().get();
+    if (len > SIZE_X*SIZE_Y) {
+        key.resize(len);
+        boost::dynamic_bitset<unsigned char> temp;
+        for (int i = SIZE_X*SIZE_Y; i < len; i++) {
+            if (i % (SIZE_Y*SIZE_X) == 0) {
+                gol_board.steps(BLOCK_STEPS);
+                temp = gol_board.get_board().get();
+            }
+            key.set(i, temp[ i % (SIZE_X*SIZE_Y) ]);
         }
     }
+    else if (len < SIZE_X*SIZE_Y) { key.resize(len); }
     return key;
 }
