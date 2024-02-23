@@ -7,7 +7,7 @@ class GOL_Keygen {
     
     C_GOL gol_board;
     boost::dynamic_bitset<unsigned char> key, temp;
-    const static short SIZE_X = 128, SIZE_Y = 128, BLOCK_STEPS = 2;
+    const static short SIZE_X = 64, SIZE_Y = 64, BLOCK_STEPS = 2;
     
     void setup();
     
