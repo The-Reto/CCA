@@ -2,7 +2,7 @@
 #include "../headers/GOL.h"
 
 void test_GOL() {
-    GOL test(32,32,0xefecafe1);
+    GOL test(64,64,0xefecafe1);
     system("clear");
     
     std::cout << "GOL Simulation \t Initial configuration" << "\n";
