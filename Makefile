@@ -1,5 +1,5 @@
 # Compiler
-CC = g++
+CC = g++ -std=c++2a
 
 # Lib Flags
 LF = -c
