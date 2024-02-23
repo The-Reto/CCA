@@ -17,19 +17,17 @@ void GOL_Keygen::setup() {
 }
 
 boost::dynamic_bitset<unsigned char> GOL_Keygen::get_streched_key(unsigned long len) { 
-    gol_board.steps(BLOCK_STEPS);
-    key = gol_board.get_board().get();
-    if (len > SIZE_X*SIZE_Y) {
+    key = gol_board.dynamic_rand_bits<SIZE_X * SIZE_X /2>();
+    if (len > SIZE_X * SIZE_X /2) {
         key.resize(len);
         boost::dynamic_bitset<unsigned char> temp;
-        for (int i = SIZE_X*SIZE_Y; i < len; i++) {
-            if (i % (SIZE_Y*SIZE_X) == 0) {
-                gol_board.steps(BLOCK_STEPS);
-                temp = gol_board.get_board().get();
+        for (int i = SIZE_X * SIZE_X /2; i < len; i++) {
+            if (i % SIZE_X * SIZE_X /2 == 0) {
+                temp = gol_board.dynamic_rand_bits<SIZE_X * SIZE_X /2>();
             }
             key.set(i, temp[ i % (SIZE_X*SIZE_Y) ]);
         }
     }
-    else if (len < SIZE_X*SIZE_Y) { key.resize(len); }
+    else if (len < SIZE_X * SIZE_X /2) { key.resize(len); }
     return key;
 }

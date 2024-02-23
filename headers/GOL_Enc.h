@@ -10,7 +10,7 @@
 class GOL_Enc 
 {
 
-    static const short BLOCK_SIZE = 4096;
+    static const short BLOCK_SIZE = 512;
     unsigned long input_size;
     std::basic_ifstream<char> input_stream;
     std::basic_ofstream<char> output_stream;

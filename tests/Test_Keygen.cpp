@@ -4,5 +4,6 @@
 int main()
 {
     GOL_Keygen test("test_password");
-    std::cout << test.get_streched_key(4100) << std::endl;
+    std::cout << test.get_streched_key(2000) << std::endl;
+    std::cout << test.get_streched_key(2000) << std::endl;
 }

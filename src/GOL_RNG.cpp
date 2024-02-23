@@ -31,7 +31,6 @@ float GOL_RNG::rand_float() {
 	const static int sign_mask = ~(3 << 30);
 	const static int exp_mask = (127 << 23);
     std::bitset bits = system.rand_bits<32>();
-
 	bits &= sign_mask;
 	bits |= exp_mask; 
 
