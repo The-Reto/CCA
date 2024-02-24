@@ -11,7 +11,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param b u_intX_t to be compared
     /// @param c u_intX_t to be compared
     /// @return a u_intX_t that is true where exactly one of the three inputs was true
-    const inline TYPE any1of3(TYPE a, TYPE b, TYPE c) {
+    const static inline TYPE any1of3(TYPE a, TYPE b, TYPE c) {
         return a & ~b & ~c | ~a & b & ~c | ~a & ~b & c;
     }
 
@@ -20,7 +20,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param b u_intX_t to be compared
     /// @param c u_intX_t to be compared
     /// @return a u_intX_t that is true where exactly two of the three inputs were true
-    const inline TYPE any2of3(TYPE a, TYPE b, TYPE c) {
+    const static inline TYPE any2of3(TYPE a, TYPE b, TYPE c) {
         return a & b & ~c | ~a & b & c | a & ~b & c;
     }
 
@@ -29,7 +29,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param b u_intX_t to be compared
     /// @param c u_intX_t to be compared
     /// @return a u_intX_t that is true where none of the three inputs were true
-    const inline TYPE noneof3(TYPE a, TYPE b, TYPE c) {
+    const static inline TYPE noneof3(TYPE a, TYPE b, TYPE c) {
         return ~(a | b | c) ;
     }
 
@@ -38,7 +38,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param b u_intX_t to be compared
     /// @param c u_intX_t to be compared
     /// @return a u_intX_t that is true where all of the three inputs were true
-    const inline TYPE all3(TYPE a, TYPE b, TYPE c) {
+    const static inline TYPE all3(TYPE a, TYPE b, TYPE c) {
         return a & b & c;
     }
 

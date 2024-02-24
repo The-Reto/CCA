@@ -1,8 +1,6 @@
 #include <chrono>
-#include "../headers/Flexible_GOL_Board.h"
-#include "../headers/Classic_GOL_Board.h"
-#include "../headers/GOL.h"
-
+#include "../../headers/New_Implementation/Flexible_GOL_Board.h"
+#include "../../headers/New_Implementation/Classic_GOL_Board.h"
 
 int main() {
     const int size = 32;
