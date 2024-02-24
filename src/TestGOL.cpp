@@ -73,20 +73,20 @@ void update_GOL_board() {
         m = board[i][0];
         board[i][0] = ~m & // create new life where current board is empty IF:
         ( 
-            create[0] * (noneof3(msb_o, msb_c, msb_u) & noneof3(lsb_c, lsb_o, lsb_u)) ^ // 0 neigbours : nothing set
-            create[1] * ( noneof3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) ^ // 1 neigbour : 0 msb set, 1 lsb set
-            create[2] * ( (noneof3(lsb_o, lsb_u, lsb_c) & any1of3(msb_o, msb_u, msb_c)) ^ // 2 neigbors : 1 msb set, 0 lsb set OR
-             (noneof3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) ) ) ^ // 2 neigbours : 2 lsb set, 0 msb set
-            create[3] * ( ( any1of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) ^ // 3 neigbours : 1 lsb set, 1 msb set OR
-             ( noneof3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c)) ) ^ // 3 neigbours : all lsb set, all msb unset
-            create[4] * ( (any1of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c)) ^ // 4 neigbours : 1 msb set, 2 lsb set OR
-             (any2of3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) ) ^ // 4 neigbours : 2 msb set, no lsb set
-            create[5] * ( (any2of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c)) ^ // 5 neigbours : two msb set, 1 lsb OR
-            ( any1of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) ^ // 5 neigbours : 1 msb, 3 lsb
-            create[6] * ( (all3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) ^ // 6 neigbours : 3 msb, no lsb
-            ( any2of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) )) ^ // 6 neigbours : 2 msb, 2 lsb
-            create[7] * ( (all3(msb_o, msb_u, msb_c) & any1of3(lsb_o, lsb_u, lsb_c) ) ^ // 7 neigbours : 3 msb, 1 lsb
-             (any2of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) ^// 7 neigbours : 2 msb, 3 lsb 
+            create[0] * (noneof3(msb_o, msb_c, msb_u) & noneof3(lsb_c, lsb_o, lsb_u)) | // 0 neigbours : nothing set
+            create[1] * ( noneof3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 1 neigbour : 0 msb set, 1 lsb set
+            create[2] * ( (noneof3(lsb_o, lsb_u, lsb_c) & any1of3(msb_o, msb_u, msb_c)) | // 2 neigbors : 1 msb set, 0 lsb set OR
+             (noneof3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) ) ) | // 2 neigbours : 2 lsb set, 0 msb set
+            create[3] * ( ( any1of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 3 neigbours : 1 lsb set, 1 msb set OR
+             ( noneof3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c)) ) | // 3 neigbours : all lsb set, all msb unset
+            create[4] * ( (any1of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c)) | // 4 neigbours : 1 msb set, 2 lsb set OR
+             (any2of3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) ) | // 4 neigbours : 2 msb set, no lsb set
+            create[5] * ( (any2of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c)) | // 5 neigbours : two msb set, 1 lsb OR
+            ( any1of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) | // 5 neigbours : 1 msb, 3 lsb
+            create[6] * ( (all3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) | // 6 neigbours : 3 msb, no lsb
+            ( any2of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) )) | // 6 neigbours : 2 msb, 2 lsb
+            create[7] * ( (all3(msb_o, msb_u, msb_c) & any1of3(lsb_o, lsb_u, lsb_c) ) | // 7 neigbours : 3 msb, 1 lsb
+             (any2of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) | // 7 neigbours : 2 msb, 3 lsb 
             create[8] * (all3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c))   // 8 neigbours : 3 msb, 2 lsb
         );
         t = msb_c & lsb_c; // for survival msb_ lsb_c will be one higher than needed as the base bit is counted
@@ -94,20 +94,20 @@ void update_GOL_board() {
         msb_c = t;
         board[i][0] |= m & // survive where current board is full IF:
         (
-            survive[0] * (noneof3(msb_o, msb_c, msb_u) & noneof3(lsb_c, lsb_o, lsb_u)) ^ // 0 neigbours : nothing set
-            survive[1] * ( noneof3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) ^ // 1 neigbour : 0 msb set, 1 lsb set
-            survive[2] * ( (noneof3(lsb_o, lsb_u, lsb_c) & any1of3(msb_o, msb_u, msb_c)) ^ // 2 neigbors : 1 msb set, 0 lsb set OR
-             (noneof3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) ) ) ^ // 2 neigbours : 2 lsb set, 0 msb set
-            survive[3] * ( ( any1of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) ^ // 3 neigbours : 1 lsb set, 1 msb set OR
-             ( noneof3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c)) ) ^ // 3 neigbours : all lsb set, all msb unset
-            survive[4] * ( (any1of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c)) ^ // 4 neigbours : 1 msb set, 2 lsb set OR
-             (any2of3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) ) ^ // 4 neigbours : 2 msb set, no lsb set
-            survive[5] * ( (any2of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c)) ^ // 5 neigbours : two msb set, 1 lsb OR
-            ( any1of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) ^ // 5 neigbours : 1 msb, 3 lsb
-            survive[6] * ( (all3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) ^ // 6 neigbours : 3 msb, no lsb
-            ( any2of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) )) ^ // 6 neigbours : 2 msb, 2 lsb
-            survive[7] * ( (all3(msb_o, msb_u, msb_c) & any1of3(lsb_o, lsb_u, lsb_c) ) ^ // 7 neigbours : 3 msb, 1 lsb
-             (any2of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) ^// 7 neigbours : 2 msb, 3 lsb 
+            survive[0] * (noneof3(msb_o, msb_c, msb_u) & noneof3(lsb_c, lsb_o, lsb_u)) | // 0 neigbours : nothing set
+            survive[1] * ( noneof3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 1 neigbour : 0 msb set, 1 lsb set
+            survive[2] * ( (noneof3(lsb_o, lsb_u, lsb_c) & any1of3(msb_o, msb_u, msb_c)) | // 2 neigbors : 1 msb set, 0 lsb set OR
+             (noneof3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) ) ) | // 2 neigbours : 2 lsb set, 0 msb set
+            survive[3] * ( ( any1of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 3 neigbours : 1 lsb set, 1 msb set OR
+             ( noneof3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c)) ) | // 3 neigbours : all lsb set, all msb unset
+            survive[4] * ( (any1of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c)) | // 4 neigbours : 1 msb set, 2 lsb set OR
+             (any2of3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) ) | // 4 neigbours : 2 msb set, no lsb set
+            survive[5] * ( (any2of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c)) | // 5 neigbours : two msb set, 1 lsb OR
+            ( any1of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) | // 5 neigbours : 1 msb, 3 lsb
+            survive[6] * ( (all3(msb_o, msb_u, msb_c) & noneof3(lsb_o, lsb_u, lsb_c)) | // 6 neigbours : 3 msb, no lsb
+            ( any2of3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c) )) | // 6 neigbours : 2 msb, 2 lsb
+            survive[7] * ( (all3(msb_o, msb_u, msb_c) & any1of3(lsb_o, lsb_u, lsb_c) ) | // 7 neigbours : 3 msb, 1 lsb
+             (any2of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) | // 7 neigbours : 2 msb, 3 lsb 
             survive[8] * (all3(msb_o, msb_u, msb_c) & any2of3(lsb_o, lsb_u, lsb_c))   // 8 neigbours : 3 msb, 2 lsb
         );
     }
