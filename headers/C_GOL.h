@@ -4,11 +4,16 @@
 #include <exception>
 #include "GOL.h"
 
+#ifndef TOOFEWBITS
+#define TOOFEWBITS
+
 class too_few_bits_exception: public std::exception {
     virtual const char* what() const throw() {
         return "Requested more random bits than the system can supply in one go";
     }
 };
+
+#endif
 
 class C_GOL: public GOL {
 
