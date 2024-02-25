@@ -17,6 +17,10 @@ template <class TYPE, int size> class Classic_GOL_Board: public GOL_Board<TYPE, 
     Classic_GOL_Board() {
     }
 
+    void steps(int number) {
+        for (int i = 0; i < number; i++) {step();}
+    }
+
     /// @brief Does one GOL-Update step
     void step()  {
         update_msb_lsb();
