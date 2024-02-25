@@ -1,7 +1,7 @@
 #include <cmath>
 #include "../headers/GOL_RNG.h"
 
-GOL_RNG::GOL_RNG(unsigned int seed_) :     system(C_GOL(64,8,seed_)) {
+GOL_RNG::GOL_RNG(unsigned int seed_) :     system(Cryptographic_GOL_Board(seed_)) {
 
 }
 
@@ -40,6 +40,6 @@ float GOL_RNG::rand_float() {
 void GOL_RNG::test() {
     for (int i =0; i < 100; i++) {
         system.step();
-        system.print();
+        system.visualize();
     }
 }
