@@ -1,9 +1,8 @@
 #ifndef GOL_Enc_H
 #define GOL_Enc_H
 
-#include "C_GOL.h"
+#include "Cryptographic_GOL_Board.h"
 #include "GOL_Keygen.h"
-#include "BitBoard.h"
 #include <fstream>
 #include <filesystem>
 

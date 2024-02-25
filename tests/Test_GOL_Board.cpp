@@ -1,6 +1,6 @@
 #include <chrono>
-#include "../../headers/New_Implementation/Flexible_GOL_Board.h"
-#include "../../headers/New_Implementation/Classic_GOL_Board.h"
+#include "../headers/Flexible_GOL_Board.h"
+#include "../headers/Classic_GOL_Board.h"
 
 int main() {
     const int size = 32;
@@ -11,22 +11,20 @@ int main() {
 
     for (int i = 0; i < size; i++) {board[i] = 0;}
     // glider
-    
     board[0] = 2;
     board[1] = 4;
     board[2] = 7;
     
     // blinker
-    
     board[10]=3<<3;
     board[11]=3<<3;
     board[12]=3<<5;
     board[13]=3<<5;
     
     // rotator
-    
     board[4] = 7<<24;
    
+    // boat
     board[25] = 2<<3;
     board[24] = 40;
     board[23] = 16;

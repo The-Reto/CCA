@@ -1,4 +1,4 @@
-#include "../../headers/New_Implementation/Cryptographic_GOL_Board.h"
+#include "../headers/Cryptographic_GOL_Board.h"
 
 void Cryptographic_GOL_Board::step() {
     update_msb_lsb();

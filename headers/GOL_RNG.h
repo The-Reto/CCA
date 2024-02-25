@@ -1,6 +1,6 @@
 #ifndef GOL_RNG_H
 #define GOL_RNG_H
-#include "../headers/New_Implementation/Cryptographic_GOL_Board.h"
+#include "Cryptographic_GOL_Board.h"
 #include <bitset>
 
 class GOL_RNG {

@@ -2,8 +2,8 @@
 #include <ratio>
 #include "../headers/GOL_RNG.h"
 #include "../headers/GOL_Hash.h"
-#include "../headers/GOL.h"
-#include "../headers/C_GOL.h"
+#include "../headers/Classic_GOL_Board.h"
+#include "../headers/Cryptographic_GOL_Board.h"
 #include "../headers/GOL_Enc.h"
 
 void test_RNG() {
@@ -56,52 +56,76 @@ void test_Hash() {
     txt.get_Str_Hash();
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    std::chrono::microseconds durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ms/byte, "<< 512*durationMS.count() / 10'204.0 <<"ms/generation)\n";
+    std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ns/byte, "<< 512*durationMS.count() / 10'204.0 <<"ns/generation)\n";
     
     std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
     start = steady_clock::now();
     video.get_Str_Hash();
     end = steady_clock::now();
     duration = end - start;
-    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ms/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ms/generation)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ns/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ns/generation)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
     music.get_Str_Hash();
     end = steady_clock::now();
     duration = end - start;
-    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t\t(" << durationMS.count() / 41'508'864.0  << "ms/byte, "<< 512*durationMS.count() / 41'508'864.0 <<"ms/generation)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 41'508'864.0  << "ns/byte, "<< 512*durationMS.count() / 41'508'864.0 <<"ns/generation)\n";
     
     std::cout << std::endl;
 }
 
 void test_GOL() {
     using namespace std::chrono;
-    GOL test_GOL(64,64,0xefecafe1);
-    const static int generations = 10000;
+    u_int64_t board[64];
+
+    for (int i = 0; i < 64; i++) {board[i] = 0;}
+    // glider
+    board[0] = 2;
+    board[1] = 4;
+    board[2] = 7;
+    
+    // blinker
+    board[10]=3<<3;
+    board[11]=3<<3;
+    board[12]=3<<5;
+    board[13]=3<<5;
+    
+    // rotator
+    board[4] = 7<<24;
+   
+    // boat
+    board[25] = 2<<3;
+    board[24] = 40;
+    board[23] = 16;
+    board[22] = 32;
+    
+    Classic_GOL_Board<u_int64_t, 64> test_GOL;
+    test_GOL.set_board(board);
+    const static int generations = 500000;
     std::cout << "Testing GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
     test_GOL.steps(generations);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    test_GOL.print();
-    std::cout << "\ttime: " << duration.count() << "s\t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() / generations << "ms/generation)\n";
+    std::cout << "\ttime: " << duration.count() << "s\t(" << std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() / generations << "ns/generation)\n";
     std::cout << std::endl;
+    if (test_GOL.get(23,44)) {std::cout << "worjs" << std::endl;} //just to force the optimizer to actually run the code
 }
 
 void test_CGOL() {
     using namespace std::chrono;
-    C_GOL test_CGOL(64,64,0xefecafe1);
-    const static int generations = 10000;
+    Cryptographic_GOL_Board test_CGOL(0xefecafe1);
+    const static int generations = 500000;
     std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
     test_CGOL.steps(generations);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    std::cout << "\ttime: " << duration.count() << "s\t(" << std::chrono::duration_cast<std::chrono::microseconds>(duration).count() / generations << "ms/generation)\n";
+    std::cout << "\ttime: " << duration.count() << "s\t(" << std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count() / generations << "ns/generation)\n";
     
     std::cout << std::endl;
 }
@@ -119,24 +143,24 @@ void test_Enc(){
     encryptor_text.encrypt("test_data/test.txt");
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    std::chrono::microseconds durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ms/byte)\n";
+    std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ns/byte)\n";
     
     std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
     start = steady_clock::now();
     encryptor_video.encrypt("test_data/test.webm");
     end = steady_clock::now();
     duration = end - start;
-    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ms/byte)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ns/byte)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
     encryptor_music.encrypt("test_data/test.mp3");
     end = steady_clock::now();
     duration = end - start;
-    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t\t(" << durationMS.count() / 41'508'864.0  << "ms/byte)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 41'508'864.0  << "ns/byte)\n";
     
     std::cout << std::endl;
 } 
@@ -151,27 +175,27 @@ void test_Dec(){
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    encryptor_text.encrypt("test_data/test.txt.enc");
+    encryptor_text.decrypt("test_data/test.txt.enc");
     auto end = steady_clock::now();
     duration<double> duration = end - start;
-    std::chrono::microseconds durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ms/byte)\n";
+    std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ns/byte)\n";
     
     std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.encrypt("test_data/test.webm.enc");
+    encryptor_video.decrypt("test_data/test.webm.enc");
     end = steady_clock::now();
     duration = end - start;
-    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ms/byte)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ns/byte)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_music.encrypt("test_data/test.mp3.enc");
+    encryptor_music.decrypt("test_data/test.mp3.enc");
     end = steady_clock::now();
     duration = end - start;
-    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t\t(" << durationMS.count() / 41'508'864.0  << "ms/byte)\n";
+    durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 41'508'864.0  << "ns/byte)\n";
     
     std::cout << std::endl;
 } 

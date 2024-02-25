@@ -1,7 +1,6 @@
 #ifndef GOL_HASH_H
 #define GOL_HASH_H
-#include "./New_Implementation/Cryptographic_GOL_Board.h"
-#include "BitBoard.h"
+#include "Cryptographic_GOL_Board.h"
 #include <fstream>
 #include <filesystem>
 #include <boost/algorithm/hex.hpp>

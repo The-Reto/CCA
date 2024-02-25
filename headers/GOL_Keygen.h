@@ -1,6 +1,6 @@
 #ifndef GOL_Key
 #define GOL_Key
-#include "../headers/New_Implementation/Cryptographic_GOL_Board.h"
+#include "Cryptographic_GOL_Board.h"
 #include <bitset>
 
 class GOL_Keygen {
