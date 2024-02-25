@@ -1,11 +1,16 @@
 #include "./GOL_Board.h"
 #include <boost/dynamic_bitset.hpp>
 
+#ifndef TOOFEWBITS
+#define TOOFEWBITS
+
 class too_few_bits_exception: public std::exception {
     virtual const char* what() const throw() {
         return "Requested more random bits than the system can supply in one go";
     }
 };
+
+#endif
 
 /// @brief A GOL-Board with flexible, customizable, rules - slower than a class where the rules are hardcoded
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
@@ -13,22 +18,25 @@ class too_few_bits_exception: public std::exception {
 class Cryptographic_GOL_Board: public GOL_Board<u_int64_t, 64> {
     const static int size = 64;
 
-    unsigned int seed;
+    u_int64_t seed;
     public:
     /// @brief Default constructor, set the rules to "vanilla" Conway GOL 
-    Cryptographic_GOL_Board(unsigned int _seed) : seed(_seed) {    }
+    Cryptographic_GOL_Board(unsigned int _seed);
+    Cryptographic_GOL_Board();
 
     /// @brief Does one GOL-Update step
     void step(); 
 
+    void steps(int steps);
+
     /// @brief updates the GOL-Board based on the LSB- and MSB-board
     void update_GOL_board();
 
-    void create_seed_map(unsigned int seed);
+    void create_seed_map();
 
     void apply_xor_map(u_int64_t xor_map[64]);
 
-    inline bool get(int index);
+    unsigned int get_seed();
 
     template<int len> std::bitset<len> rand_bits() {
         if (len > size) {throw too_few_bits_exception();}

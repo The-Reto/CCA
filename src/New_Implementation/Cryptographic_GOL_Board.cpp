@@ -5,6 +5,16 @@ void Cryptographic_GOL_Board::step() {
     update_GOL_board();
 }
 
+void Cryptographic_GOL_Board::steps(int steps) {
+    for (int i = 0; i< steps; i++) {step();}
+}
+
+Cryptographic_GOL_Board::Cryptographic_GOL_Board(unsigned int _seed) {
+    seed = (u_int64_t) _seed;
+    for (int i = 0; i<64; i++) {board[i][0] = 0;}
+    create_seed_map();
+}
+
 void Cryptographic_GOL_Board::update_GOL_board() {
     u_int64_t lsb_o, lsb_c, lsb_u, msb_o, msb_c, msb_u, m, t;
     for (int i = 0; i < size; i++) {
@@ -34,6 +44,17 @@ void Cryptographic_GOL_Board::update_GOL_board() {
     }
 }
 
-inline bool Cryptographic_GOL_Board::get(int index) {
-    return GOL_Board<u_int64_t, 64>::get(index % 64, index / 64);
+void Cryptographic_GOL_Board::create_seed_map() {
+    const static int multipliers[3] = {5,127,2293}; //Prime Number No. 3,31,314
+    for (int i : multipliers) {
+        for (int y = 0; y < size; y++) {
+            board[y][0] ^= std::rotr(seed, (i+y*i) % 64);
+        }
+    }
+}
+
+void Cryptographic_GOL_Board::apply_xor_map(u_int64_t xor_map[64]) {
+    for (int i =0; i<64; i++) {
+        board[i][0] ^= xor_map[i];
+    }
 }
