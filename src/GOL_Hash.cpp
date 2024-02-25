@@ -1,39 +1,34 @@
 #include "../headers/GOL_Hash.h"
 
-GOL_Hash::GOL_Hash(std::string _path) : gol_board(SIZE_X,SIZE_Y,0), salt(SIZE_X,SIZE_Y), input_stream(_path), hashed(false), salted(false) {
+GOL_Hash::GOL_Hash(std::string _path) : gol_board(0), input_stream(_path), hashed(false), salted(false) {
     input_size = std::filesystem::file_size(_path);
 }
 
 void GOL_Hash::hashing() {
     hashed = true;
-    BitBoard data(SIZE_X,SIZE_Y);
+    u_int64_t data[64];
     const long bufferSize = std::min((int)input_size, (int)HASH_SIZE);
-    std::vector<char> buffer(bufferSize);
     while (!input_stream.eof()) {
-        input_stream.read(buffer.data(), bufferSize);
-        data.set(boost::dynamic_bitset<unsigned char>(buffer.begin(), buffer.end()));
-        gol_board.apply_xormap(data);
+        input_stream.read((char*) data, bufferSize);
+        gol_board.apply_xor_map(data);
         gol_board.steps(BLOCK_STEPS);
     }
-    if (salted) {gol_board.apply_xormap(salt);}
+    if (salted) {gol_board.apply_xor_map(salt);}
     gol_board.steps(SALT_STEPS);
 }
 
-boost::dynamic_bitset<unsigned char> GOL_Hash::get_Hash() {
+void GOL_Hash::print_graph_Hash() {
     if (!hashed) {hashing();}
-    return gol_board.get_board().get();
-}
-
-BitBoard GOL_Hash::get_graph_Hash() {
-    if (!hashed) {hashing();}
-    return gol_board.get_board();
+    gol_board.visualize();
 }
 
 std::string GOL_Hash::get_Str_Hash() {
     if (!hashed) {hashing();}
     const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;";
     std::string buffer;
-    boost::to_string(gol_board.get_board().get(), buffer);
+    for (int i = 0; i<64; i++) {
+        buffer += std::bitset<64>(gol_board.board[i][0]).to_string();
+    }
     std::stringstream reader(buffer);
     std::stringstream result;
 

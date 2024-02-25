@@ -1,18 +1,19 @@
 #include "../headers/GOL_Keygen.h"
 
-GOL_Keygen::GOL_Keygen(boost::dynamic_bitset<unsigned char> key_) : key(key_), gol_board(SIZE_X,SIZE_Y,0) {
-    setup();
-}
-
-GOL_Keygen::GOL_Keygen(std::string key_) : gol_board(SIZE_X,SIZE_Y,0) {
+GOL_Keygen::GOL_Keygen(std::string key_) : gol_board(0) {
     for (unsigned char c : key_) { key.append(c);}
     setup();
 }
 
 void GOL_Keygen::setup() {
-    BitBoard start(SIZE_X,SIZE_Y);
-    start.set(key);
-    gol_board.apply_xormap(start);
+    u_int64_t seed = 0;
+    std::string str;
+    boost::to_string(key, str);
+    for (int i = 0; i < str.length(); i++) {
+        seed += ((u_int64_t) str[i]) << (8*i % 64);
+    }
+    gol_board.set_seed(seed);
+    gol_board.create_seed_map();
     gol_board.steps(SIZE_X);
 }
 

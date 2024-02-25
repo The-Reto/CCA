@@ -1,16 +1,15 @@
 #ifndef GOL_Enc_H
 #define GOL_Enc_H
 
-#include "C_GOL.h"
+#include "Cryptographic_GOL_Board.h"
 #include "GOL_Keygen.h"
-#include "BitBoard.h"
 #include <fstream>
 #include <filesystem>
 
 class GOL_Enc 
 {
 
-    static const short BLOCK_SIZE = 512;
+    static const short BLOCK_SIZE = 256;
     unsigned long input_size;
     std::basic_ifstream<char> input_stream;
     std::basic_ofstream<char> output_stream;
