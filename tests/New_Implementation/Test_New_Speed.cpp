@@ -45,37 +45,37 @@ void test_RNG() {
 }
 
 void test_Hash() {
-    // using namespace std::chrono;
-    // GOL_Hash txt("test_data/test.txt");
-    // GOL_Hash music("test_data/test.mp3");
-    // GOL_Hash video("test_data/test.webm");
-    // std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
+    using namespace std::chrono;
+    GOL_Hash txt("test_data/test.txt");
+    GOL_Hash music("test_data/test.mp3");
+    GOL_Hash video("test_data/test.webm");
+    std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
     
-    // std::cout << "\ttext file (" << 10'204 << " Bytes): ";
-    // auto start = steady_clock::now();
-    // txt.get_Str_Hash();
-    // auto end = steady_clock::now();
-    // duration<double> duration = end - start;
-    // std::chrono::microseconds durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    // std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ms/byte, "<< 512*durationMS.count() / 10'204.0 <<"ms/generation)\n";
+    std::cout << "\ttext file (" << 10'204 << " Bytes): ";
+    auto start = steady_clock::now();
+    txt.get_Str_Hash();
+    auto end = steady_clock::now();
+    duration<double> duration = end - start;
+    std::chrono::microseconds durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ms/byte, "<< 512*durationMS.count() / 10'204.0 <<"ms/generation)\n";
     
-    // std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
-    // start = steady_clock::now();
-    // video.get_Str_Hash();
-    // end = steady_clock::now();
-    // duration = end - start;
-    // durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    // std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ms/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ms/generation)\n";
+    std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
+    start = steady_clock::now();
+    video.get_Str_Hash();
+    end = steady_clock::now();
+    duration = end - start;
+    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ms/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ms/generation)\n";
     
-    // std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
-    // start = steady_clock::now();
-    // music.get_Str_Hash();
-    // end = steady_clock::now();
-    // duration = end - start;
-    // durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
-    // std::cout << "\ttime: " << duration.count() << "s \t\t(" << durationMS.count() / 41'508'864.0  << "ms/byte, "<< 512*durationMS.count() / 41'508'864.0 <<"ms/generation)\n";
+    std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
+    start = steady_clock::now();
+    music.get_Str_Hash();
+    end = steady_clock::now();
+    duration = end - start;
+    durationMS = std::chrono::duration_cast<std::chrono::microseconds>(duration);
+    std::cout << "\ttime: " << duration.count() << "s \t\t(" << durationMS.count() / 41'508'864.0  << "ms/byte, "<< 512*durationMS.count() / 41'508'864.0 <<"ms/generation)\n";
     
-    // std::cout << std::endl;
+    std::cout << std::endl;
 }
 
 void test_GOL() {
@@ -182,7 +182,7 @@ int main()
     test_GOL();
     test_CGOL();
     // test_RNG();
-    // test_Hash();
+    test_Hash();
     // test_Enc();
     // test_Dec();
 }
