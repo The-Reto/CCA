@@ -58,7 +58,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param layer what layer to return: 0 (default) -> GOL Board, 1 -> LSB Board, 2 -> MSB Board
     /// @return Bit at position x/y as a boolean
     inline bool get(int x, int y, short layer = 0) {
-        return (board[y][layer] >> x) & 1;
+        return (board[y%size][layer] >> (x%size)) & 1;
     }
 
     inline bool get(int index) {
@@ -66,7 +66,7 @@ template <class TYPE, int size> class GOL_Board {
     }
 
     inline void set(int x, int y, bool value) {
-        board[y][0] = board[y][0] & (value) << x;
+        board[y%size][0] = board[y%size][0] | ((value) << (x%size));
     }
 
     inline void set(int index, bool value) {
