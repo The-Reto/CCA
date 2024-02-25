@@ -40,6 +40,7 @@ class Cryptographic_GOL_Board: public GOL_Board<u_int64_t, 64> {
     void apply_xor_map(u_int64_t xor_map[64]);
 
     unsigned int get_seed();
+    void set_seed(u_int64_t _seed);
 
     template<int len> std::bitset<len> rand_bits() {
         if (len > size) {throw too_few_bits_exception();}

@@ -56,8 +56,8 @@ $(EXEC_PATH)Test_GOL.run:	 $(GOL)
 $(EXEC_PATH)Test_CGOL.run:	 $(CGOL)
 $(EXEC_PATH)Test_RNG.run:    $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_RNG.o
 $(EXEC_PATH)Test_Hash.run:   $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Hash.o
-$(EXEC_PATH)Test_Keygen.run: $(CGOL) $(LIBS_PATH)GOL_Keygen.o
-$(EXEC_PATH)Test_Enc.run:    $(CGOL) $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
+$(EXEC_PATH)Test_Keygen.run: $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Keygen.o
+$(EXEC_PATH)Test_Enc.run:    $(LIBS_PATH)Cryptographic_GOL_Board.o  $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
 $(EXEC_PATH)Test_Speed.run:  $(CGOL) $(LIBS_PATH)Cryptographic_GOL_Board.o  $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
 $(EXEC_PATH)Test_New_Speed.run:  $(CGOL)  $(LIBS_PATH)Cryptographic_GOL_Board.o  $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
 $(EXEC_PATH)Test_GOL_Board.run: 
