@@ -61,6 +61,18 @@ template <class TYPE, int size> class GOL_Board {
         return (board[y][layer] >> x) & 1;
     }
 
+    inline bool get(int index) {
+        return get(index % size, index / size);
+    }
+
+    inline void set(int x, int y, bool value) {
+        board[y][0] = board[y][0] & (value) << x;
+    }
+
+    inline void set(int index, bool value) {
+        set(index % size, index / size, value);
+    }
+
     /// @brief Upbades the LSB- and MSB-Boards based on the GOL Board, needs to be run before updating GOL-Board
     void update_msb_lsb() {
         TYPE l, r, c;
