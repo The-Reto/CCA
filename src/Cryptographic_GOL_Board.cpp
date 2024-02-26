@@ -11,7 +11,7 @@ void Cryptographic_GOL_Board::steps(int steps) {
 
 Cryptographic_GOL_Board::Cryptographic_GOL_Board(unsigned int _seed) {
     seed = (u_int64_t) _seed;
-    for (int i = 0; i<64; i++) {board[i][0] = 0;}
+    for (int i = 0; i<size; i++) {board[i][0] = 0;}
     create_seed_map();
 }
 
@@ -51,7 +51,7 @@ void Cryptographic_GOL_Board::create_seed_map() {
 }
 
 void Cryptographic_GOL_Board::apply_xor_map(u_int64_t xor_map[64]) {
-    for (int i =0; i<64; i++) {
+    for (int i =0; i<size; i++) {
         board[i][0] ^= xor_map[i];
     }
 }
