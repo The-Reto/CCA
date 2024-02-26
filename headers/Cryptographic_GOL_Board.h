@@ -30,48 +30,53 @@ class Cryptographic_GOL_Board: public GOL_Board<u_int64_t, 64> {
     /// @brief Does one GOL-Update step
     void step(); 
 
+    /// @brief Does multiple steps in a loop
+    /// @param steps (int) number of steps the system should take
     void steps(int steps);
 
     /// @brief updates the GOL-Board based on the LSB- and MSB-board
     void update_GOL_board();
 
+    /// @brief spreads the seed over the board to initialize the random state
     void create_seed_map();
 
+    /// @brief Applies a xor-map to the board
+    /// @param xor_map u_int64_t array of length 64, will be xor-ed against the current state of the board
     void apply_xor_map(u_int64_t xor_map[size]);
 
+    /// @brief returns the seed
+    /// @return u_int64_t seed used to seed the board
     unsigned int get_seed();
+
+
+    /// @brief Sets the seed, create_seed_map needs to be called after this for this to have any effect
+    /// @param _seed u_int64_t seed used in create_seed_map
     void set_seed(u_int64_t _seed);
 
+    /// @brief returns a random bitset of length len. Note: len should be much smaller than 4096 as that's the maximum number of bits on the board at any time.
+    /// @tparam len (int) the length of the bitset to be returned 
+    /// @return std::bitset<len> with pseudo random bits
     template<int len> std::bitset<len> rand_bits() {
-        if (len > size) {throw too_few_bits_exception();}
         const static int multipliers[5] = {7,11,13,17,19};
-        std::bitset<len> ret, to_seed(64);
-        const int shift = seed % size*size;
+        std::bitset<len> ret;
         const int multi = multipliers[seed%5];
         for (int i = 0; i < len; ++i) {
-            ret[i] = get(multi*i+shift);
+            ret[i] = get(multi*i+seed);
         }
-        for (int i = len; i < len + 64; ++i) {
-            to_seed[i-len] = get(multi*i+shift);
-        }
-        seed ^= ( seed + to_seed.to_ulong() ) % INT_MAX;
         step();      
         return ret;
     }	
     
+    /// @brief returns a random dynamic_bitset of length len. Note: len should be much smaller than 4096 as that's the maximum number of bits on the board at any time.
+    /// @tparam len (int) the length of the bitset to be returned 
+    /// @return boost::dynamic_bitset<unsigned char> with pseudo random bits
     template<int len> boost::dynamic_bitset<unsigned char> dynamic_rand_bits() {
-        if (len > size * size / 2) {throw too_few_bits_exception();}
         const static int multipliers[5] = {7,11,13,17,19};
-        boost::dynamic_bitset<unsigned char> ret(len), to_seed(64);
-        const int shift = seed % size*size;
+        boost::dynamic_bitset<unsigned char> ret(len);
         const int multi = multipliers[seed%5];
         for (int i = 0; i < len; ++i) {
-            ret[i] = get(multi*i+shift);
+            ret[i] = get(multi*i+seed);
         }
-        for (int i = len; i < len + 64; ++i) {
-            to_seed[i-len] = get(multi*i+shift);
-        }
-        seed ^= ( seed + to_seed.to_ulong() ) % INT_MAX;
         step();      
         return ret;
     }	

@@ -61,14 +61,24 @@ template <class TYPE, int size> class GOL_Board {
         return (board[y%size][layer] >> (x%size)) & 1;
     }
 
+    /// @brief returns the bit at position index as a boolean, where row-major indexing is used
+    /// @param index (int) position of the bit to be returned
+    /// @return Bit at position index as a boolean
     inline bool get(int index) {
         return get(index % size, index / size);
     }
 
+    /// @brief sets the bit at position x/y as a boolean
+    /// @param x x position to be set
+    /// @param y y position to be set
+    /// @param value (bool) the new value of the bit at position x/y
     inline void set(int x, int y, bool value) {
         board[y%size][0] = board[y%size][0] | ((value) << (x%size));
     }
 
+    /// @brief sets the bit at position index as a boolean
+    /// @param index (int) position of the bit to be returned
+    /// @param value (bool) the new value of the bit at position index
     inline void set(int index, bool value) {
         set(index % size, index / size, value);
     }
