@@ -31,7 +31,7 @@ $(EXEC_PATH)Test_%.run: $(T_PATH)Test_%.cpp
 	$(CC) -o $@ $(OPF) $+
 
 clean:
-	rm $(EXEC_PATH)*.run $(LIBS_PATH)*.o ./test_data/*.enc ./test_data/*.dec
+	rm $(EXEC_PATH)*.run $(LIBS_PATH)*.o ./test_data/*.trc
 
 # Dependency Variables
 
