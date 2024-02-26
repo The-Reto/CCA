@@ -13,6 +13,7 @@ Cryptographic_GOL_Board::Cryptographic_GOL_Board(unsigned int _seed) {
     seed = (u_int64_t) _seed;
     for (int i = 0; i<size; i++) {board[i][0] = 0;}
     create_seed_map();
+    steps(64);
 }
 
 void Cryptographic_GOL_Board::update_GOL_board() {
