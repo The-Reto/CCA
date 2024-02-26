@@ -35,7 +35,9 @@ void GOL_Enc::encrypt(std::string path) {
         return;
     }
     run_once = true;
-    encdec(path, path+".enc");
+    std::string out_path = path;
+    out_path.replace(out_path.size()-4, 1, "-");
+    encdec(path, out_path+".trc");
 }
 
 void GOL_Enc::decrypt(std::string path) {
@@ -44,6 +46,8 @@ void GOL_Enc::decrypt(std::string path) {
         return;
     }
     run_once = true;
-    encdec(path, path.substr(0, path.size()-4)+".dec");
+    std::string out_path = path.substr(0, (path.size()-4));
+    out_path = out_path.replace(out_path.size()-4, 1, ".");
+    encdec(path, out_path);
 }
 

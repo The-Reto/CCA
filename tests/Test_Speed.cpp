@@ -48,7 +48,7 @@ void test_Hash() {
     using namespace std::chrono;
     GOL_Hash txt("test_data/test.txt");
     GOL_Hash music("test_data/test.mp3");
-    GOL_Hash video("test_data/test.webm");
+    GOL_Hash video("test_data/test.mp4");
     std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
@@ -59,13 +59,13 @@ void test_Hash() {
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
     std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ns/byte, "<< 512*durationMS.count() / 10'204.0 <<"ns/generation)\n";
     
-    std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
+    std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
     video.get_Str_Hash();
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ns/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ns/generation)\n";
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  705'948'212.0  << "ns/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ns/generation)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
@@ -146,13 +146,13 @@ void test_Enc(){
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
     std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ns/byte)\n";
     
-    std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
+    std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.encrypt("test_data/test.webm");
+    encryptor_video.encrypt("test_data/test.mp4");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ns/byte)\n";
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  705'948'212.0  << "ns/byte)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
@@ -175,23 +175,23 @@ void test_Dec(){
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    encryptor_text.decrypt("test_data/test.txt.enc");
+    encryptor_text.decrypt("test_data/test-txt.trc");
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
     std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() / 10'204.0 << "ns/byte)\n";
     
-    std::cout << "\tvideo file (" << 2'391'888 << " Bytes): ";
+    std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.decrypt("test_data/test.webm.enc");
+    encryptor_video.decrypt("test_data/test-mp4.trc");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  2'391'888.0  << "ns/byte)\n";
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  705'948'212.0  << "ns/byte)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_music.decrypt("test_data/test.mp3.enc");
+    encryptor_music.decrypt("test_data/test-mp3.trc");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
