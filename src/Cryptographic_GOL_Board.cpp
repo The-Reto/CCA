@@ -45,12 +45,12 @@ void Cryptographic_GOL_Board::create_seed_map() {
     const static int multipliers[3] = {5,127,2293}; //Prime Number No. 3,31,314
     for (int i : multipliers) {
         for (int y = 0; y < size; y++) {
-            board[y][0] = std::rotr(seed, (i+y*i) % 64);
+            board[y][0] = std::rotr(seed, (i+y*i) % size);
         }
     }
 }
 
-void Cryptographic_GOL_Board::apply_xor_map(u_int64_t xor_map[64]) {
+void Cryptographic_GOL_Board::apply_xor_map(u_int64_t xor_map[size]) {
     for (int i =0; i<size; i++) {
         board[i][0] ^= xor_map[i];
     }

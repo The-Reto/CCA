@@ -37,7 +37,7 @@ class Cryptographic_GOL_Board: public GOL_Board<u_int64_t, 64> {
 
     void create_seed_map();
 
-    void apply_xor_map(u_int64_t xor_map[64]);
+    void apply_xor_map(u_int64_t xor_map[size]);
 
     unsigned int get_seed();
     void set_seed(u_int64_t _seed);
