@@ -30,7 +30,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param c u_intX_t to be compared
     /// @return a u_intX_t that is true where none of the three inputs were true
     const static inline TYPE noneof3(TYPE a, TYPE b, TYPE c) {
-        return ~(a | b | c) ;
+        return ~a&~b&~c ;
     }
 
     /// @brief returns true where all three of the three inputs are true
