@@ -7,6 +7,8 @@
 
 class GOL_Hash {
     
+    public:
+
     Cryptographic_GOL_Board gol_board;
     u_int64_t salt[64];
     std::basic_ifstream<char> input_stream;
@@ -16,7 +18,6 @@ class GOL_Hash {
     
     void hashing();
     
-    public:
     GOL_Hash(std::string _path);
     
     auto get_input_stream();

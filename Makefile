@@ -13,9 +13,9 @@ T_PATH = ./tests/
 EXEC_PATH = ./execs/
 
 # Tests
-TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_Hash.run $(EXEC_PATH)Test_Keygen.run $(EXEC_PATH)Test_Enc.run $(EXEC_PATH)Test_GOL_Board.run
+TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_Hash.run $(EXEC_PATH)Test_Keygen.run $(EXEC_PATH)Test_Enc.run $(EXEC_PATH)Test_GOL_Board.run $(EXEC_PATH)Test_B_Enc.run
 
-LIBS = $(LIBS_PATH)GOL_Enc.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)Cryptographic_GOL_Board.o
+LIBS = $(LIBS_PATH)GOL_Enc.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_B_Enc.o
 
 default: Libs Tests
 
@@ -41,7 +41,8 @@ CGOL = $(LIBS_PATH)Cryptographic_GOL_Board.o
 $(EXEC_PATH)Test_RNG.run:    $(CGOL) $(LIBS_PATH)GOL_RNG.o
 $(EXEC_PATH)Test_Hash.run:   $(CGOL) $(LIBS_PATH)GOL_Hash.o
 $(EXEC_PATH)Test_Keygen.run: $(CGOL) $(LIBS_PATH)GOL_Keygen.o
-$(EXEC_PATH)Test_Enc.run:    $(CGOL)  $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
+$(EXEC_PATH)Test_Enc.run:    $(CGOL) $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
 $(EXEC_PATH)Test_Speed.run:  $(CGOL) $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o
+$(EXEC_PATH)Test_B_Enc.run:  $(CGOL) $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_B_Enc.o
 $(EXEC_PATH)Test_GOL_Board.run: 
 
