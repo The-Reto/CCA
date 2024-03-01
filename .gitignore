@@ -1,5 +1,5 @@
 *.o
 *.run
 test_data/
-src/a.out
 .vscode/settings.json
+Documentation/Papers/
