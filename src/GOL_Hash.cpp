@@ -27,7 +27,7 @@ std::string GOL_Hash::get_Str_Hash() {
     const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;";
     std::string buffer;
     for (int i = 0; i<64; i++) {
-        buffer += std::bitset<64>(gol_board.board[i][0]).to_string();
+        buffer += std::bitset<64>(gol_board.board[0][i]).to_string();
     }
     std::stringstream reader(buffer);
     std::stringstream result;

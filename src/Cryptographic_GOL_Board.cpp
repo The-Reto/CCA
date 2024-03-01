@@ -11,7 +11,7 @@ void Cryptographic_GOL_Board::steps(int steps) {
 
 Cryptographic_GOL_Board::Cryptographic_GOL_Board(unsigned int _seed) {
     seed = (u_int64_t) _seed;
-    for (int i = 0; i<size; i++) {board[i][0] = 0;}
+    for (int i = 0; i<size; i++) {board[0][i] = 0;}
     create_seed_map();
     steps(64);
 }
@@ -19,12 +19,12 @@ Cryptographic_GOL_Board::Cryptographic_GOL_Board(unsigned int _seed) {
 void Cryptographic_GOL_Board::update_GOL_board() {
     u_int64_t lsb_o, lsb_c, lsb_u, msb_o, msb_c, msb_u, m, t;
     for (int i = 0; i < size; i++) {
-        m = board[i][0];
-        lsb_o = board[(i+size-1)%size][1];  msb_o = board[(i+size-1)%size][2];
-        lsb_c = (~m&board[i][1])|(m&(board[i][2]&~board[i][1]));
-        msb_c = (board[i][2]&board[i][1])|(board[i][2]&~m);
-        lsb_u = board[(i+1)%size][1];       msb_u = board[(i+1)%size][2];
-        board[i][0] = 
+        m = board[0][i];
+        lsb_o = board[1][(i+size-1)%size];  msb_o = board[2][(i+size-1)%size];
+        lsb_c = (~m&board[1][i])|(m&(board[2][i]&~board[1][i]));
+        msb_c = (board[2][i]&board[1][i])|(board[2][i]&~m);
+        lsb_u = board[1][(i+1)%size];       msb_u = board[2][(i+1)%size];
+        board[0][i] = 
         ( (any2of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c)) | // 5 neigbours (happens independently of m) : two msb set, 1 lsb OR
         ( any1of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) | // 5 neigbours : 1 msb, 3 lsb
         ~m & // create new life where current board is empty IF:
@@ -45,14 +45,14 @@ void Cryptographic_GOL_Board::create_seed_map() {
     const static int multipliers[3] = {5,127,2293}; //Prime Number No. 3,31,314
     for (int i : multipliers) {
         for (int y = 0; y < size; y++) {
-            board[y][0] = std::rotr(seed, (i+y*i) % size);
+            board[0][y] = std::rotr(seed, (i+y*i) % size);
         }
     }
 }
 
 void Cryptographic_GOL_Board::apply_xor_map(u_int64_t xor_map[size]) {
     for (int i =0; i<size; i++) {
-        board[i][0] ^= xor_map[i];
+        board[0][i] ^= xor_map[i];
     }
 }
 

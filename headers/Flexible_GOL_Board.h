@@ -36,11 +36,11 @@ template <class TYPE, int size> class Flexible_GOL_Board: public GOL_Board<TYPE,
     void update_GOL_board() {
         TYPE lsb_o, lsb_c, lsb_u, msb_o, msb_c, msb_u, m, t;
         for (int i = 0; i < size; i++) {
-            lsb_o = board[(i+size-1)%size][1];  msb_o = board[(i+size-1)%size][2];
-            lsb_c = board[i][1];                msb_c = board[i][2];
-            lsb_u = board[(i+1)%size][1];       msb_u = board[(i+1)%size][2];
-            m = board[i][0];
-            board[i][0] = ~m & // create new life where current board is empty IF:
+            lsb_o = board[1][(i+size-1)%size];  msb_o = board[2][(i+size-1)%size];
+            lsb_c = board[1][i];                msb_c = board[2][i];
+            lsb_u = board[1][(i+1)%size];       msb_u = board[2][(i+1)%size];
+            m = board[0][i];
+            board[0][i] = ~m & // create new life where current board is empty IF:
             ( 
                 create[0] * (noneof3(msb_o, msb_c, msb_u) & noneof3(lsb_c, lsb_o, lsb_u)) | // 0 neigbours : nothing set
                 create[1] * ( noneof3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 1 neigbour : 0 msb set, 1 lsb set
@@ -61,7 +61,7 @@ template <class TYPE, int size> class Flexible_GOL_Board: public GOL_Board<TYPE,
             t = msb_c & lsb_c; // for survival msb_ lsb_c will be one higher than needed as the base bit is counted
             lsb_c = msb_c & ~lsb_c;
             msb_c = t;
-            board[i][0] |= m & // survive where current board is full IF:
+            board[0][i] |= m & // survive where current board is full IF:
             (
                 survive[0] * (noneof3(msb_o, msb_c, msb_u) & noneof3(lsb_c, lsb_o, lsb_u)) | // 0 neigbours : nothing set
                 survive[1] * ( noneof3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 1 neigbour : 0 msb set, 1 lsb set

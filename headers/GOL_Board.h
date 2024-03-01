@@ -42,13 +42,13 @@ template <class TYPE, int size> class GOL_Board {
         return a & b & c;
     }
 
-    TYPE board[size][3];
+    TYPE board[3][size];
 
     /// @brief Sets the GOL-Board to a predefined state
     /// @param _board a GOL-Board used to set the internal GOL-Board
     void set_board(TYPE _board[size]) {
         for (int i = 0; i<size; i++) {
-            board[i][0] = _board[i];
+            board[0][i] = _board[i];
         }
     }
 
@@ -58,7 +58,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param layer what layer to return: 0 (default) -> GOL Board, 1 -> LSB Board, 2 -> MSB Board
     /// @return Bit at position x/y as a boolean
     inline bool get(int x, int y, short layer = 0) {
-        return (board[y%size][layer] >> (x%size)) & 1;
+        return (board[layer][y%size] >> (x%size)) & 1;
     }
 
     /// @brief returns the bit at position index as a boolean, where row-major indexing is used
@@ -73,7 +73,7 @@ template <class TYPE, int size> class GOL_Board {
     /// @param y y position to be set
     /// @param value (bool) the new value of the bit at position x/y
     inline void set(int x, int y, bool value) {
-        board[y%size][0] = board[y%size][0] | ((value) << (x%size));
+        board[0][y%size] = board[0][y%size] | ((value) << (x%size));
     }
 
     /// @brief sets the bit at position index as a boolean
@@ -87,9 +87,9 @@ template <class TYPE, int size> class GOL_Board {
     void update_msb_lsb() {
         TYPE l, r, c;
         for (int i = 0; i < size; i++) {
-            l = std::rotl(board[i][0], 1), r = std::rotr(board[i][0], 1), c = board[i][0];
-            board[i][1] = (c ^ l) ^ r; // LSB
-            board[i][2] = (c & l) | (c & r) | (r & l);//MSB
+            l = std::rotl(board[0][i], 1), r = std::rotr(board[0][i], 1), c = board[0][i];
+            board[1][i] = (c ^ l) ^ r; // LSB
+            board[2][i] = (c & l) | (c & r) | (r & l);//MSB
         }
     }
 
