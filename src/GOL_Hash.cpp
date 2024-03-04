@@ -26,9 +26,27 @@ void GOL_Hash::hashing() {
 }
 
 void GOL_Hash::print_graph_Hash() {
-    if (!hashed) {hashing();}
-    // gol_board.visualize();
-    std::cout << "VISUAL HASH CURRENTLY DISABLED" << std::endl;
+    std::cout << get_graph_Hash() << std::endl;
+
+}
+
+std::string GOL_Hash::get_graph_Hash() {
+    std::bitset<1024> hash = get_Hash();
+    std::string to_ret = "\u250f\u2501";
+    for (int i = 0; i < SIZE_X /2; i++) { to_ret += "\u2501\u2501"; }
+    to_ret += "\u2513\n";
+    for (int i = 0; i < SIZE_Y /2; i++) {
+        to_ret += "\u2503 ";
+        for (int j = 0; j < SIZE_X /2; j++) {
+            if (hash[32*i + j]) { to_ret += "\u25A0 "; }
+            else { to_ret += "\u25A2 "; }
+        }
+        to_ret += "\u2503\n";
+    }
+    to_ret += "\u2517\u2501";
+    for (int i = 0; i < SIZE_X /2; i++) { to_ret += "\u2501\u2501"; }
+    to_ret += "\u251b\n";
+    return to_ret;
 }
 
 void GOL_Hash::set_salt(u_int64_t _salt[64]) {

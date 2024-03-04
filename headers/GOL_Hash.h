@@ -28,6 +28,7 @@ class GOL_Hash {
     
     void print_graph_Hash();
     std::string get_Str_Hash();
+    std::string get_graph_Hash();
     std::bitset<1024> get_Hash();
     
 };
