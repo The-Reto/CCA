@@ -27,7 +27,18 @@ void GOL_Hash::hashing() {
 
 void GOL_Hash::print_graph_Hash() {
     if (!hashed) {hashing();}
-    gol_board.visualize();
+    // gol_board.visualize();
+    std::cout << "VISUAL HASH CURRENTLY DISABLED" << std::endl;
+}
+
+void GOL_Hash::set_salt(u_int64_t _salt[64]) {
+    for (int i = 0; i < 64; i++) {
+        salt[i] = _salt[i];
+    }
+}
+
+u_int64_t* GOL_Hash::get_salt() {
+    return &salt[0];
 }
 
 std::string GOL_Hash::get_Str_Hash() {
@@ -48,4 +59,13 @@ std::string GOL_Hash::get_Str_Hash() {
     }
     std::string res = result.str();
     return res.substr(0, res.size()-1);
+}
+
+std::bitset<1024> GOL_Hash::get_Hash() {
+    if (!hashed) {hashing();}
+    std::string buffer;
+    for (int i = 0; i<SIZE_Y/2; i++) {
+        buffer += std::bitset<SIZE_X /2>(gol_board.board[0][i]).to_string();
+    }
+    return std::bitset<1024>(buffer);
 }

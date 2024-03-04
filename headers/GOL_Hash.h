@@ -22,14 +22,13 @@ class GOL_Hash {
     
 
     GOL_Hash(std::string _path);
-    
-    auto get_input_stream();
-    
-    void set_salt();
+        
+    void set_salt(u_int64_t _salt[64]);
     u_int64_t* get_salt();
     
     void print_graph_Hash();
     std::string get_Str_Hash();
+    std::bitset<1024> get_Hash();
     
 };
 #endif
