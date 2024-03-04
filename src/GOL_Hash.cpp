@@ -42,13 +42,8 @@ u_int64_t* GOL_Hash::get_salt() {
 }
 
 std::string GOL_Hash::get_Str_Hash() {
-    if (!hashed) {hashing();}
     const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;";
-    std::string buffer;
-    for (int i = 0; i<SIZE_Y/2; i++) {
-        buffer += std::bitset<SIZE_X /2>(gol_board.board[0][i]).to_string();
-    }
-    std::stringstream reader(buffer);
+    std::stringstream reader(get_Hash().to_string());
     std::stringstream result;
 
     std::bitset<6> digit;
