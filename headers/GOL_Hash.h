@@ -6,6 +6,8 @@
 #include <boost/algorithm/hex.hpp>
 
 class GOL_Hash {
+
+    void fold();
     
     public:
 
@@ -18,6 +20,7 @@ class GOL_Hash {
     
     void hashing();
     
+
     GOL_Hash(std::string _path);
     
     auto get_input_stream();
