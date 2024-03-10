@@ -3,6 +3,7 @@
 
 #include <bit>
 #include <iostream>
+#include <array>
 
 template <class TYPE, int size> class GOL_Board {
     public:
@@ -50,6 +51,15 @@ template <class TYPE, int size> class GOL_Board {
         for (int i = 0; i<size; i++) {
             board[0][i] = _board[i];
         }
+    }
+
+    /// @brief Sets the GOL-Board to a predefined state
+    /// @param _board a GOL-Board used to set the internal GOL-Board
+    
+    std::array<TYPE,size> get_board() {
+        std::array<TYPE,size> to_ret;
+        std::copy(std::begin(board[0]), std::end(board[0]), to_ret.begin());
+        return to_ret;
     }
 
     /// @brief returns the bit at position x/y as a boolean
