@@ -3,8 +3,8 @@
 
 int main()
 {
-    Bit_Board<u_int16_t, 16> board_a;
-    Bit_Board<u_int16_t, 16> board_b;
+    Bit_Board<u_int16_t> board_a;
+    Bit_Board<u_int16_t> board_b;
 
     board_a[3] = 345;
 

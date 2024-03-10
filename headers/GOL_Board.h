@@ -4,6 +4,7 @@
 #include <bit>
 #include <iostream>
 #include <array>
+#include "../headers/BitBoard.h"
 
 template <class TYPE, int size> class GOL_Board {
     public:
@@ -43,23 +44,19 @@ template <class TYPE, int size> class GOL_Board {
         return a & b & c;
     }
 
-    TYPE board[3][size];
+    //TYPE board[3][size];
+    Bit_Board<TYPE> board[3];
 
     /// @brief Sets the GOL-Board to a predefined state
     /// @param _board a GOL-Board used to set the internal GOL-Board
-    void set_board(TYPE _board[size]) {
-        for (int i = 0; i<size; i++) {
-            board[0][i] = _board[i];
-        }
+    void set_board(Bit_Board<TYPE> _board) {
+        board[0] = _board;
     }
 
     /// @brief Sets the GOL-Board to a predefined state
     /// @param _board a GOL-Board used to set the internal GOL-Board
-    
-    std::array<TYPE,size> get_board() {
-        std::array<TYPE,size> to_ret;
-        std::copy(std::begin(board[0]), std::end(board[0]), to_ret.begin());
-        return to_ret;
+    Bit_Board<TYPE>& get_board(int layer = 0) {
+        return board[layer];
     }
 
     /// @brief returns the bit at position x/y as a boolean
@@ -68,22 +65,22 @@ template <class TYPE, int size> class GOL_Board {
     /// @param layer what layer to return: 0 (default) -> GOL Board, 1 -> LSB Board, 2 -> MSB Board
     /// @return Bit at position x/y as a boolean
     inline bool get(int x, int y, short layer = 0) {
-        return (board[layer][y%size] >> (x%size)) & 1;
+        return board[layer].get(x,y);
     }
 
     /// @brief returns the bit at position index as a boolean, where row-major indexing is used
     /// @param index (int) position of the bit to be returned
     /// @return Bit at position index as a boolean
-    inline bool get(int index) {
-        return get(index % size, index / size);
+    inline bool get(int index, short layer = 0) {
+        return get(index % size, index / size, layer);
     }
 
     /// @brief sets the bit at position x/y as a boolean
     /// @param x x position to be set
     /// @param y y position to be set
     /// @param value (bool) the new value of the bit at position x/y
-    inline void set(int x, int y, bool value) {
-        board[0][y%size] = board[0][y%size] | ((value) << (x%size));
+    inline void set(int x, int y, bool value, short layer = 0) {
+        board[layer].set(x,y,value);
     }
 
     /// @brief sets the bit at position index as a boolean
@@ -103,22 +100,8 @@ template <class TYPE, int size> class GOL_Board {
         }
     }
 
-    /// @brief Visualizes the GOL-Board on the console
-    void visualize()  {
-        std::cout << "\u250f\u2501";
-        for (int i = 0; i < size; i++) { std::cout << "\u2501\u2501"; }
-        std::cout << "\u2513\n";
-        for (int i = 0; i < size; i++) {
-            std::cout << "\u2503 ";
-            for (int j = 0; j < size; j++) {
-                if (get(j,i)) { std::cout << "\u25A0 "; }
-                else { std::cout << "\u25A2 "; }
-            }
-            std::cout << "\u2503\n";
-        }
-        std::cout << "\u2517\u2501";
-        for (int i = 0; i < size; i++) { std::cout << "\u2501\u2501"; }
-        std::cout << "\u251b" << std::endl;
+    void visualize() {
+        Bit_Board<TYPE>::visualize(board[0]);
     }
 };
 

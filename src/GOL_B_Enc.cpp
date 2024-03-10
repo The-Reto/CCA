@@ -64,7 +64,7 @@ void GOL_B_Enc::encrypt(std::string path) {
 
 void GOL_B_Enc::decrypt(std::string path) {
     Cryptographic_GOL_Board gol_board(seed);
-    u_int64_t key_map[64], in_buffer[64];
+    Bit_Board<u_int64_t> key_map, in_buffer;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board.board[0][i];}
     u_int64_t hash_map[64];
 

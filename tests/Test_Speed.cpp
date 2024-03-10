@@ -80,7 +80,7 @@ void test_Hash() {
 
 void test_GOL() {
     using namespace std::chrono;
-    u_int64_t board[64];
+    Bit_Board<u_int64_t> board;
 
     for (int i = 0; i < 64; i++) {board[i] = 0;}
     // glider

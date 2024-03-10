@@ -7,7 +7,7 @@ int main() {
     
     Flexible_GOL_Board<u_int32_t, size> f_gol;
     Classic_GOL_Board<u_int32_t, size> c_gol;
-    u_int32_t board[size];
+    Bit_Board<u_int32_t> board;
 
     for (int i = 0; i < size; i++) {board[i] = 0;}
     // glider

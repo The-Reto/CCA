@@ -10,7 +10,7 @@ class GOL_B_Enc
 {
     static const short BLOCK_SIZE = 512;
     unsigned long input_size;
-    u_int64_t buffer[64];
+    Bit_Board<u_int64_t> buffer;
     unsigned int seed;
 
     void scramble(Cryptographic_GOL_Board* gol_board);
