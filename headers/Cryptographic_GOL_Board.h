@@ -1,4 +1,4 @@
-#include "./GOL_Board.h"
+#include "./Neighbour_Counting_Board.h"
 #include <boost/dynamic_bitset.hpp>
 
 #ifndef TOOFEWBITS

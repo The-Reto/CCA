@@ -1,4 +1,4 @@
-#include "./GOL_Board.h"
+#include "./Neighbour_Counting_Board.h"
 
 /// @brief A GOL-Board with flexible, customizable, rules - slower than a class where the rules are hardcoded
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
