@@ -24,7 +24,7 @@ void Cryptographic_GOL_Board::update_GOL_board() {
         lsb_c = (~m&board[1][i])|(m&(board[2][i]&~board[1][i]));
         msb_c = (board[2][i]&board[1][i])|(board[2][i]&~m);
         lsb_u = board[1][(i+1)%size];       msb_u = board[2][(i+1)%size];
-        board[0][i] = 
+        board[0][i] = board[1][(i+2)%size] ^  board[1][(i+size-2)%size] ^ (
         ( (any2of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c)) | // 5 neigbours (happens independently of m) : two msb set, 1 lsb OR
         ( any1of3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c) ) ) | // 5 neigbours : 1 msb, 3 lsb
         ~m & // create new life where current board is empty IF:
@@ -37,15 +37,18 @@ void Cryptographic_GOL_Board::update_GOL_board() {
         (
             ( ( any1of3(msb_o, msb_u, msb_c) & any1of3(lsb_u, lsb_o, lsb_c) ) | // 3 neigbours : 1 lsb set, 1 msb set OR
             ( noneof3(msb_o, msb_u, msb_c) & all3(lsb_o, lsb_u, lsb_c)) ) // 3 neigbours : all lsb set, all msb unset
-        );
+        ));
     }
 }
 
 void Cryptographic_GOL_Board::create_seed_map() {
     const static int multipliers[3] = {5,127,2293}; //Prime Number No. 3,31,314
     for (int i : multipliers) {
-        for (int y = 0; y < size; y++) {
+        for (int y = 0; y < size/2; y++) {
             board[0][y] = std::rotr(seed, (i+y*i) % size);
+        }
+        for (int y = 0; y < size/2; y++) {
+            board[0][size/2+y] = seed ^ (i+y*i);
         }
     }
 }
