@@ -4,7 +4,7 @@
 #include "../headers/GOL_Hash.h"
 #include "../headers/Classic_GOL_Board.h"
 #include "../headers/Cryptographic_GOL_Board.h"
-#include "../headers/GOL_Enc.h"
+#include "../headers/GOL_B_Enc.h"
 
 void test_RNG() {
     using namespace std::chrono;
@@ -65,7 +65,7 @@ void test_Hash() {
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
-    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  705'948'212.0  << "ns/byte, "<< 512*durationMS.count()/  2'391'888.0 <<"ns/generation)\n";
+    std::cout << "\ttime: " << duration.count() << "s \t(" << durationMS.count() /  705'948'212.0  << "ns/byte, "<< 512*durationMS.count()/  705'948'212.0  <<"ns/generation)\n";
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
@@ -132,9 +132,9 @@ void test_CGOL() {
 
 void test_Enc(){
     using namespace std::chrono;
-    GOL_Enc encryptor_text("thisIs4T3st_text");
-    GOL_Enc encryptor_video("thisIs4T3st_video");
-    GOL_Enc encryptor_music("thisIs4T3st_music");
+    GOL_B_Enc encryptor_text("thisIs4T3st_text");
+    GOL_B_Enc encryptor_video("thisIs4T3st_video");
+    GOL_B_Enc encryptor_music("thisIs4T3st_music");
     
     std::cout << "Testing Encryption Class by encrypting a text, a music and a video file:\n";
     
@@ -167,9 +167,9 @@ void test_Enc(){
 
 void test_Dec(){
     using namespace std::chrono;
-    GOL_Enc encryptor_text("thisIs4T3st_text");
-    GOL_Enc encryptor_video("thisIs4T3st_video");
-    GOL_Enc encryptor_music("thisIs4T3st_music");
+    GOL_B_Enc encryptor_text("thisIs4T3st_text");
+    GOL_B_Enc encryptor_video("thisIs4T3st_video");
+    GOL_B_Enc encryptor_music("thisIs4T3st_music");
     
     std::cout << "Testing Encryption Class by decrypting a text, a music and a video file:\n";
     
