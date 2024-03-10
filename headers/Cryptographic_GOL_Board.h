@@ -18,7 +18,7 @@ class too_few_bits_exception: public std::exception {
 /// @brief A GOL-Board with flexible, customizable, rules - slower than a class where the rules are hardcoded
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
 /// @tparam size height of the GOL-Board
-class Cryptographic_GOL_Board: public GOL_Board<u_int64_t, 64> {
+class Cryptographic_GOL_Board: public Neighbour_Counting_Board<u_int64_t> {
     const static int size = 64;
 
     u_int64_t seed;

@@ -6,8 +6,8 @@ GOL_Hash::GOL_Hash(std::string _path) : gol_board(0), input_stream(_path), hashe
 
 void GOL_Hash::fold() {
     for (int i =  0; i < SIZE_Y/2; i++) {
-        gol_board.board[0][i] ^= gol_board.board[0][SIZE_Y-1-i];
-        gol_board.board[0][i] ^= gol_board.board[0][i] >> (SIZE_X /2);
+        gol_board[0][i] ^= gol_board[0][SIZE_Y-1-i];
+        gol_board[0][i] ^= gol_board[0][i] >> (SIZE_X /2);
     }
 }
 
@@ -78,7 +78,7 @@ std::bitset<1024> GOL_Hash::get_Hash() {
     if (!hashed) {hashing();}
     std::string buffer;
     for (int i = 0; i<SIZE_Y/2; i++) {
-        buffer += std::bitset<SIZE_X /2>(gol_board.board[0][i]).to_string();
+        buffer += std::bitset<SIZE_X /2>(gol_board[0][i]).to_string();
     }
     return std::bitset<1024>(buffer);
 }

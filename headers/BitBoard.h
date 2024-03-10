@@ -6,7 +6,10 @@
 
 template <class type> class Bit_Board {
 
+    public:
     const static int size = sizeof(type) * 8;
+    
+    protected:
     type board[size];
 
     public:

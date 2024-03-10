@@ -3,13 +3,13 @@
 /// @brief A GOL-Board with classic rules - faster than a class where the rules are flexible
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
 /// @tparam size height of the GOL-Board
-template <class TYPE, int size> class Classic_GOL_Board: public GOL_Board<TYPE, size> {
-    using GOL_Board<TYPE, size>::update_msb_lsb;
-    using GOL_Board<TYPE, size>::board;
-    using GOL_Board<TYPE, size>::noneof3;
-    using GOL_Board<TYPE, size>::any1of3;
-    using GOL_Board<TYPE, size>::any2of3;
-    using GOL_Board<TYPE, size>::all3;
+template <class TYPE, int size> class Classic_GOL_Board: public Neighbour_Counting_Board<TYPE> {
+    using Neighbour_Counting_Board<TYPE>::update_msb_lsb;
+    using Neighbour_Counting_Board<TYPE>::board;
+    using Neighbour_Counting_Board<TYPE>::noneof3;
+    using Neighbour_Counting_Board<TYPE>::any1of3;
+    using Neighbour_Counting_Board<TYPE>::any2of3;
+    using Neighbour_Counting_Board<TYPE>::all3;
 
     public:
 

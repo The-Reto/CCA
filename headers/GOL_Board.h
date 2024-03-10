@@ -2,11 +2,18 @@
 #define GOL_BOARD_HEADER
 
 #include <bit>
-#include <iostream>
-#include <array>
 #include "../headers/BitBoard.h"
 
-template <class TYPE, int size> class GOL_Board {
+enum class Layer {main, lsb, msb};
+
+template <class TYPE> class Neighbour_Counting_Board {
+
+    public:
+    const static int size = Bit_Board<TYPE>::size;
+
+    protected:
+    Bit_Board<TYPE> board[3];
+
     public:
     /// @brief returns true where exactly 1 of the three inputs is true
     /// @param a u_intX_t to be compared
@@ -44,18 +51,15 @@ template <class TYPE, int size> class GOL_Board {
         return a & b & c;
     }
 
-    //TYPE board[3][size];
-    Bit_Board<TYPE> board[3];
-
     /// @brief Sets the GOL-Board to a predefined state
     /// @param _board a GOL-Board used to set the internal GOL-Board
-    void set_board(Bit_Board<TYPE> _board) {
-        board[0] = _board;
+    void set_board(Bit_Board<TYPE> _board, short layer = 0) {
+        board[layer] = _board;
     }
 
     /// @brief Sets the GOL-Board to a predefined state
     /// @param _board a GOL-Board used to set the internal GOL-Board
-    Bit_Board<TYPE>& get_board(int layer = 0) {
+    Bit_Board<TYPE>& get_board(short layer = 0) {
         return board[layer];
     }
 
@@ -86,8 +90,8 @@ template <class TYPE, int size> class GOL_Board {
     /// @brief sets the bit at position index as a boolean
     /// @param index (int) position of the bit to be returned
     /// @param value (bool) the new value of the bit at position index
-    inline void set(int index, bool value) {
-        set(index % size, index / size, value);
+    inline void set(int index, bool value, short layer = 0) {
+        set(index % size, index / size, value, layer);
     }
 
     /// @brief Upbades the LSB- and MSB-Boards based on the GOL Board, needs to be run before updating GOL-Board
@@ -100,8 +104,12 @@ template <class TYPE, int size> class GOL_Board {
         }
     }
 
-    void visualize() {
-        Bit_Board<TYPE>::visualize(board[0]);
+    void visualize(short layer = 0) {
+        Bit_Board<TYPE>::visualize(board[layer]);
+    }
+
+    Bit_Board<TYPE>& operator[](short layer) {
+        return board[layer];
     }
 };
 
