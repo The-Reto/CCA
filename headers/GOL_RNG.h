@@ -10,9 +10,9 @@ class GOL_RNG {
     public:
     GOL_RNG(unsigned int seed_);
     
-    int rand_int(unsigned int max = INT_MAX);
+    int rand_int(unsigned int max = INT32_MAX);
     
-    long rand_long(unsigned int max = INT_MAX);
+    long rand_long(unsigned long max = INT64_MAX);
     
     bool rand_bit();
     
