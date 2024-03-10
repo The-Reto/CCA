@@ -9,7 +9,7 @@ int GOL_RNG::rand_int(unsigned int max) {
     return system.rand_bits<32>().to_ulong() % max;
 }
 
-long GOL_RNG::rand_long(unsigned int max) {
+long GOL_RNG::rand_long(unsigned long max) {
     return system.rand_bits<64>().to_ulong() % max;
 }
 
