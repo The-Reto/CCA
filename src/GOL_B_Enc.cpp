@@ -21,7 +21,7 @@ void GOL_B_Enc::encrypt(std::string path) {
     Cryptographic_GOL_Board gol_board(seed);
     GOL_Hash hash(path);
     hash.hashing();
-    std::cout<< hash.get_Str_Hash() << std::endl;
+    // std::cout<< hash.get_Str_Hash() << std::endl;
     u_int64_t key_map[64];
     for (int i = 0; i<64; i++) {key_map[i] = gol_board.board[0][i];}
     u_int64_t hash_map[64];
@@ -58,6 +58,8 @@ void GOL_B_Enc::encrypt(std::string path) {
     }
     input_stream.close();
     output_stream.close();
+    GOL_Hash hash_enc(out_path+".trc");
+    // std::cout<< hash_enc.get_Str_Hash() << std::endl;
 }
 
 void GOL_B_Enc::decrypt(std::string path) {
@@ -100,8 +102,8 @@ void GOL_B_Enc::decrypt(std::string path) {
     
     GOL_Hash hash(out_file + "-DEC." + out_ext);
     hash.hashing();
-    std::cout << "Decrypted File has hash:" << std::endl;
-    std::cout << hash.get_Str_Hash() << std::endl;
+    // std::cout << "Decrypted File has hash:" << std::endl;
+    // std::cout << hash.get_Str_Hash() << std::endl;
     bool match = true;
     for (int i = 0; i<64; i++) {
         if (hash_map[i] != hash.gol_board.board[0][i]) {
@@ -109,10 +111,10 @@ void GOL_B_Enc::decrypt(std::string path) {
             break;
         }
     }
-    if (match) {
-        std::cout << "Which matches the check-sum of the original file.\nDECRYPTION SUCCESSFUL" << std::endl;
-    }
-    else {
-        std::cout << "Which does not match the check-sum of the original file.\nDECRYPTION FAILED" << std::endl;
-    }
+    // if (match) {
+    //     std::cout << "Which matches the check-sum of the original file.\nDECRYPTION SUCCESSFUL" << std::endl;
+    // }
+    // else {
+    //     std::cout << "Which does not match the check-sum of the original file.\nDECRYPTION FAILED" << std::endl;
+    // }
 }

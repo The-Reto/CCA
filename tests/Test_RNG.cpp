@@ -49,8 +49,7 @@ int demo(unsigned int seed) {
 
 int main()
 {
-    unsigned long int seed = 22'3141592'1996;
-    
+    unsigned long seed = 3141592;
     for(int i = 0; i < 3; i++) {
         std::cout << "Testing for seed: " << seed << std::endl;
         seed = test(seed);
