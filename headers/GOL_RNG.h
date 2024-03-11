@@ -6,6 +6,8 @@
 class GOL_RNG {
     
     Cryptographic_GOL_Board system;
+    int int_ctr = 4096, long_ctr = 4096, float_ctr = 4096, double_ctr=4096, bit_ctr=4096;
+    Bit_Board<u_int64_t> int_board, long_board, float_board, double_board, bit_board;
 
     public:
     GOL_RNG(unsigned int seed_);

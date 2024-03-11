@@ -2,13 +2,12 @@
 #include "../headers/GOL_RNG.h"
 
 int test(int seed) {
-    static const int range = 20, avg=100;
+    static const int range = 20, avg=5000;
     GOL_RNG test(seed);
     
     int samples = range*avg;
     int results_int[range] = {0};
     int results_float[range] = {0};
-    
     
     std::cout << "Testing uniform distribution by pooling results into bins:" << std::endl;
     
@@ -19,13 +18,11 @@ int test(int seed) {
     std::cout << "For Integers: ";
     for (int i =0; i < range; i++) {
         std::cout << results_int[i] << " ";
-        if (results_int[i] < avg) {std::cout << " ";}
     }
     std::cout << std::endl;
     std::cout << "For Floats:   ";
     for (int i =0; i < range; i++) {
         std::cout << results_float[i] << " ";
-        if (results_float[i] < avg) {std::cout << " ";}
     }
     std::cout << std::endl;
     return test.rand_int();
