@@ -5,7 +5,7 @@ int main()
 {
     GOL_Enc encryptor("test_password");
     GOL_Enc decryptor("test_password");
-    std::string file = "test_data/test.mp3";
+    std::string file = "test_data/test.mp4";
     encryptor.encrypt(file);
     std::cout << "encrpyted" << std::endl;
     std::string enc_file = file;
