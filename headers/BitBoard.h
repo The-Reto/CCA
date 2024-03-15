@@ -41,7 +41,7 @@ template <class type> class Bit_Board {
     /// @param layer what layer to return: 0 (default) -> GOL Board, 1 -> LSB Board, 2 -> MSB Board
     /// @return Bit at position x/y as a boolean
     inline bool get(int x, int y) {
-        return (board[y%size] >> (x%sizeof(type) * 8)) & 1;
+        return (board[y%size] >> (x % (sizeof(type) * 8))) & 1;
     }
 
     /// @brief sets the bit at position x/y as a boolean
