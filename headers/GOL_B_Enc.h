@@ -13,7 +13,7 @@ class GOL_B_Enc
     Bit_Board<u_int64_t> buffer;
     unsigned int seed;
 
-    void scramble(Cryptographic_GOL_Board* gol_board);
+    void scramble(Cryptographic_GOL_Board* gol_board, Bit_Board<u_int64_t> key);
 
     public:
 

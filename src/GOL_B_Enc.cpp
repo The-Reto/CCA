@@ -7,24 +7,22 @@ GOL_B_Enc::GOL_B_Enc(std::string key) {
     }
 }
 
-void GOL_B_Enc::scramble(Cryptographic_GOL_Board* gol_board)
+void GOL_B_Enc::scramble(Cryptographic_GOL_Board* gol_board, Bit_Board<u_int64_t> key)
 {
-    (*gol_board).steps(16);
+    (*gol_board).steps(2);
     for (int i = 0; i < 64; i+=2) { 
-            (*gol_board)[0][i] = (*gol_board)[0][i]<<16;
-            (*gol_board)[0][i+1] = (*gol_board)[0][i+1]>>16;
+            (*gol_board)[0][i] = (*gol_board)[0][i]<<16 ^ key[i];
+            (*gol_board)[0][i+1] = (*gol_board)[0][i+1]>>16 ^ key[i];
     }
-    (*gol_board).steps(16);
+    (*gol_board).steps(2);
 }
 
 void GOL_B_Enc::encrypt(std::string path) {
     Cryptographic_GOL_Board gol_board(seed);
     GOL_Hash hash(path);
     hash.hashing();
-    // std::cout<< hash.get_Str_Hash() << std::endl;
-    u_int64_t key_map[64];
+    Bit_Board<u_int64_t> key_map, hash_map;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board[0][i];}
-    u_int64_t hash_map[64];
     for (int i = 0; i<64; i++) {hash_map[i] = hash.gol_board[0][i];}
 
     std::basic_ifstream<char> input_stream = std::basic_ifstream<char>(path);
@@ -37,7 +35,7 @@ void GOL_B_Enc::encrypt(std::string path) {
             gol_board[0][i] = hash_map[i]^key_map[i];
     }
     output_stream.write(reinterpret_cast<char*>(&gol_board[0][0]), 64 * sizeof(u_int64_t));
-    scramble(&gol_board);
+    scramble(&gol_board,key_map);
 
     while (input_size >= BLOCK_SIZE) {
         input_stream.read(reinterpret_cast<char*>(&buffer[0]), BLOCK_SIZE);
@@ -46,7 +44,7 @@ void GOL_B_Enc::encrypt(std::string path) {
         }
         output_stream.write(reinterpret_cast<char*>(&buffer[0]), 64 * sizeof(u_int64_t));
         gol_board.set_board(buffer);
-        scramble(&gol_board);
+        scramble(&gol_board,key_map);
         input_size -= BLOCK_SIZE;
     }
     if (input_size > 0) {
@@ -59,7 +57,6 @@ void GOL_B_Enc::encrypt(std::string path) {
     input_stream.close();
     output_stream.close();
     GOL_Hash hash_enc(out_path+".trc");
-    // std::cout<< hash_enc.get_Str_Hash() << std::endl;
 }
 
 void GOL_B_Enc::decrypt(std::string path) {
@@ -78,14 +75,14 @@ void GOL_B_Enc::decrypt(std::string path) {
     for (int i = 0; i < 64; i++) { 
         hash_map[i] = key_map[i] ^  gol_board[0][i];
     }
-    scramble(&gol_board);
+    scramble(&gol_board, key_map);
     while (input_size >= BLOCK_SIZE) {
         input_stream.read(reinterpret_cast<char*>(&in_buffer[0]), BLOCK_SIZE);
         for (int i = 0; i < 64; i++) { 
             buffer[i] = in_buffer[i] ^ key_map[i] ^ gol_board[0][i];
         }
         gol_board.set_board(in_buffer);
-        scramble(&gol_board);
+        scramble(&gol_board, key_map);
         output_stream.write(reinterpret_cast<char*>(&buffer[0]), 64 * sizeof(u_int64_t));
         input_size -= BLOCK_SIZE;
     }
