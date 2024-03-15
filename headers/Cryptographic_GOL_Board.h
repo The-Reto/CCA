@@ -53,33 +53,5 @@ class Cryptographic_GOL_Board: public Neighbour_Counting_Board<u_int64_t> {
     /// @param _seed u_int64_t seed used in create_seed_map
     void set_seed(u_int64_t _seed);
 
-    /// @brief returns a random bitset of length len. Note: len should be much smaller than 4096 as that's the maximum number of bits on the board at any time.
-    /// @tparam len (int) the length of the bitset to be returned 
-    /// @return std::bitset<len> with pseudo random bits
-    template<int len> std::bitset<len> rand_bits() {
-        const static int multipliers[5] = {7,11,13,17,19};
-        std::bitset<len> ret;
-        const int multi = multipliers[seed%5];
-        for (int i = 0; i < len; ++i) {
-            ret[i] = get(multi*i+seed);
-        }
-        step();      
-        return ret;
-    }	
-    
-    /// @brief returns a random dynamic_bitset of length len. Note: len should be much smaller than 4096 as that's the maximum number of bits on the board at any time.
-    /// @tparam len (int) the length of the bitset to be returned 
-    /// @return boost::dynamic_bitset<unsigned char> with pseudo random bits
-    template<int len> boost::dynamic_bitset<unsigned char> dynamic_rand_bits() {
-        const static int multipliers[5] = {7,11,13,17,19};
-        boost::dynamic_bitset<unsigned char> ret(len);
-        const int multi = multipliers[seed%5];
-        for (int i = 0; i < len; ++i) {
-            ret[i] = get(multi*i+seed);
-        }
-        step();      
-        return ret;
-    }	
-
 };
 #endif
