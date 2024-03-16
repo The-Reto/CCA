@@ -21,7 +21,7 @@ class GOL_B_Enc
 
     GOL_B_Enc(std::string key);
 
-    void encrypt(std::string path);
-    void decrypt(std::string path);
+    int encrypt(std::string in_path, std::string out_path);
+    int decrypt(std::string in_path, std::string out_path);
 };
 #endif

@@ -17,19 +17,17 @@ void GOL_B_Enc::scramble(Cryptographic_GOL_Board* gol_board, Bit_Board<u_int64_t
     (*gol_board).steps(2);
 }
 
-void GOL_B_Enc::encrypt(std::string path) {
+int GOL_B_Enc::encrypt(std::string in_path, std::string out_path) {
     Cryptographic_GOL_Board gol_board(seed);
-    GOL_Hash hash(path);
+    GOL_Hash hash(in_path);
     hash.hashing();
     Bit_Board<u_int64_t> key_map, hash_map;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board[0][i];}
     for (int i = 0; i<64; i++) {hash_map[i] = hash.gol_board[0][i];}
 
-    std::basic_ifstream<char> input_stream = std::basic_ifstream<char>(path);
-    input_size = std::filesystem::file_size(path);
-    std::string out_path = path;
-    out_path.replace(out_path.size()-4, 1, "-");
-    std::basic_ofstream<char> output_stream = std::basic_ofstream<char>(out_path+".trc", std::ios::binary );
+    std::basic_ifstream<char> input_stream = std::basic_ifstream<char>(in_path);
+    input_size = std::filesystem::file_size(in_path);
+    std::basic_ofstream<char> output_stream = std::basic_ofstream<char>(out_path, std::ios::binary );
 
     for (int i = 0; i < 64; i++) { 
             gol_board[0][i] = hash_map[i]^key_map[i];
@@ -56,20 +54,18 @@ void GOL_B_Enc::encrypt(std::string path) {
     }
     input_stream.close();
     output_stream.close();
-    GOL_Hash hash_enc(out_path+".trc");
+    return 0;
 }
 
-void GOL_B_Enc::decrypt(std::string path) {
+int GOL_B_Enc::decrypt(std::string in_path, std::string out_path) {
     Cryptographic_GOL_Board gol_board(seed);
     Bit_Board<u_int64_t> key_map, in_buffer;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board[0][i];}
     u_int64_t hash_map[64];
 
-    std::basic_ifstream<char>  input_stream = std::basic_ifstream<char>(path);
-    input_size = std::filesystem::file_size(path) - BLOCK_SIZE;
-    std::string out_file = path.substr(0, path.size()-8);
-    std::string out_ext = path.substr(path.size()-7, 3);
-    std::basic_ofstream<char> output_stream = std::basic_ofstream<char>(out_file + "-DEC." + out_ext, std::ios::binary);
+    std::basic_ifstream<char>  input_stream = std::basic_ifstream<char>(in_path);
+    input_size = std::filesystem::file_size(in_path) - BLOCK_SIZE;
+    std::basic_ofstream<char> output_stream = std::basic_ofstream<char>(out_path, std::ios::binary);
 
     input_stream.read(reinterpret_cast<char*>(&gol_board[0][0]), BLOCK_SIZE);
     for (int i = 0; i < 64; i++) { 
@@ -97,10 +93,8 @@ void GOL_B_Enc::decrypt(std::string path) {
     input_stream.close();
     output_stream.close();
     
-    GOL_Hash hash(out_file + "-DEC." + out_ext);
+    GOL_Hash hash(out_path);
     hash.hashing();
-    // std::cout << "Decrypted File has hash:" << std::endl;
-    // std::cout << hash.get_Str_Hash() << std::endl;
     bool match = true;
     for (int i = 0; i<64; i++) {
         if (hash_map[i] != hash.gol_board[0][i]) {
@@ -108,10 +102,10 @@ void GOL_B_Enc::decrypt(std::string path) {
             break;
         }
     }
-    // if (match) {
-    //     std::cout << "Which matches the check-sum of the original file.\nDECRYPTION SUCCESSFUL" << std::endl;
-    // }
-    // else {
-    //     std::cout << "Which does not match the check-sum of the original file.\nDECRYPTION FAILED" << std::endl;
-    // }
+    if (match) {
+        return 0;
+    }
+    else {
+        return -1;
+    }
 }

@@ -6,12 +6,12 @@ int main()
 {
     GOL_B_Enc encryptor("test_password");
     GOL_B_Enc decryptor("test_password");
-    std::string file = "test_data/test.txt";
-    encryptor.encrypt(file);
+    std::string ifile = "test_data/test.txt";
+    std::string ofile = "test_data/test-txt.trc";
+    std::string o2file = "test_data/test-DEC.txt";
+    encryptor.encrypt(ifile, ofile);
     std::cout << "encrpyted" << std::endl;
 
-    std::string enc_file = file;
-    enc_file.replace(enc_file.size()-4, 1, "-");
-    decryptor.decrypt(enc_file+".trc");
+    decryptor.decrypt(ofile, o2file);
     std::cout << "decrpyted" << std::endl;
 }
