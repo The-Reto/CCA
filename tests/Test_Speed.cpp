@@ -211,7 +211,7 @@ void test_S_Enc(){
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    encryptor_text.encrypt("test_data/test.txt");
+    encryptor_text.encrypt("test_data/test.txt", "test_data/test-txt.trc");
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -219,7 +219,7 @@ void test_S_Enc(){
     
     std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.encrypt("test_data/test.mp4");
+    encryptor_video.encrypt("test_data/test.mp4", "test_data/test-mp4.trc");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -227,7 +227,7 @@ void test_S_Enc(){
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_music.encrypt("test_data/test.mp3");
+    encryptor_music.encrypt("test_data/test.mp3", "test_data/test-mp3.trc");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -246,7 +246,7 @@ void test_S_Dec(){
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    encryptor_text.decrypt("test_data/test-txt.trc");
+    encryptor_text.encrypt("test_data/test-txt.trc", "test_data/test-txt-dec.txt");
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -254,7 +254,7 @@ void test_S_Dec(){
     
     std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.decrypt("test_data/test-mp4.trc");
+    encryptor_video.encrypt("test_data/test-mp4.trc", "test_data/test-mp4-dec.mp4");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -262,7 +262,7 @@ void test_S_Dec(){
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_music.decrypt("test_data/test-mp3.trc");
+    encryptor_music.encrypt("test_data/test-mp3.trc", "test_data/test-mp3-dec.mp3");
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);

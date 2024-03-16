@@ -27,25 +27,13 @@ void GOL_Enc::encdec(std::string in_path, std::string out_path) {
     output_stream.close();
 }
 
-void GOL_Enc::encrypt(std::string path) {
+int GOL_Enc::encrypt(std::string in_path, std::string out_path) {
     if (run_once) {
         std::cout << "already ran once, need to be reinitialized";
-        return;
+        return -1;
     }
     run_once = true;
-    std::string out_path = path;
-    out_path.replace(out_path.size()-4, 1, "-");
-    encdec(path, out_path+".trc");
-}
-
-void GOL_Enc::decrypt(std::string path) {
-    if (run_once) {
-        std::cout << "already ran once, need to be reinitialized";
-        return;
-    }
-    run_once = true;
-    std::string out_path = path.substr(0, (path.size()-4));
-    out_path = out_path.replace(out_path.size()-4, 1, ".");
-    encdec(path, out_path);
+    encdec(in_path, out_path);
+    return 0;
 }
 
