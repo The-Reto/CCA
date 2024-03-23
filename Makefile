@@ -13,7 +13,7 @@ T_PATH = ./tests/
 EXEC_PATH = ./execs/
 
 # Tests
-TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_Hash.run $(EXEC_PATH)Test_Keygen.run $(EXEC_PATH)Test_Enc.run $(EXEC_PATH)Test_GOL_Board.run $(EXEC_PATH)Test_B_Enc.run $(EXEC_PATH)Test_BitBoard.run $(EXEC_PATH)Test_Dieharder.run
+TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_Hash.run $(EXEC_PATH)Test_Keygen.run $(EXEC_PATH)Test_Enc.run $(EXEC_PATH)Test_GOL_Board.run $(EXEC_PATH)Test_B_Enc.run $(EXEC_PATH)Test_BitBoard.run $(EXEC_PATH)Test_Dieharder.run $(EXEC_PATH)Test_Cycle_Len.run
 
 LIBS = $(LIBS_PATH)GOL_Enc.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_B_Enc.o
 
@@ -43,6 +43,7 @@ clean:
 # Dependency Chains
 $(EXEC_PATH)Test_GOL_Board.run: 
 $(EXEC_PATH)Test_BitBoard.run: 
+$(EXEC_PATH)Test_Cycle_Len.run: 
 $(EXEC_PATH)Test_RNG.run:    $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_RNG.o
 $(EXEC_PATH)Test_Hash.run:   $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Hash.o
 $(EXEC_PATH)Test_Keygen.run: $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Keygen.o
