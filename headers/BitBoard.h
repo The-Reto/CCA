@@ -35,6 +35,14 @@ template <class type> class Bit_Board {
         return *this;
     }
 
+    bool operator==(const Bit_Board& other)
+    {
+        for (int i = 0; i < size; i++) {
+            if (board[i] != other.board[i]) { return false;}
+        }
+        return true;
+    }
+
     /// @brief returns the bit at position x/y as a boolean
     /// @param x x position to be returned
     /// @param y y position to be returned
