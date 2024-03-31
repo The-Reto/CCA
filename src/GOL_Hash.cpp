@@ -60,7 +60,7 @@ u_int64_t* GOL_Hash::get_salt() {
 }
 
 std::string GOL_Hash::get_Str_Hash() {
-    const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:;";
+    const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>";
     std::stringstream reader(get_Hash().to_string());
     std::stringstream result;
 
