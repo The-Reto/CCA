@@ -17,7 +17,7 @@ TESTS = $(EXEC_PATH)Test_Speed.run $(EXEC_PATH)Test_RNG.run $(EXEC_PATH)Test_Has
 
 LIBS = $(LIBS_PATH)GOL_Enc.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_RNG.o $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_B_Enc.o
 
-PRODUCTS = $(EXEC_PATH)CA_Encrypt.run
+PRODUCTS = $(EXEC_PATH)CA_Encrypt.run $(EXEC_PATH)CA_6Bit_Enc.run
 
 default: Libs Tests
 
@@ -52,3 +52,4 @@ $(EXEC_PATH)Test_Speed.run:  $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)G
 $(EXEC_PATH)Test_B_Enc.run:  $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_B_Enc.o
 $(EXEC_PATH)Test_Dieharder.run: $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Keygen.o
 $(EXEC_PATH)CA_Encrypt.run: $(LIBS_PATH)Cryptographic_GOL_Board.o $(LIBS_PATH)GOL_Keygen.o $(LIBS_PATH)GOL_Enc.o $(LIBS_PATH)GOL_Hash.o $(LIBS_PATH)GOL_B_Enc.o
+$(EXEC_PATH)CA_6Bit_Enc.run:
