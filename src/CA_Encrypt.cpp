@@ -51,7 +51,7 @@ options getOptions(int argc, char *argv[]) {
 
      mode = getCmdOption(argv, argv+argc, "-m");
      if (mode[0] == '-') {
-          mode = "BE";
+          mode.erase(mode.begin(), mode.begin() + 1);
      }
      else if ((mode[0] != 'B' & mode[0] != 'S') | (mode[1] != 'E' & mode[1] != 'D')) {
           std::cerr << "INVALID MODE, ABORTING." << std::endl;
