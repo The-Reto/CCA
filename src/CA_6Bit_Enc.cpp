@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string.h>
 
-const static int BLOCK_SIZE = 24 * 7;
+const static int BLOCK_SIZE = 24 * 3;
 const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>";
 
 void encode(std::string in_path, std::string out_path) {
@@ -41,6 +41,7 @@ void encode(std::string in_path, std::string out_path) {
             }
             count += 6;
             result << symbols[digit.to_ulong()];
+            if (count % (2*24) == 0) {result << " ";}
         }
         output_stream << result.str() << "\n";
         input_size -= size;
@@ -66,6 +67,8 @@ void decode(std::string in_path, std::string out_path) {
     getline(myfile,line);
     long filesize = std::stol(line.substr(11, size(line)));
     while ( getline(myfile,line) ) {
+        std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
+        line.erase(end_pos, line.end());
         for (int i = 0; i < size(line); i++) {
             short c = get_bits(line[i]);
             for (int j = 0; j < 6; j++) {
