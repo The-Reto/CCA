@@ -16,7 +16,6 @@ void encode(std::string in_path, std::string out_path) {
     std::bitset<6> digit;
     std::bitset<BLOCK_SIZE * 8> reader;
     buffer = new char [BLOCK_SIZE];
-    output_stream << "FILE-SIZE: " << input_size << "\n";
     int size = (input_size < BLOCK_SIZE) ? input_size : BLOCK_SIZE;
     while (input_size > 0) {
         input_stream.read(buffer, size);
@@ -62,10 +61,12 @@ short get_bits(char c) {
 void decode(std::string in_path, std::string out_path) {
     std::string line;
     std::ifstream myfile (in_path);
+    std::ifstream myfile1 (in_path);
     std::ofstream output(out_path);
-    std::bitset<8*BLOCK_SIZE> bits;
-    getline(myfile,line);
-    long filesize = std::stol(line.substr(11, size(line)));
+    std::bitset<12*BLOCK_SIZE> bits;
+    unsigned long file_size = std::filesystem::file_size(in_path);
+    int lines = std::count(std::istreambuf_iterator<char>(myfile1), std::istreambuf_iterator<char>(), '\n')-1;
+    unsigned long input_size = 3*((12*8)*lines + ((file_size - 109*lines) - (file_size - 109*lines)/9 - 1)) / 4;
     while ( getline(myfile,line) ) {
         std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
         line.erase(end_pos, line.end());
@@ -75,8 +76,8 @@ void decode(std::string in_path, std::string out_path) {
                 bits.set(6*i + j, c & (0b1 << j));
             }
         }
-        output.write( reinterpret_cast<char *>(&bits), (filesize < BLOCK_SIZE) ? filesize : BLOCK_SIZE);
-        filesize -= BLOCK_SIZE;
+        output.write( reinterpret_cast<char *>(&bits), (input_size < BLOCK_SIZE) ? input_size : BLOCK_SIZE);
+        input_size -= BLOCK_SIZE;
     }
     myfile.close();
     output.close();
