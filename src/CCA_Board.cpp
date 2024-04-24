@@ -1,27 +1,27 @@
-#include "../headers/Cryptographic_GOL_Board.h"
+#include "../headers/CCA_Board.h"
 
-void Cryptographic_GOL_Board::step() {
+void CCA_Board::step() {
     update_msb_lsb();
     update_GOL_board();
 }
 
-void Cryptographic_GOL_Board::steps(int steps) {
+void CCA_Board::steps(int steps) {
     for (int i = 0; i< steps; i++) {step();}
 }
 
-Cryptographic_GOL_Board::Cryptographic_GOL_Board(unsigned int _seed) {
+CCA_Board::CCA_Board(unsigned int _seed) {
     seed = (u_int64_t) _seed;
     for (int i = 0; i<size; i++) {board[0][i] = 0;}
     create_seed_map();
     steps(64);
 }
 
-Cryptographic_GOL_Board::Cryptographic_GOL_Board(): Cryptographic_GOL_Board(0) {
+CCA_Board::CCA_Board(): CCA_Board(0) {
 
 }
 
 
-void Cryptographic_GOL_Board::update_GOL_board() {
+void CCA_Board::update_GOL_board() {
     u_int64_t lsb_o, lsb_c, lsb_u, msb_o, msb_c, msb_u, m, t;
     for (int i = 0; i < size; i++) {
         m = board[0][i];
@@ -46,7 +46,7 @@ void Cryptographic_GOL_Board::update_GOL_board() {
     }
 }
 
-void Cryptographic_GOL_Board::create_seed_map() {
+void CCA_Board::create_seed_map() {
     const static int multipliers[3] = {5,127,2293}; //Prime Number No. 3,31,314
     for (int y = 0; y < size; y++) {
         board[0][y] = pi[y];
@@ -61,12 +61,12 @@ void Cryptographic_GOL_Board::create_seed_map() {
     }
 }
 
-void Cryptographic_GOL_Board::apply_xor_map(u_int64_t xor_map[size]) {
+void CCA_Board::apply_xor_map(u_int64_t xor_map[size]) {
     for (int i =0; i<size; i++) {
         board[0][i] ^= xor_map[i];
     }
 }
 
-void Cryptographic_GOL_Board::set_seed(u_int64_t _seed) {
+void CCA_Board::set_seed(u_int64_t _seed) {
     seed = _seed;
 }

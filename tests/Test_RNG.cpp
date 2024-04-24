@@ -1,9 +1,9 @@
 #include <cmath>
-#include "../headers/GOL_RNG.h"
+#include "../headers/CCA_RNG.h"
 
 int test(int seed) {
     static const int range = 20, avg=5000;
-    GOL_RNG test(seed);
+    CCA_RNG test(seed);
     
     int samples = range*avg;
     int results_int[range] = {0};
@@ -29,7 +29,7 @@ int test(int seed) {
 }
 
 int demo(unsigned int seed) {
-    GOL_RNG a(seed ^ 3141591);
+    CCA_RNG a(seed ^ 3141591);
     std::cout << "Showing sample uniform distribution:" << std::endl;
     std::cout << "For Floats:   ";
     for (int i = 0; i < 15; i++) {

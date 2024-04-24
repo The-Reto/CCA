@@ -1,16 +1,16 @@
 #ifndef GOL_RNG_H
 #define GOL_RNG_H
-#include "Cryptographic_GOL_Board.h"
+#include "CCA_Board.h"
 #include <bitset>
 
-class GOL_RNG {
+class CCA_RNG {
     
-    Cryptographic_GOL_Board system;
+    CCA_Board system;
     int int_ctr = 4096, long_ctr = 4096, float_ctr = 4096, double_ctr=4096, bit_ctr=4096;
     Bit_Board<u_int64_t> int_board, long_board, float_board, double_board, bit_board;
 
     public:
-    GOL_RNG(unsigned int seed_);
+    CCA_RNG(unsigned int seed_);
     
     int rand_int(unsigned int max = INT32_MAX);
     

@@ -1,8 +1,8 @@
-#include "../headers/GOL_Enc.h"
+#include "../headers/CCA_S_Enc.h"
 
-GOL_Enc::GOL_Enc(std::string key) : key_manager(key) {}
+CCA_S_Enc::CCA_S_Enc(std::string key) : key_manager(key) {}
 
-void GOL_Enc::scramble_block(int blockSize) {
+void CCA_S_Enc::scramble_block(int blockSize) {
     input_stream.read(reinterpret_cast<char*>(&buffer[0]), blockSize);
     key = key_manager.get_streched_key();
     for (int i = 0; i < 64; i++){
@@ -12,7 +12,7 @@ void GOL_Enc::scramble_block(int blockSize) {
 }
 
 
-void GOL_Enc::encdec(std::string in_path, std::string out_path) {
+void CCA_S_Enc::encdec(std::string in_path, std::string out_path) {
     input_stream = std::basic_ifstream<char>(in_path);
     input_size = std::filesystem::file_size(in_path);
     output_stream = std::basic_ofstream<char>(out_path, std::ios::binary );
@@ -27,7 +27,7 @@ void GOL_Enc::encdec(std::string in_path, std::string out_path) {
     output_stream.close();
 }
 
-int GOL_Enc::encrypt(std::string in_path, std::string out_path) {
+int CCA_S_Enc::encrypt(std::string in_path, std::string out_path) {
     if (run_once) {
         std::cout << "already ran once, need to be reinitialized";
         return -1;

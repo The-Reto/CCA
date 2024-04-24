@@ -1,12 +1,12 @@
 #include <chrono>
-#include "../headers/Flexible_GOL_Board.h"
-#include "../headers/Classic_GOL_Board.h"
+#include "../headers/Flexible_CA_Board.h"
+#include "../headers/CA_Board.h"
 
 int main() {
     const int size = 32;
     
-    Flexible_GOL_Board<u_int32_t, size> f_gol;
-    Classic_GOL_Board<u_int32_t, size> c_gol;
+    Flexible_CA_Board<u_int32_t, size> f_gol;
+    CA_Board<u_int32_t, size> c_gol;
     Bit_Board<u_int32_t> board;
 
     for (int i = 0; i < size; i++) {board[i] = 0;}

@@ -1,11 +1,11 @@
 #include <cmath>
-#include "../headers/GOL_RNG.h"
+#include "../headers/CCA_RNG.h"
 
-GOL_RNG::GOL_RNG(unsigned int seed_) :     system(Cryptographic_GOL_Board(seed_)) {
+CCA_RNG::CCA_RNG(unsigned int seed_) :     system(CCA_Board(seed_)) {
 
 }
 
-int GOL_RNG::rand_int(unsigned int max) {
+int CCA_RNG::rand_int(unsigned int max) {
     if (int_ctr >= 128) {
         int_ctr = -1;
         int_board = system[0];
@@ -20,7 +20,7 @@ int GOL_RNG::rand_int(unsigned int max) {
     }
 }
 
-long GOL_RNG::rand_long(unsigned long max) {
+long CCA_RNG::rand_long(unsigned long max) {
     if (long_ctr >= 64) {
         long_ctr = 0;
         long_board = system[0];
@@ -29,7 +29,7 @@ long GOL_RNG::rand_long(unsigned long max) {
     return long_board[long_ctr++] % max;
 }
 
-bool GOL_RNG::rand_bit() {
+bool CCA_RNG::rand_bit() {
     if (bit_ctr >= 4096) {
         bit_ctr = 0;
         bit_board = system[0];
@@ -38,7 +38,7 @@ bool GOL_RNG::rand_bit() {
     return bit_board.get(bit_ctr%64, bit_ctr/64);
 }
 
-double GOL_RNG::rand_double() {
+double CCA_RNG::rand_double() {
 	const static long sign_mask = ~((long) 3 << 62);
 	const static long exp_mask = ((long) 1023 << 52);
     u_int64_t bits = rand_long();
@@ -47,7 +47,7 @@ double GOL_RNG::rand_double() {
     return *reinterpret_cast<double *>(&bits) - 1.0;
 }
 
-float GOL_RNG::rand_float() {
+float CCA_RNG::rand_float() {
 	const static int sign_mask = ~(3 << 30);
 	const static int exp_mask = (127 << 23);
     u_int32_t bits = rand_int();
@@ -56,7 +56,7 @@ float GOL_RNG::rand_float() {
     return *reinterpret_cast<float *>(&bits) - 1.0;
 }
 
-void GOL_RNG::test() {
+void CCA_RNG::test() {
     for (int i =0; i < 100; i++) {
         system.step();
         system.visualize();

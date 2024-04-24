@@ -1,17 +1,17 @@
 #ifndef GOL_HASH_H
 #define GOL_HASH_H
-#include "Cryptographic_GOL_Board.h"
+#include "CCA_Board.h"
 #include <fstream>
 #include <filesystem>
 #include <boost/algorithm/hex.hpp>
 
-class GOL_Hash {
+class CCA_Hash {
 
     void fold();
     
     public:
 
-    Cryptographic_GOL_Board gol_board;
+    CCA_Board gol_board;
     u_int64_t salt[64];
     std::basic_ifstream<char> input_stream;
     unsigned long input_size;
@@ -21,7 +21,7 @@ class GOL_Hash {
     void hashing();
     
 
-    GOL_Hash(std::string _path);
+    CCA_Hash(std::string _path);
         
     void set_salt(u_int64_t _salt[64]);
     u_int64_t* get_salt();

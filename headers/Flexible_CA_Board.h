@@ -3,7 +3,7 @@
 /// @brief A GOL-Board with flexible, customizable, rules - slower than a class where the rules are hardcoded
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
 /// @tparam size height of the GOL-Board
-template <class TYPE, int size> class Flexible_GOL_Board: public Neighbour_Counting_Board<TYPE> {
+template <class TYPE, int size> class Flexible_CA_Board: public Neighbour_Counting_Board<TYPE> {
     using Neighbour_Counting_Board<TYPE>::update_msb_lsb;
     using Neighbour_Counting_Board<TYPE>::board;
     using Neighbour_Counting_Board<TYPE>::noneof3;
@@ -16,12 +16,12 @@ template <class TYPE, int size> class Flexible_GOL_Board: public Neighbour_Count
     bool survive[9] = {0,0,1,1,0,0,0,0,0}, create[9] = {0,0,0,1,0,0,0,0,0};
 
     /// @brief Default constructor, set the rules to "vanilla" Conway GOL 
-    Flexible_GOL_Board() {    }
+    Flexible_CA_Board() {    }
 
     /// @brief Constructor, set the rules to custom GOL ruleset
     /// @param _survive survival rules, boolean array of length 9
     /// @param _create creation rules, boolean array of length 9
-    Flexible_GOL_Board(bool _survive[9], bool _create[9]): survive(_survive), create(_create) {
+    Flexible_CA_Board(bool _survive[9], bool _create[9]): survive(_survive), create(_create) {
 
     }
 

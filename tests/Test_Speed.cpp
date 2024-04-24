@@ -1,17 +1,17 @@
 #include <chrono>
 #include <ratio>
-#include "../headers/GOL_RNG.h"
-#include "../headers/GOL_Hash.h"
-#include "../headers/Classic_GOL_Board.h"
-#include "../headers/Cryptographic_GOL_Board.h"
-#include "../headers/GOL_B_Enc.h"
-#include "../headers/GOL_Enc.h"
+#include "../headers/CCA_RNG.h"
+#include "../headers/CCA_Hash.h"
+#include "../headers/CA_Board.h"
+#include "../headers/CCA_Board.h"
+#include "../headers/CCA_B_Enc.h"
+#include "../headers/CCA_S_Enc.h"
 
 void test_RNG() {
     using namespace std::chrono;
 
     static const int samples = 10'000'000;
-    GOL_RNG test(35687634);
+    CCA_RNG test(35687634);
     
     std::cout << "Testing RNG Class by taking " << samples << " samples:\n";
     
@@ -47,9 +47,9 @@ void test_RNG() {
 
 void test_Hash() {
     using namespace std::chrono;
-    GOL_Hash txt("test_data/test.txt");
-    GOL_Hash music("test_data/test.mp3");
-    GOL_Hash video("test_data/test.mp4");
+    CCA_Hash txt("test_data/test.txt");
+    CCA_Hash music("test_data/test.mp3");
+    CCA_Hash video("test_data/test.mp4");
     std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
@@ -104,7 +104,7 @@ void test_GOL() {
     board[23] = 16;
     board[22] = 32;
     
-    Classic_GOL_Board<u_int64_t, 64> test_GOL;
+    CA_Board<u_int64_t, 64> test_GOL;
     test_GOL.set_board(board);
     const static int generations = 500000;
     std::cout << "Testing GOL Class by taking running a random setting for " << generations << " generations.\n";
@@ -119,7 +119,7 @@ void test_GOL() {
 
 void test_CGOL() {
     using namespace std::chrono;
-    Cryptographic_GOL_Board test_CGOL(0xefecafe1);
+    CCA_Board test_CGOL(0xefecafe1);
     const static int generations = 500000;
     std::cout << "Testing C-GOL Class by taking running a random setting for " << generations << " generations.\n";
     auto start = steady_clock::now();
@@ -133,9 +133,9 @@ void test_CGOL() {
 
 void test_B_Enc(){
     using namespace std::chrono;
-    GOL_B_Enc encryptor_text("thisIs4T3st_text");
-    GOL_B_Enc encryptor_video("thisIs4T3st_video");
-    GOL_B_Enc encryptor_music("thisIs4T3st_music");
+    CCA_B_Enc encryptor_text("thisIs4T3st_text");
+    CCA_B_Enc encryptor_video("thisIs4T3st_video");
+    CCA_B_Enc encryptor_music("thisIs4T3st_music");
     
     std::cout << "Testing Block Encryption Class by encrypting a text, a music and a video file:\n";
     
@@ -168,9 +168,9 @@ void test_B_Enc(){
 
 void test_B_Dec(){
     using namespace std::chrono;
-    GOL_B_Enc encryptor_text("thisIs4T3st_text");
-    GOL_B_Enc encryptor_video("thisIs4T3st_video");
-    GOL_B_Enc encryptor_music("thisIs4T3st_music");
+    CCA_B_Enc encryptor_text("thisIs4T3st_text");
+    CCA_B_Enc encryptor_video("thisIs4T3st_video");
+    CCA_B_Enc encryptor_music("thisIs4T3st_music");
     
     std::cout << "Testing Block Encryption Class by decrypting a text, a music and a video file:\n";
     
@@ -203,9 +203,9 @@ void test_B_Dec(){
 
 void test_S_Enc(){
     using namespace std::chrono;
-    GOL_Enc encryptor_text("thisIs4T3st_text");
-    GOL_Enc encryptor_video("thisIs4T3st_video");
-    GOL_Enc encryptor_music("thisIs4T3st_music");
+    CCA_S_Enc encryptor_text("thisIs4T3st_text");
+    CCA_S_Enc encryptor_video("thisIs4T3st_video");
+    CCA_S_Enc encryptor_music("thisIs4T3st_music");
     
     std::cout << "Testing Stream Encryption Class by encrypting a text, a music and a video file:\n";
     
@@ -238,9 +238,9 @@ void test_S_Enc(){
 
 void test_S_Dec(){
     using namespace std::chrono;
-    GOL_Enc encryptor_text("thisIs4T3st_text");
-    GOL_Enc encryptor_video("thisIs4T3st_video");
-    GOL_Enc encryptor_music("thisIs4T3st_music");
+    CCA_S_Enc encryptor_text("thisIs4T3st_text");
+    CCA_S_Enc encryptor_video("thisIs4T3st_video");
+    CCA_S_Enc encryptor_music("thisIs4T3st_music");
     
     std::cout << "Testing Stream Encryption Class by decrypting a text, a music and a video file:\n";
     

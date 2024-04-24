@@ -1,17 +1,17 @@
-#include "../headers/GOL_Hash.h"
+#include "../headers/CCA_Hash.h"
 
-GOL_Hash::GOL_Hash(std::string _path) : gol_board(0), input_stream(_path), hashed(false), salted(false) {
+CCA_Hash::CCA_Hash(std::string _path) : gol_board(0), input_stream(_path), hashed(false), salted(false) {
     input_size = std::filesystem::file_size(_path);
 }
 
-void GOL_Hash::fold() {
+void CCA_Hash::fold() {
     for (int i =  0; i < SIZE_Y/2; i++) {
         gol_board[0][i] ^= gol_board[0][SIZE_Y-1-i];
         gol_board[0][i] ^= gol_board[0][i] >> (SIZE_X /2);
     }
 }
 
-void GOL_Hash::hashing() {
+void CCA_Hash::hashing() {
     hashed = true;
     u_int64_t data[64];
     const long bufferSize = std::min((int)input_size, (int)HASH_SIZE);
@@ -25,12 +25,12 @@ void GOL_Hash::hashing() {
     fold();
 }
 
-void GOL_Hash::print_graph_Hash() {
+void CCA_Hash::print_graph_Hash() {
     std::cout << get_graph_Hash() << std::endl;
 
 }
 
-std::string GOL_Hash::get_graph_Hash() {
+std::string CCA_Hash::get_graph_Hash() {
     std::bitset<1024> hash = get_Hash();
     std::string to_ret = "\u250f\u2501";
     for (int i = 0; i < SIZE_X /2; i++) { to_ret += "\u2501\u2501"; }
@@ -49,17 +49,17 @@ std::string GOL_Hash::get_graph_Hash() {
     return to_ret;
 }
 
-void GOL_Hash::set_salt(u_int64_t _salt[64]) {
+void CCA_Hash::set_salt(u_int64_t _salt[64]) {
     for (int i = 0; i < 64; i++) {
         salt[i] = _salt[i];
     }
 }
 
-u_int64_t* GOL_Hash::get_salt() {
+u_int64_t* CCA_Hash::get_salt() {
     return &salt[0];
 }
 
-std::string GOL_Hash::get_Str_Hash() {
+std::string CCA_Hash::get_Str_Hash() {
     const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz<>";
     std::stringstream reader(get_Hash().to_string());
     std::stringstream result;
@@ -74,7 +74,7 @@ std::string GOL_Hash::get_Str_Hash() {
     return res.substr(0, res.size()-1);
 }
 
-std::bitset<1024> GOL_Hash::get_Hash() {
+std::bitset<1024> CCA_Hash::get_Hash() {
     if (!hashed) {hashing();}
     std::string buffer;
     for (int i = 0; i<SIZE_Y/2; i++) {

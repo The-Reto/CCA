@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../headers/GOL_Enc.h"
-#include "../headers/GOL_B_Enc.h"
+#include "../headers/CCA_S_Enc.h"
+#include "../headers/CCA_B_Enc.h"
 
 char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){ // call -f in-file -m MODE -k Key -o out-file
      std::cout << "File to encrypt: " << myOptions.in_file << " with key: " << myOptions.key << " and outputing to: " << myOptions.out_file << std::endl;
      int check;
      if (myOptions.mode[0] == 'B') {
-          GOL_B_Enc encryptor(myOptions.key);
+          CCA_B_Enc encryptor(myOptions.key);
           if (myOptions.mode[1] == 'E') {
                check = encryptor.encrypt(myOptions.in_file, myOptions.out_file);
           }
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){ // call -f in-file -m MODE -k Key -o out-file
           }
      }
      else if (myOptions.mode[0] == 'S') {
-          GOL_Enc encryptor(myOptions.key);
+          CCA_S_Enc encryptor(myOptions.key);
           check = encryptor.encrypt(myOptions.in_file, myOptions.out_file);
      }
 

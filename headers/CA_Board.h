@@ -3,7 +3,7 @@
 /// @brief A GOL-Board with classic rules - faster than a class where the rules are flexible
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
 /// @tparam size height of the GOL-Board
-template <class TYPE, int size> class Classic_GOL_Board: public Neighbour_Counting_Board<TYPE> {
+template <class TYPE, int size> class CA_Board: public Neighbour_Counting_Board<TYPE> {
     using Neighbour_Counting_Board<TYPE>::update_msb_lsb;
     using Neighbour_Counting_Board<TYPE>::board;
     using Neighbour_Counting_Board<TYPE>::noneof3;
@@ -14,7 +14,7 @@ template <class TYPE, int size> class Classic_GOL_Board: public Neighbour_Counti
     public:
 
     /// @brief Default constructor
-    Classic_GOL_Board() {
+    CA_Board() {
     }
 
     void steps(int number) {

@@ -1,10 +1,10 @@
-#include "../headers/GOL_Enc.h"
+#include "../headers/CCA_S_Enc.h"
 #include <boost/dynamic_bitset.hpp>
 
 int main()
 {
-    GOL_Enc encryptor("test_password");
-    GOL_Enc decryptor("test_password");
+    CCA_S_Enc encryptor("test_password");
+    CCA_S_Enc decryptor("test_password");
     std::string in_file = "test_data/test.mp4";
     std::string out_file = "test_data/testvideo.trc";
     std::string out2_file = "test_data/testvideoDEC.mp4";

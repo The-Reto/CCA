@@ -1,13 +1,13 @@
-#include "../headers/GOL_B_Enc.h"
+#include "../headers/CCA_B_Enc.h"
 
-GOL_B_Enc::GOL_B_Enc(std::string key) {
+CCA_B_Enc::CCA_B_Enc(std::string key) {
     seed = 0;
     for (int i = 0; i < key.length(); i++) {
         seed += ((u_int64_t) key[i]) << (8*i % 64);
     }
 }
 
-void GOL_B_Enc::scramble(Cryptographic_GOL_Board* gol_board, Bit_Board<u_int64_t> key)
+void CCA_B_Enc::scramble(CCA_Board* gol_board, Bit_Board<u_int64_t> key)
 {
     (*gol_board).steps(2);
     for (int i = 0; i < 64; i+=2) { 
@@ -17,9 +17,9 @@ void GOL_B_Enc::scramble(Cryptographic_GOL_Board* gol_board, Bit_Board<u_int64_t
     (*gol_board).steps(2);
 }
 
-int GOL_B_Enc::encrypt(std::string in_path, std::string out_path) {
-    Cryptographic_GOL_Board gol_board(seed);
-    GOL_Hash hash(in_path);
+int CCA_B_Enc::encrypt(std::string in_path, std::string out_path) {
+    CCA_Board gol_board(seed);
+    CCA_Hash hash(in_path);
     hash.hashing();
     Bit_Board<u_int64_t> key_map, hash_map;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board[0][i];}
@@ -57,8 +57,8 @@ int GOL_B_Enc::encrypt(std::string in_path, std::string out_path) {
     return 0;
 }
 
-int GOL_B_Enc::decrypt(std::string in_path, std::string out_path) {
-    Cryptographic_GOL_Board gol_board(seed);
+int CCA_B_Enc::decrypt(std::string in_path, std::string out_path) {
+    CCA_Board gol_board(seed);
     Bit_Board<u_int64_t> key_map, in_buffer;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board[0][i];}
     u_int64_t hash_map[64];
@@ -93,7 +93,7 @@ int GOL_B_Enc::decrypt(std::string in_path, std::string out_path) {
     input_stream.close();
     output_stream.close();
     
-    GOL_Hash hash(out_path);
+    CCA_Hash hash(out_path);
     hash.hashing();
     bool match = true;
     for (int i = 0; i<64; i++) {
