@@ -1,5 +1,5 @@
 #include <cmath>
-#include "../headers/CCA_RNG.h"
+#include "../../headers/CCA_RNG.h"
 
 int test(int seed) {
     static const int range = 20, avg=5000;

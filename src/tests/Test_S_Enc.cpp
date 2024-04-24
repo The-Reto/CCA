@@ -1,4 +1,4 @@
-#include "../headers/CCA_S_Enc.h"
+#include "../../headers/CCA_S_Enc.h"
 #include <boost/dynamic_bitset.hpp>
 
 int main()

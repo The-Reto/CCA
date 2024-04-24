@@ -1,4 +1,4 @@
-#include "../headers/CCA_S_Enc.h"
+#include "../../headers/CCA_S_Enc.h"
 
 CCA_S_Enc::CCA_S_Enc(std::string key) : key_manager(key) {}
 

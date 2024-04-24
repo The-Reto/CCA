@@ -9,7 +9,8 @@ OPF = -O3
 LIBS_PATH = ./lib/
 SRC_PATH = ./src/
 H_PATH = ./headers/
-T_PATH = ./tests/
+T_PATH = ./src/tests/
+L_PATH = ./src/libs/
 EXEC_PATH = ./execs/
 T_EXEC_PATH = ./execs/tests/
 
@@ -30,7 +31,7 @@ Tests: $(TESTS)
 
 Products: $(PRODUCTS)
 
-$(LIBS_PATH)%.o: $(SRC_PATH)%.cpp $(H_PATH)%.h
+$(LIBS_PATH)%.o: $(L_PATH)%.cpp $(H_PATH)%.h
 	$(CC) $(LF) -o $@ $(OPF) $<
 
 $(T_EXEC_PATH)Test_%.run: $(T_PATH)Test_%.cpp

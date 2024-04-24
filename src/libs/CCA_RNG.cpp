@@ -1,5 +1,5 @@
 #include <cmath>
-#include "../headers/CCA_RNG.h"
+#include "../../headers/CCA_RNG.h"
 
 CCA_RNG::CCA_RNG(unsigned int seed_) :     system(CCA_Board(seed_)) {
 

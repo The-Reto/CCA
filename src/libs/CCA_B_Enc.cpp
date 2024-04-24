@@ -1,4 +1,4 @@
-#include "../headers/CCA_B_Enc.h"
+#include "../../headers/CCA_B_Enc.h"
 
 CCA_B_Enc::CCA_B_Enc(std::string key) {
     seed = 0;

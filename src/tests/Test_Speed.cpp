@@ -1,11 +1,11 @@
 #include <chrono>
 #include <ratio>
-#include "../headers/CCA_RNG.h"
-#include "../headers/CCA_Hash.h"
-#include "../headers/CA_Board.h"
-#include "../headers/CCA_Board.h"
-#include "../headers/CCA_B_Enc.h"
-#include "../headers/CCA_S_Enc.h"
+#include "../../headers/CCA_RNG.h"
+#include "../../headers/CCA_Hash.h"
+#include "../../headers/CA_Board.h"
+#include "../../headers/CCA_Board.h"
+#include "../../headers/CCA_B_Enc.h"
+#include "../../headers/CCA_S_Enc.h"
 
 void test_RNG() {
     using namespace std::chrono;

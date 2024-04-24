@@ -1,4 +1,4 @@
-#include "../headers/CCA_Hash.h"
+#include "../../headers/CCA_Hash.h"
 
 CCA_Hash::CCA_Hash(std::string _path) : gol_board(0), input_stream(_path), hashed(false), salted(false) {
     input_size = std::filesystem::file_size(_path);

@@ -1,4 +1,4 @@
-#include "../headers/Neighbour_Counting_Board.h"
+#include "../../headers/Neighbour_Counting_Board.h"
 
 class Cycle_Length_Board: public Neighbour_Counting_Board<u_int8_t> {
     const static int size = 8;

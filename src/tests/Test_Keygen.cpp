@@ -1,5 +1,5 @@
-#include "../headers/CCA_Keygen.h"
-#include "../headers/Flexible_CA_Board.h"
+#include "../../headers/CCA_Keygen.h"
+#include "../../headers/Flexible_CA_Board.h"
 #include <boost/dynamic_bitset.hpp>
 
 int main()
