@@ -1,5 +1,5 @@
-# C-GOL
-C-GOL, Crypto-GOL or Crypto-Game-of-Life is an exploration of a - most likely stupid - Idea I had a while ago.
+# CCA
+"CCA" or "Cryptographic Cellular Automaton" is an exploration of a - most likely stupid - Idea I had a while ago.
 The idea was to use the chaotic behaviour* of celular automata under certain rule sets for applications such as RNG, Hashing and even encryption. 
 
 *:_Is it actually chaotic? I haven't checked, but it looks pretty chaotic to the naked eye, doesn't it?_
