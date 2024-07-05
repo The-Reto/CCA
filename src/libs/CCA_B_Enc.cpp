@@ -19,8 +19,8 @@ void CCA_B_Enc::scramble(CCA_Board* gol_board, Bit_Board<u_int64_t> key)
 
 int CCA_B_Enc::encrypt(std::string in_path, std::string out_path) {
     CCA_Board gol_board(seed);
-    CCA_Hash hash(in_path);
-    hash.hashing();
+    std::basic_ifstream<char> stream(in_path);
+    CCA_Hash hash(stream, std::filesystem::file_size(in_path));
     Bit_Board<u_int64_t> key_map, hash_map;
     for (int i = 0; i<64; i++) {key_map[i] = gol_board[0][i];}
     for (int i = 0; i<64; i++) {hash_map[i] = hash.gol_board[0][i];}
@@ -93,8 +93,8 @@ int CCA_B_Enc::decrypt(std::string in_path, std::string out_path) {
     input_stream.close();
     output_stream.close();
     
-    CCA_Hash hash(out_path);
-    hash.hashing();
+    std::basic_ifstream<char> stream(out_path);
+    CCA_Hash hash(stream, std::filesystem::file_size(out_path));
     bool match = true;
     for (int i = 0; i<64; i++) {
         if (hash_map[i] != hash.gol_board[0][i]) {
