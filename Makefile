@@ -19,7 +19,7 @@ TESTS = $(T_EXEC_PATH)Test_Speed.run $(T_EXEC_PATH)Test_RNG.run $(T_EXEC_PATH)Te
 
 LIBS = $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_Keygen.o $(LIBS_PATH)CCA_RNG.o $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_B_Enc.o
 
-PRODUCTS = $(EXEC_PATH)CCA_Encrypt.run
+PRODUCTS = $(EXEC_PATH)CCA_Encrypt.run $(EXEC_PATH)CCA_Hash.run
 
 default: Libs Tests
 
@@ -56,3 +56,4 @@ $(T_EXEC_PATH)Test_Speed.run:  $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_RNG.o $(L
 $(T_EXEC_PATH)Test_B_Enc.run:  $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_B_Enc.o
 $(T_EXEC_PATH)Test_Dieharder.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen.o
 $(EXEC_PATH)CCA_Encrypt.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen.o $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_B_Enc.o
+$(EXEC_PATH)CCA_Hash.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Hash.o
