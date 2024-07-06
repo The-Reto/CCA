@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){ // call -f in-file -m MODE -k Key -o out-file
      
      options myOptions = getOptions(argc, argv);
      if (!myOptions.valid) { return -1; }
-     std::cout << "File to encrypt: " << myOptions.in_file << " with key: " << myOptions.key << " and outputing to: " << myOptions.out_file << std::endl;
+     std::cout <<  myOptions.in_file << " -> " << myOptions.out_file << std::endl;
      int check;
      if (myOptions.mode[0] == 'B') {
           CCA_B_Enc encryptor(myOptions.key);
