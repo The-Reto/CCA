@@ -27,6 +27,10 @@ default: Libs Tests
 clean:
 	rm $(T_EXEC_PATH)*.run $(P_EXEC_PATH)*.run $(LIBS_PATH)*.o ./test_data/*.trc
 
+install: Products
+	sudo cp $(P_EXEC_PATH)CCA_Encrypt.run /usr/bin/ccaenc
+	sudo cp $(P_EXEC_PATH)CCA_Hash.run /usr/bin/ccahash
+
 All: Libs Tests Products
 
 Libs: $(LIBS)
