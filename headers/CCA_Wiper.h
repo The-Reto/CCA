@@ -8,7 +8,7 @@
 
 class CCA_Wiper {    
     public:
-    static const short BLOCK_SIZE = 512;
+    static const short BLOCK_SIZE = 64*64;
 
     static void wipe(std::string path, std::string seed, short repetitions = 8);
     
