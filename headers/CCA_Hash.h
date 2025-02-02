@@ -3,6 +3,7 @@
 #include "CCA_Board.h"
 #include <fstream>
 #include <boost/algorithm/hex.hpp>
+#include <bitset>
 
 class CCA_Hash {    
     public:

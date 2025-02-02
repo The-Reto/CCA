@@ -40,7 +40,7 @@ std::string CCA_Hash::get_graph_Hash() {
 }
 
 std::string CCA_Hash::get_Str_Hash() {
-    const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+    const static char symbols[65] = "0123456789ABCDFEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+_";
     std::stringstream reader(get_Hash().to_string());
     std::stringstream result;
 
