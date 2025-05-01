@@ -35,6 +35,14 @@ template <class type> class Bit_Board {
         return *this;
     }
 
+    Bit_Board& operator^(const Bit_Board& other)
+    {
+        for (int i = 0; i < size; i++) {
+            board[i] ^= other.board[i];
+        }
+        return *this;
+    }
+
     bool operator==(const Bit_Board& other)
     {
         for (int i = 0; i < size; i++) {
