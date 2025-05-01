@@ -1,16 +1,18 @@
 #include "../../headers/CCA_S_Enc.h"
+#include "../../headers/BitBoardFileWriter.h"
+#include "../../headers/BitBoardFileReader.h"
 #include <boost/dynamic_bitset.hpp>
+#include <fstream>
 
 int main()
 {
-    CCA_S_Enc encryptor("test_password");
-    CCA_S_Enc decryptor("test_password");
-    std::string in_file = "test_data/test.mp4";
-    std::string out_file = "test_data/testvideo.trc";
-    std::string out2_file = "test_data/testvideoDEC.mp4";
-    encryptor.encrypt(in_file, out_file);
-    std::cout << "encrpyted" << std::endl;
+    BitBoardFileWriter out("./test_data/test.trc");
+    CCA_S_Enc encryptor(out, "test_password");
+    BitBoardFileReader file("./test_data/test.txt");
+    file.run(encryptor);
 
-    decryptor.encrypt(out_file, out2_file);
-    std::cout << "decrpyted" << std::endl;
+    BitBoardFileWriter out1("./test_data/test-dec.txt");
+    CCA_S_Enc decryptor(out1, "test_password");
+    BitBoardFileReader file1("./test_data/test.trc");
+    file1.run(decryptor);
 }

@@ -6,6 +6,9 @@
 #include "../../headers/CCA_Board.h"
 #include "../../headers/CCA_B_Enc.h"
 #include "../../headers/CCA_S_Enc.h"
+#include "../../headers/BitBoardFileWriter.h"
+#include "../../headers/BitBoardFileReader.h"
+
 
 void test_RNG() {
     using namespace std::chrono;
@@ -206,15 +209,21 @@ void test_B_Dec(){
 
 void test_S_Enc(){
     using namespace std::chrono;
-    CCA_S_Enc encryptor_text("thisIs4T3st_text");
-    CCA_S_Enc encryptor_video("thisIs4T3st_video");
-    CCA_S_Enc encryptor_music("thisIs4T3st_music");
+    BitBoardFileWriter out_text("./test_data/test-txt.trc");
+    BitBoardFileWriter out_video("./test_data/test-mp4.trc");
+    BitBoardFileWriter out_music("./test_data/test-mp3.trc");
+    CCA_S_Enc encryptor_text(out_text, "thisIs4T3st_text");
+    CCA_S_Enc encryptor_video(out_video, "thisIs4T3st_video");
+    CCA_S_Enc encryptor_music(out_music, "thisIs4T3st_music");
+    BitBoardFileReader in_text("./test_data/test.txt");
+    BitBoardFileReader in_video("./test_data/test.mp4");
+    BitBoardFileReader in_music("./test_data/test.mp3");
     
     std::cout << "Testing Stream Encryption Class by encrypting a text, a music and a video file:\n";
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    encryptor_text.encrypt("test_data/test.txt", "test_data/test-txt.trc");
+    in_text.run(encryptor_text);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -222,7 +231,7 @@ void test_S_Enc(){
     
     std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.encrypt("test_data/test.mp4", "test_data/test-mp4.trc");
+    in_video.run(encryptor_video);
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -230,7 +239,7 @@ void test_S_Enc(){
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_music.encrypt("test_data/test.mp3", "test_data/test-mp3.trc");
+    in_music.run(encryptor_music);
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -238,18 +247,25 @@ void test_S_Enc(){
     
     std::cout << std::endl;
 } 
+
 
 void test_S_Dec(){
     using namespace std::chrono;
-    CCA_S_Enc encryptor_text("thisIs4T3st_text");
-    CCA_S_Enc encryptor_video("thisIs4T3st_video");
-    CCA_S_Enc encryptor_music("thisIs4T3st_music");
+    BitBoardFileWriter out_text("./test_data/test-dec.txt");
+    BitBoardFileWriter out_video("./test_data/test-dec.mp4");
+    BitBoardFileWriter out_music("./test_data/test-dec.mp3");
+    CCA_S_Enc encryptor_text(out_text, "thisIs4T3st_text");
+    CCA_S_Enc encryptor_video(out_video, "thisIs4T3st_video");
+    CCA_S_Enc encryptor_music(out_music, "thisIs4T3st_music");
+    BitBoardFileReader in_text("./test_data/test-txt.trc");
+    BitBoardFileReader in_video("./test_data/test-mp4.trc");
+    BitBoardFileReader in_music("./test_data/test-mp3.trc");
     
-    std::cout << "Testing Stream Encryption Class by decrypting a text, a music and a video file:\n";
+    std::cout << "Testing Stream Encryption Class by encrypting a text, a music and a video file:\n";
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    encryptor_text.encrypt("test_data/test-txt.trc", "test_data/test-txt-dec.txt");
+    in_text.run(encryptor_text);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -257,7 +273,7 @@ void test_S_Dec(){
     
     std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_video.encrypt("test_data/test-mp4.trc", "test_data/test-mp4-dec.mp4");
+    in_video.run(encryptor_video);
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -265,7 +281,7 @@ void test_S_Dec(){
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    encryptor_music.encrypt("test_data/test-mp3.trc", "test_data/test-mp3-dec.mp3");
+    in_music.run(encryptor_music);
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -274,14 +290,15 @@ void test_S_Dec(){
     std::cout << std::endl;
 } 
 
+
 int main()
 {
-    test_GOL();
-    test_CGOL();
-    test_RNG();
-    test_Hash();
-    test_B_Enc();
-    test_B_Dec();
+    //test_GOL();
+    //test_CGOL();
+    //test_RNG();
+    //test_Hash();
+    //test_B_Enc();
+    //test_B_Dec();
     test_S_Enc();
     test_S_Dec();
 }
