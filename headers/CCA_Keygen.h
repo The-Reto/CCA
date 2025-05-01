@@ -14,7 +14,7 @@ class CCA_Keygen {
     public:
     CCA_Keygen(std::string key_);
     
-    Bit_Board<u_int64_t>  get_streched_key();
+    Bit_Board<u_int64_t>* get_streched_key();
     
 };
 #endif

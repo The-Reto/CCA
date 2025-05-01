@@ -14,8 +14,8 @@ void CCA_Keygen::setup() {
 
 }
 
-Bit_Board<u_int64_t> CCA_Keygen::get_streched_key() { 
+Bit_Board<u_int64_t>* CCA_Keygen::get_streched_key() { 
     key = gol_board[0];
     gol_board.step();
-    return key;
+    return &key;
 }
