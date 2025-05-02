@@ -61,7 +61,7 @@ void CCA_Board::create_seed_map() {
     }
 }
 
-void CCA_Board::apply_xor_map(u_int64_t xor_map[size]) {
+void CCA_Board::apply_xor_map(Bit_Board<u_int64_t> xor_map) {
     for (int i =0; i<size; i++) {
         board[0][i] ^= xor_map[i];
     }
