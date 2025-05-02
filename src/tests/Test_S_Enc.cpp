@@ -10,6 +10,7 @@ int main()
     CCA_S_Enc encryptor(out, "test_password");
     BitBoardFileReader file("./test_data/test.txt");
     file.run(encryptor);
+    out.flush();
 
     BitBoardFileWriter out1("./test_data/test-dec.txt");
     CCA_S_Enc decryptor(out1, "test_password");

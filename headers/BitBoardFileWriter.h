@@ -4,8 +4,10 @@
 
 class BitBoardFileWriter : public BitBoardOSink {
     public:
-        BitBoardFileWriter(std::string file_name) : fout(file_name, std::ios::binary), BitBoardOSink(fout) {}
+        BitBoardFileWriter(std::string file_name) : out(file_name, std::ios::binary), BitBoardOSink(out) {}
+
+        void flush() {out.flush();}
 
     private:
-        std::ofstream fout;
+        std::ofstream out;
 };
