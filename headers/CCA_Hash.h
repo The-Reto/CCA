@@ -1,27 +1,26 @@
 #ifndef GOL_HASH_H
 #define GOL_HASH_H
 #include "CCA_Board.h"
-#include <fstream>
-#include <boost/algorithm/hex.hpp>
-#include <bitset>
+#include "BitBoardStreamBuf.h"
+#include "BitBoard.h"
 
-class CCA_Hash {    
+class CCA_Hash : public BitBoardStreamBuf {    
     public:
-    CCA_Board gol_board;    
-
-    CCA_Hash(std::string _path);
-        
-    void set_salt(u_int64_t _salt[64]);
-    u_int64_t* get_salt();
-
     const static short SIZE_X = 64, SIZE_Y = 64, HASH_SIZE = SIZE_X * SIZE_Y / CHAR_BIT, BLOCK_STEPS = 1, MIX_STEPS = 64;    
 
-    CCA_Hash(std::istream &input_stream, unsigned long input_size);
+    CCA_Hash(BitBoardStreamBuf& _next);
+    CCA_Hash();
     
-    void print_graph_Hash();
-    std::string get_Str_Hash();
-    std::string get_graph_Hash();
-    std::bitset<2048> get_Hash();
+    bool put(Bit_Board<u_int64_t> buffer, int size=BUFFER_SIZE);
+
+    Bit_Board<u_int64_t> get_Hash();
+
+    private:
+    CCA_Board gol_board;    
+    BitBoardStreamBuf& next;
+    bool hash_calculated;
+
+    void add_to_hash(Bit_Board<u_int64_t>& _buffer);
     
 };
 #endif

@@ -49,14 +49,15 @@ void test_RNG() {
 }
 
 void test_Hash() {
+    CCA_Hash txt_hasher, mp3_hasher, mp4_hasher;
+    BitBoardFileReader txt_file("./test_data/test.txt"), mp3_file("./test_data/test.mp3"), mp4_file("./test_data/test.mp4");
+
     using namespace std::chrono;
     std::cout << "Testing Hash Class by taking the Hash of a text, a music and a video file:\n";
     
     std::cout << "\ttext file (" << 10'204 << " Bytes): ";
     auto start = steady_clock::now();
-    std::basic_ifstream<char> stream("test_data/test.txt");
-    CCA_Hash txt(stream, std::filesystem::file_size("test_data/test.txt"));
-    txt.get_Str_Hash();
+    txt_file.run(txt_hasher);
     auto end = steady_clock::now();
     duration<double> duration = end - start;
     std::chrono::nanoseconds durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -64,9 +65,7 @@ void test_Hash() {
     
     std::cout << "\tvideo file (" << 705'948'212 << " Bytes): ";
     start = steady_clock::now();
-    stream = std::basic_ifstream<char>("test_data/test.mp4");
-    CCA_Hash video(stream, std::filesystem::file_size("test_data/test.mp4"));
-    video.get_Str_Hash();
+    mp4_file.run(mp4_hasher);
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -74,9 +73,7 @@ void test_Hash() {
     
     std::cout << "\tmusic file (" << 41'508'864 << " Bytes): ";
     start = steady_clock::now();
-    stream = std::basic_ifstream<char>("test_data/test.mp3");
-    CCA_Hash music(stream, std::filesystem::file_size("test_data/test.mp3"));
-    music.get_Str_Hash();
+    mp3_file.run(mp3_hasher);
     end = steady_clock::now();
     duration = end - start;
     durationMS = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
@@ -296,7 +293,7 @@ int main()
     //test_GOL();
     //test_CGOL();
     //test_RNG();
-    //test_Hash();
+    test_Hash();
     //test_B_Enc();
     //test_B_Dec();
     test_S_Enc();
