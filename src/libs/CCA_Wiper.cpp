@@ -11,12 +11,12 @@ void CCA_Wiper::wipe(std::string path, std::string seed, short repetitions) {
     for (int i = 0; i < repetitions; i++) {
         input_size = file_size;
         while (input_size >= BLOCK_SIZE) {
-            key = gol_board.get_streched_key();
+            key = *gol_board.get_streched_key();
             output_stream.write(reinterpret_cast<char*>(&key[0]), BLOCK_SIZE * sizeof(unsigned char));
             input_size -= BLOCK_SIZE;
         }
         if (input_size > 0) {
-            key = gol_board.get_streched_key();
+            key = *gol_board.get_streched_key();
             output_stream.write(reinterpret_cast<char*>(&key[0]), input_size * sizeof(unsigned char));
         }
         output_stream.flush();
