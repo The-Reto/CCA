@@ -16,6 +16,6 @@ class CCA_S_Enc : public BitBoardStreamBuf
     
     CCA_S_Enc(BitBoardStreamBuf& _next, std::string _key);
     
-    bool put(Bit_Board<u_int64_t> buffer, int size=BUFFER_SIZE);
+    bool put(Bit_Board<u_int64_t> buffer, int size=BIT_BOARD_STREAM_BUFFER_SIZE);
 };
 #endif

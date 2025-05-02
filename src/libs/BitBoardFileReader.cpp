@@ -9,8 +9,8 @@ bool BitBoardFileReader::run(BitBoardStreamBuf& sink) {
     file.clear();
     file.seekg(0, std::ios::beg);
 
-    while (file.read(reinterpret_cast<char*>(&buffer), BitBoardStreamBuf::BUFFER_SIZE)) {
-        sink.put(buffer, BitBoardStreamBuf::BUFFER_SIZE);
+    while (file.read(reinterpret_cast<char*>(&buffer), BIT_BOARD_STREAM_BUFFER_SIZE)) {
+        sink.put(buffer, BIT_BOARD_STREAM_BUFFER_SIZE);
     }
     std::streamsize remaining = file.gcount();
     if (remaining > 0) {

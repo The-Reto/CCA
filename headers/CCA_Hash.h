@@ -11,7 +11,7 @@ class CCA_Hash : public BitBoardStreamBuf {
     CCA_Hash(BitBoardStreamBuf& _next);
     CCA_Hash();
     
-    bool put(Bit_Board<u_int64_t> buffer, int size=BUFFER_SIZE);
+    bool put(Bit_Board<u_int64_t> buffer, int size=BIT_BOARD_STREAM_BUFFER_SIZE);
 
     Bit_Board<u_int64_t> get_Hash();
 
