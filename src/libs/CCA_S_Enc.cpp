@@ -1,10 +1,10 @@
 #include "../../headers/CCA_S_Enc.h"
 
-CCA_S_Enc::CCA_S_Enc(std::string key) : key_manager(key) {}
+CCA_S_Enc::CCA_S_Enc(std::string key) : key_manager(CCA_Key::generate_key(key)) {}
 
 void CCA_S_Enc::scramble_block(std::basic_istream<char>* input_stream, int blockSize, std::basic_ostream<char>* output_stream) {
     input_stream->read(reinterpret_cast<char*>(&buffer[0]), blockSize);
-    key = key_manager.get_streched_key();
+    key = *key_manager.get_streched_key();
     for (int i = 0; i < 64; i++){
         buffer[i] ^= key[i];
     }

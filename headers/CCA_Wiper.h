@@ -1,6 +1,6 @@
 #ifndef GOL_WIPE_H
 #define GOL_WIPE_H
-#include "CCA_Keygen.h"
+#include "CCA_Key.h"
 #include <fstream>
 #include <fstream>
 #include <filesystem>
