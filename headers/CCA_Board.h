@@ -108,7 +108,7 @@ class CCA_Board: public Neighbour_Counting_Board<u_int64_t> {
 
     /// @brief Applies a xor-map to the board
     /// @param xor_map u_int64_t array of length 64, will be xor-ed against the current state of the board
-    void apply_xor_map(u_int64_t xor_map[size]);
+    void apply_xor_map(Bit_Board<u_int64_t> xor_map);
 
     /// @brief returns the seed
     /// @return u_int64_t seed used to seed the board
