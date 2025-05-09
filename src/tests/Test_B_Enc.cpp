@@ -1,17 +1,19 @@
 #include "../../headers/CCA_B_Enc.h"
+#include "../../headers/CCA_B_Dec.h"
+#include "../../headers/BitBoardFileWriter.h"
+#include "../../headers/BitBoardFileReader.h"
 #include <boost/dynamic_bitset.hpp>
 #include <iostream>
 
 int main()
 {
-    CCA_B_Enc encryptor("test_password");
-    CCA_B_Enc decryptor("test_password");
-    std::string ifile = "test_data/test.txt";
-    std::string ofile = "test_data/test-txt.trc";
-    std::string o2file = "test_data/test-DEC.txt";
-    encryptor.encrypt(ifile, ofile);
-    std::cout << "encrpyted" << std::endl;
-
-    decryptor.decrypt(ofile, o2file);
-    std::cout << "decrpyted" << std::endl;
+    BitBoardFileWriter out("./test_data/test.trc");
+    CCA_B_Enc encryptor(out, "test_password");
+    BitBoardFileReader file("./test_data/test.txt");
+    file.run(encryptor);
+    out.flush();
+    BitBoardFileWriter out1("./test_data/test-dec.txt");
+    CCA_B_Dec decryptor(out1, "test_password");
+    BitBoardFileReader file1("./test_data/test.trc");
+    file1.run(decryptor);
 }
