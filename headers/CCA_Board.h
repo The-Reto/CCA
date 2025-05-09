@@ -20,6 +20,9 @@ class too_few_bits_exception: public std::exception {
 /// @tparam size height of the GOL-Board
 class CCA_Board: public Neighbour_Counting_Board<u_int64_t> {
     const static int size = 64;
+    u_int64_t seed;
+
+    public:
     constexpr static u_int64_t pi[64] = {
         0b1100100100001111110110101010001000100001011010001100001000110100,
         0b1100010011000110011000101000101110000000110111000001110011010001,
@@ -87,8 +90,7 @@ class CCA_Board: public Neighbour_Counting_Board<u_int64_t> {
         0b1100000111010100110111001011001001100000001001100100011011011110
     };
 
-    u_int64_t seed;
-    public:
+
     /// @brief Default constructor, set the rules to "vanilla" Conway GOL 
     CCA_Board(unsigned int _seed);
     CCA_Board();
