@@ -8,13 +8,17 @@ template <class type> class Bit_Board {
 
     public:
     const static int size = sizeof(type) * 8;
-    
+
     protected:
     type board[size];
 
     public:
 
     Bit_Board() {
+        reset();
+    }
+
+    void reset() {
         for (int i =  0; i < size; i++) {
             board[i] = 0;
         }
