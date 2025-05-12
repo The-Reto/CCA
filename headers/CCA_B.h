@@ -18,7 +18,7 @@ class CCA_B : public BitBoardStreamBuf
             
     public:
     
-    static const short ROUNDS = 24;
+    static const short ROUNDS = 16;
 
     CCA_B(BitBoardStreamBuf& _next, std::string _key);
     
