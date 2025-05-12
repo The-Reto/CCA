@@ -9,6 +9,8 @@ public:
 
     bool put(Bit_Board<u_int64_t> buffer, int size=BIT_BOARD_STREAM_BUFFER_SIZE) override;
 
-private:
+    void flush();
+
+protected:
     std::ostream& out;
 };
