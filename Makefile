@@ -23,7 +23,7 @@ TESTS = $(T_EXEC_PATH)Test_Speed.run $(T_EXEC_PATH)Test_RNG.run $(T_EXEC_PATH)Te
 LIBS = $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_Key.o $(LIBS_PATH)CCA_RNG.o $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_B.o $(LIBS_PATH)CCA_B_Dec.o $(LIBS_PATH)CCA_B_Enc.o $(LIBS_PATH)CCA_Wiper.o $(LIBS_PATH)BitBoardOSink.o $(LIBS_PATH)BitBoardFileReader.o $(LIBS_PATH)BitBoardStringReader.o $(LIBS_PATH)6BitEncoder.o
 #$(LIBS_PATH)CCA_Archive.o
 
-PRODUCTS = $(P_EXEC_PATH)CCA_Encrypt.run $(P_EXEC_PATH)CCA_Hash.run $(P_EXEC_PATH)CCA_Wipe.run
+PRODUCTS = $(P_EXEC_PATH)CCA_Encrypt.run $(P_EXEC_PATH)CCA_Hash.run $(P_EXEC_PATH)CCA_Wipe.run $(P_EXEC_PATH)CCA_Key_Generator.run
 
 default: Libs Tests
 
@@ -34,6 +34,7 @@ install: Products
 	sudo cp $(P_EXEC_PATH)CCA_Encrypt.run /usr/bin/ccaenc
 	sudo cp $(P_EXEC_PATH)CCA_Hash.run /usr/bin/ccahash
 	sudo cp $(P_EXEC_PATH)CCA_Wipe.run /usr/bin/ccawipe
+	sudo cp $(P_EXEC_PATH)CCA_Wipe.run /usr/bin/ccakey
 
 All: Libs Tests Products
 
@@ -69,3 +70,4 @@ $(T_EXEC_PATH)Test_Archive.run: $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_S_Enc.o $
 $(P_EXEC_PATH)CCA_Encrypt.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Key.o $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_B_Enc.o $(LIBS_PATH)CCA_B_Dec.o $(LIBS_PATH)BitBoardFileReader.o $(LIBS_PATH)BitBoardOSink.o  $(LIBS_PATH)CCA_B.o $(LIBS_PATH)BitBoardStringReader.o
 $(P_EXEC_PATH)CCA_Hash.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)BitBoardFileReader.o $(LIBS_PATH)BitBoardOSink.o $(LIBS_PATH)BitBoardStringReader.o $(LIBS_PATH)6BitEncoder.o
 $(P_EXEC_PATH)CCA_Wipe.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Key.o $(LIBS_PATH)CCA_Wiper.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)BitBoardStringReader.o
+$(P_EXEC_PATH)CCA_Key_Generator.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Key.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)BitBoardStringReader.o
