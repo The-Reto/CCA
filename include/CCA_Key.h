@@ -12,7 +12,11 @@ class CCA_Key : public CCA_Board {
     Bit_Board<u_int64_t>* get_streched_key();
     Bit_Board<u_int64_t>* get_key();
 
+    static bool write_key_to_file(CCA_Key key, std::string path);
+
     static CCA_Key generate_key(std::string user_input);
+
+    static CCA_Key read_key(std::string path);
     
 };
 #endif

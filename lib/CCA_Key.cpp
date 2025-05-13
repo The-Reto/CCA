@@ -2,6 +2,7 @@
 #include "../include/CCA_Hash.h"
 #include "../include/BitBoardStringReader.h"
 #include <random>
+#include <fstream>
 #include <bit>
 
 CCA_Key::CCA_Key(Bit_Board<u_int64_t> _key) : CCA_Board() {
@@ -18,6 +19,14 @@ Bit_Board<u_int64_t> *CCA_Key::get_key()
 {
     return &board[0];
 }
+
+bool CCA_Key::write_key_to_file(CCA_Key key, std::string path)
+{
+    std::ofstream out(path, std::ios::binary);
+    out.write(reinterpret_cast<const char*>(&(key.board)), BIT_BOARD_STREAM_BUFFER_SIZE);
+    return out.good();
+}
+
 CCA_Key CCA_Key::generate_key(std::string user_input)
 {
     const static u_int64_t multipliers[3] = {2293,28843,368411}; //Prime Number No. 314, 3141, 31415
@@ -46,4 +55,14 @@ CCA_Key CCA_Key::generate_key(std::string user_input)
     }
     
     return CCA_Key(new_key);
+}
+
+CCA_Key CCA_Key::read_key(std::string path)
+{
+    std::ifstream file(path, std::ios::binary);
+    Bit_Board<u_int64_t> buffer;
+
+    file.read(reinterpret_cast<char*>(&buffer), BIT_BOARD_STREAM_BUFFER_SIZE);
+
+    return CCA_Key(buffer);
 }
