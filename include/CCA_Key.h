@@ -1,7 +1,6 @@
 #ifndef GOL_Key
 #define GOL_Key
 #include "CCA_Board.h"
-#include <bitset>
 
 class CCA_Key : public CCA_Board {
     

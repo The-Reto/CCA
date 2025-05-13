@@ -2,14 +2,14 @@
 #define GOL_Enc_H
 
 #include "CCA_Board.h"
-#include "CCA_Keygen.h"
+#include "CCA_Key.h"
 #include "BitBoardStreamBuf.h"
 
 class CCA_S_Enc : public BitBoardStreamBuf
 {
     private:
 
-    CCA_Keygen key_manager;
+    CCA_Key key_manager;
     BitBoardStreamBuf& next;
             
     public:

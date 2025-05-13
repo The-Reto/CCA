@@ -1,4 +1,4 @@
-#include "../include/CCA_Keygen.h"
+#include "../include/CCA_Key.h"
 #include <chrono>
 
 int main(int argc, char *argv[])

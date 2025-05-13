@@ -21,7 +21,7 @@ void CCA_B::update_Key(Bit_Board<u_int64_t> &buffer)
     }
 }
 
-CCA_B::CCA_B(BitBoardStreamBuf &_next, std::string _key) : next(_next), key_manager(_key)
+CCA_B::CCA_B(BitBoardStreamBuf &_next, std::string _key) : next(_next), key_manager(CCA_Key::generate_key(_key))
 {
     key = key_manager.get_streched_key();
 }

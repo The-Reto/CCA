@@ -2,13 +2,13 @@
 #define CCA_B_H
 
 #include "CCA_Board.h"
-#include "CCA_Keygen.h"
+#include "CCA_Key.h"
 #include "BitBoardStreamBuf.h"
 
 class CCA_B : public BitBoardStreamBuf
 {
     protected:
-    CCA_Keygen key_manager;
+    CCA_Key key_manager;
     BitBoardStreamBuf& next;
     CCA_Board F;
     Bit_Board<u_int64_t> *key, prev;

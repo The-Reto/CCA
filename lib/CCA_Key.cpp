@@ -1,5 +1,6 @@
-#include "../../headers/CCA_Key.h"
-#include "../../headers/CCA_Hash.h"
+#include "../include/CCA_Key.h"
+#include "../include/CCA_Hash.h"
+#include "../include/BitBoardStringReader.h"
 #include <random>
 #include <bit>
 
@@ -23,18 +24,24 @@ CCA_Key CCA_Key::generate_key(std::string user_input)
     Bit_Board<u_int64_t> new_key;
     std::random_device rd;
     std::uniform_int_distribution<u_int32_t> dist(0, 0xFFFFFFFF);
-    u_int64_t seed = dist(rd);
-    std::istringstream stream(user_input);
-    CCA_Hash hasher(stream, std::strlen(user_input.c_str()));
-    Bit_Board<u_int64_t> hash = hasher.gol_board.get_board();
+    u_int32_t seed = dist(rd);
+    BitBoardStringReader stream(user_input);
+    CCA_Hash hasher;
+    stream.run(hasher);
+    Bit_Board<u_int64_t> hash = hasher.get_Hash();
     for (int y = 0; y < size; y++) {
-        new_key[y] ^= hash[y] ^ pi[y];
+        new_key[y] ^= hash[y] ^ pi[y] ^ seed;
     } 
-
+    CCA_Key to_ret = CCA_Key(new_key);
+    to_ret.steps(32);
     for (u_int64_t i : multipliers) {
         for (int y = 0; y < size; y++) {
-            new_key[y] ^= std::rotr(seed, (y*i) % size);
-            new_key[y] = std::rotl(new_key[y], (seed*i*y) % size);
+            to_ret.board[0][y] ^= std::rotr(seed, (y*i) % 32);
+            to_ret.board[0][y] = std::rotl(to_ret.board[0][y], (seed*i*y) % size);
+        }
+        to_ret.steps(32);
+        for (int y = 0; y < size; y++) {
+            to_ret.board[0][y] ^= std::rotr(hash[i*y], (y*i) % size);
         }
     }
     

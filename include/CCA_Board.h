@@ -19,14 +19,11 @@ class too_few_bits_exception: public std::exception {
 /// @tparam TYPE u_intX_t used to store the bord, simultaneously sets width of GOL-Board (eg. u_int32_t, sets the width to 32)
 /// @tparam size height of the GOL-Board
 class CCA_Board: public Neighbour_Counting_Board<u_int64_t> {
-    u_int64_t seed;
-
-    public:
     
+    public:
     const static int size = 64;
     u_int64_t seed;
 
-    public:
     constexpr static u_int64_t pi[64] = {
         0b1100100100001111110110101010001000100001011010001100001000110100,
         0b1100010011000110011000101000101110000000110111000001110011010001,
