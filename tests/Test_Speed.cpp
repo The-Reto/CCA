@@ -137,9 +137,9 @@ void test_CGOL() {
 
 void test_B_Enc(){
     using namespace std::chrono;
-    BitBoardFileWriter out_text("./test_data/test-txt.trc");
-    BitBoardFileWriter out_video("./test_data/test-mp4.trc");
-    BitBoardFileWriter out_music("./test_data/test-mp3.trc");
+    BitBoardFileWriter out_text("./test_data/test-B-txt.trc");
+    BitBoardFileWriter out_video("./test_data/test-B-mp4.trc");
+    BitBoardFileWriter out_music("./test_data/test-B-mp3.trc");
     CCA_B_Enc encryptor_text(out_text, "thisIs4T3st_text");
     CCA_B_Enc encryptor_video(out_video, "thisIs4T3st_video");
     CCA_B_Enc encryptor_music(out_music, "thisIs4T3st_music");
@@ -178,15 +178,15 @@ void test_B_Enc(){
 
 void test_B_Dec(){
     using namespace std::chrono;
-    BitBoardFileWriter out_text("./test_data/test-txt.trc");
-    BitBoardFileWriter out_video("./test_data/test-mp4.trc");
-    BitBoardFileWriter out_music("./test_data/test-mp3.trc");
+    BitBoardFileWriter out_text("./test_data/test-B-dec.txt");
+    BitBoardFileWriter out_video("./test_data/test-B-dec.mp4");
+    BitBoardFileWriter out_music("./test_data/test-B-dec.mp3");
     CCA_B_Dec encryptor_text(out_text, "thisIs4T3st_text");
     CCA_B_Dec encryptor_video(out_video, "thisIs4T3st_video");
     CCA_B_Dec encryptor_music(out_music, "thisIs4T3st_music");
-    BitBoardFileReader in_text("./test_data/test.txt");
-    BitBoardFileReader in_video("./test_data/test.mp4");
-    BitBoardFileReader in_music("./test_data/test.mp3");
+    BitBoardFileReader in_text("./test_data/test-B-txt.trc");
+    BitBoardFileReader in_video("./test_data/test-B-mp4.trc");
+    BitBoardFileReader in_music("./test_data/test-B-mp3.trc");
     
     std::cout << "Testing Block Encryption Class by decrypting a text, a music and a video file:\n";
     
@@ -219,9 +219,9 @@ void test_B_Dec(){
 
 void test_S_Enc(){
     using namespace std::chrono;
-    BitBoardFileWriter out_text("./test_data/test-txt.trc");
-    BitBoardFileWriter out_video("./test_data/test-mp4.trc");
-    BitBoardFileWriter out_music("./test_data/test-mp3.trc");
+    BitBoardFileWriter out_text("./test_data/test-S-txt.trc");
+    BitBoardFileWriter out_video("./test_data/test-S-mp4.trc");
+    BitBoardFileWriter out_music("./test_data/test-S-mp3.trc");
     CCA_S_Enc encryptor_text(out_text, "thisIs4T3st_text");
     CCA_S_Enc encryptor_video(out_video, "thisIs4T3st_video");
     CCA_S_Enc encryptor_music(out_music, "thisIs4T3st_music");
@@ -261,15 +261,15 @@ void test_S_Enc(){
 
 void test_S_Dec(){
     using namespace std::chrono;
-    BitBoardFileWriter out_text("./test_data/test-dec.txt");
-    BitBoardFileWriter out_video("./test_data/test-dec.mp4");
-    BitBoardFileWriter out_music("./test_data/test-dec.mp3");
+    BitBoardFileWriter out_text("./test_data/test-S-dec.txt");
+    BitBoardFileWriter out_video("./test_data/test-S-dec.mp4");
+    BitBoardFileWriter out_music("./test_data/test-S-dec.mp3");
     CCA_S_Enc encryptor_text(out_text, "thisIs4T3st_text");
     CCA_S_Enc encryptor_video(out_video, "thisIs4T3st_video");
     CCA_S_Enc encryptor_music(out_music, "thisIs4T3st_music");
-    BitBoardFileReader in_text("./test_data/test-txt.trc");
-    BitBoardFileReader in_video("./test_data/test-mp4.trc");
-    BitBoardFileReader in_music("./test_data/test-mp3.trc");
+    BitBoardFileReader in_text("./test_data/test-S-txt.trc");
+    BitBoardFileReader in_video("./test_data/test-S-mp4.trc");
+    BitBoardFileReader in_music("./test_data/test-S-mp3.trc");
     
     std::cout << "Testing Stream Encryption Class by encrypting a text, a music and a video file:\n";
     
