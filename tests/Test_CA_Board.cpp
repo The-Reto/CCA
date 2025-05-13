@@ -1,6 +1,6 @@
 #include <chrono>
-#include "../../headers/Flexible_CA_Board.h"
-#include "../../headers/CA_Board.h"
+#include "../include/Flexible_CA_Board.h"
+#include "../include/CA_Board.h"
 
 int main() {
     const int size = 32;

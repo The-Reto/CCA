@@ -1,5 +1,5 @@
-#include "../../headers/CCA_Hash.h"
-#include "../../headers/BitBoardDiscardSink.h"
+#include "../include/CCA_Hash.h"
+#include "../include/BitBoardDiscardSink.h"
 
 
 CCA_Hash::CCA_Hash(BitBoardStreamBuf &_next) : next(_next), gol_board(0), hash_calculated(false) {}

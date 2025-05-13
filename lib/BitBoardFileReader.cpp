@@ -1,4 +1,4 @@
-#include "../../headers/BitBoardFileReader.h"
+#include "../include/BitBoardFileReader.h"
 
 BitBoardFileReader::BitBoardFileReader(const std::string& filename) : file(filename, std::ios::binary) {}
     

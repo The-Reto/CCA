@@ -1,6 +1,6 @@
 #include <iostream>
 #include <filesystem>
-#include "../headers/CCA_Hash.h"
+#include "../include/CCA_Hash.h"
 
 bool cmdOptionExists(char** begin, char** end, const std::string& option)
 {

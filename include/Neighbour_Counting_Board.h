@@ -2,7 +2,7 @@
 #define GOL_BOARD_HEADER
 
 #include <bit>
-#include "../headers/BitBoard.h"
+#include "BitBoard.h"
 
 enum class Layer {main, lsb, msb};
 

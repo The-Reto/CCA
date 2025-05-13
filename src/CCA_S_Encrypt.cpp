@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../headers/CCA_S_Enc.h"
+#include "../include/CCA_S_Enc.h"
 
 
 int main(int argc, char *argv[]){ // call mode in-file Key out-file

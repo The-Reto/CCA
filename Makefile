@@ -6,14 +6,15 @@ LF = -c
 OPF = -O3
 
 # Paths
-LIBS_PATH = ./lib/
 SRC_PATH = ./src/
-H_PATH = ./headers/
-T_PATH = ./src/tests/
-L_PATH = ./src/libs/
+H_PATH = ./include/
+T_PATH = ./tests/
+L_PATH = ./lib/
 EXEC_PATH = ./execs/
 T_EXEC_PATH = $(EXEC_PATH)tests/
 P_EXEC_PATH = $(EXEC_PATH)products/
+LIBS_PATH = $(EXEC_PATH)lib/
+
 
 # Tests
 TESTS = $(T_EXEC_PATH)Test_Speed.run $(T_EXEC_PATH)Test_RNG.run $(T_EXEC_PATH)Test_Hash.run $(T_EXEC_PATH)Test_Keygen.run $(T_EXEC_PATH)Test_S_Enc.run $(T_EXEC_PATH)Test_CA_Board.run $(T_EXEC_PATH)Test_B_Enc.run $(T_EXEC_PATH)Test_BitBoard.run $(T_EXEC_PATH)Test_Dieharder.run $(T_EXEC_PATH)Test_Wipe.run  

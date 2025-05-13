@@ -1,4 +1,4 @@
-#include "../../headers/BitBoard.h"
+#include "../include/BitBoard.h"
 #include <iostream>
 
 int main()

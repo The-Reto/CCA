@@ -1,4 +1,4 @@
-#include "../../headers/CCA_B_Dec.h"
+#include "../include/CCA_B_Dec.h"
 
 bool CCA_B_Dec::put(Bit_Board<u_int64_t> buffer, int size) {
     if (size == BIT_BOARD_STREAM_BUFFER_SIZE) {

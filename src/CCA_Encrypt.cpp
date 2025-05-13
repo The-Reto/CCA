@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../headers/CCA_S_Enc.h"
-#include "../headers/CCA_B_Enc.h"
+#include "../include/CCA_S_Enc.h"
+#include "../include/CCA_B_Enc.h"
 
 char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {

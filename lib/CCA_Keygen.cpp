@@ -1,4 +1,4 @@
-#include "../../headers/CCA_Keygen.h"
+#include "../include/CCA_Keygen.h"
 
 CCA_Keygen::CCA_Keygen(std::string key_) : gol_board(0) {
     u_int64_t seed = 0;

@@ -1,4 +1,4 @@
-#include "../../headers/BitBoardOSink.h"
+#include "../include/BitBoardOSink.h"
 
 BitBoardOSink::BitBoardOSink(std::ostream& out) : out(out) {}
 

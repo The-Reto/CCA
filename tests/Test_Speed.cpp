@@ -1,14 +1,14 @@
 #include <chrono>
 #include <ratio>
-#include "../../headers/CCA_RNG.h"
-#include "../../headers/CCA_Hash.h"
-#include "../../headers/CA_Board.h"
-#include "../../headers/CCA_Board.h"
-#include "../../headers/CCA_B_Enc.h"
-#include "../../headers/CCA_B_Dec.h"
-#include "../../headers/CCA_S_Enc.h"
-#include "../../headers/BitBoardFileWriter.h"
-#include "../../headers/BitBoardFileReader.h"
+#include "../include/CCA_RNG.h"
+#include "../include/CCA_Hash.h"
+#include "../include/CA_Board.h"
+#include "../include/CCA_Board.h"
+#include "../include/CCA_B_Enc.h"
+#include "../include/CCA_B_Dec.h"
+#include "../include/CCA_S_Enc.h"
+#include "../include/BitBoardFileWriter.h"
+#include "../include/BitBoardFileReader.h"
 
 
 void test_RNG() {

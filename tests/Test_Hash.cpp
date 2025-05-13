@@ -1,6 +1,6 @@
-#include "../../headers/CCA_Hash.h"
-#include "../../headers/BitBoardOSink.h"
-#include "../../headers/BitBoardFileReader.h"
+#include "../include/CCA_Hash.h"
+#include "../include/BitBoardOSink.h"
+#include "../include/BitBoardFileReader.h"
 
 int main()
 {

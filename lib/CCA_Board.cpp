@@ -1,4 +1,4 @@
-#include "../../headers/CCA_Board.h"
+#include "../include/CCA_Board.h"
 
 void CCA_Board::step() {
     update_msb_lsb();

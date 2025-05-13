@@ -1,4 +1,4 @@
-#include "../../headers/CCA_B.h"
+#include "../include/CCA_B.h"
 
 void CCA_B::update_F(Bit_Board<u_int64_t> &buffer, short ofset, short cycle)
 {

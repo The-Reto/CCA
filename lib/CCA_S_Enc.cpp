@@ -1,4 +1,4 @@
-#include "../../headers/CCA_S_Enc.h"
+#include "../include/CCA_S_Enc.h"
 
 CCA_S_Enc::CCA_S_Enc(BitBoardStreamBuf& _next, std::string _key) : next(_next), key_manager(_key) {}
 
