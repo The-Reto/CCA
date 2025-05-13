@@ -56,7 +56,6 @@ $(P_EXEC_PATH)CCA_%.run: $(SRC_PATH)CCA_%.cpp
 # Dependency Chains
 $(T_EXEC_PATH)Test_CA_Board.run: 
 $(T_EXEC_PATH)Test_BitBoard.run: 
-$(T_EXEC_PATH)Test_Cycle_Len.run: 
 $(T_EXEC_PATH)Test_RNG.run:    $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_RNG.o
 $(T_EXEC_PATH)Test_Hash.run:   $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)BitBoardOSink.o $(LIBS_PATH)BitBoardFileReader.o
 $(T_EXEC_PATH)Test_Keygen.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen.o
@@ -67,5 +66,5 @@ $(T_EXEC_PATH)Test_Dieharder.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen
 $(T_EXEC_PATH)Test_Wipe.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen.o $(LIBS_PATH)CCA_Wiper.o
 $(P_EXEC_PATH)CCA_Encrypt.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen.o $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_B_Enc.o
 $(P_EXEC_PATH)CCA_Hash.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Hash.o
-$(P_EXEC_PATH)CCA_Wipe.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Keygen.o $(LIBS_PATH)CCA_Wiper.o
-$(T_EXEC_PATH)Test_Archive.run: $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Keygen.o $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Archive.o
+$(P_EXEC_PATH)CCA_Wipe.run: $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Key.o $(LIBS_PATH)CCA_Wiper.o $(LIBS_PATH)CCA_Hash.o
+$(T_EXEC_PATH)Test_Archive.run: $(LIBS_PATH)CCA_Hash.o $(LIBS_PATH)CCA_S_Enc.o $(LIBS_PATH)CCA_Key.o $(LIBS_PATH)CCA_Board.o $(LIBS_PATH)CCA_Archive.o

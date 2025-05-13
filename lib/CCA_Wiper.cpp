@@ -4,7 +4,7 @@
 
 
 void CCA_Wiper::wipe(std::string path, std::string seed, short repetitions) {
-    CCA_Keygen gol_board(seed); 
+    CCA_Key gol_board = CCA_Key::generate_key(seed); 
     Bit_Board<u_int64_t> key;
     unsigned long file_size = std::filesystem::file_size(path), input_size;
     std::basic_ofstream<char> output_stream = std::basic_ofstream<char>(path, std::ios::binary | std::ios::trunc);
