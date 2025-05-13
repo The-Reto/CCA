@@ -1,6 +1,9 @@
 #include <iostream>
 #include "../include/CCA_S_Enc.h"
 #include "../include/CCA_B_Enc.h"
+#include "../include/CCA_B_Dec.h"
+#include "../include/BitBoardFileReader.h"
+#include "../include/BitBoardFileWriter.h"
 
 char* getCmdOption(char ** begin, char ** end, const std::string & option)
 {
@@ -71,20 +74,24 @@ int main(int argc, char *argv[]){ // call -f in-file -m MODE -k Key -o out-file
      options myOptions = getOptions(argc, argv);
      if (!myOptions.valid) { return -1; }
      std::cout <<  myOptions.in_file << " -> " << myOptions.out_file << std::endl;
-     int check;
+     BitBoardFileWriter out(myOptions.out_file);
+     BitBoardFileReader file(myOptions.in_file);
      if (myOptions.mode[0] == 'B') {
-          CCA_B_Enc encryptor(myOptions.key);
+          
           if (myOptions.mode[1] == 'E') {
-               check = encryptor.encrypt(myOptions.in_file, myOptions.out_file);
+               CCA_B_Enc encryptor(out, myOptions.key);
+               file.run(encryptor);
           }
           if (myOptions.mode[1] == 'D') {
-               check = encryptor.decrypt(myOptions.in_file, myOptions.out_file);
+               CCA_B_Dec decryptor(out, myOptions.key);
+               file.run(decryptor);
           }
      }
      else if (myOptions.mode[0] == 'S') {
-          CCA_S_Enc encryptor(myOptions.key);
-          check = encryptor.encrypt(myOptions.in_file, myOptions.out_file);
+          CCA_S_Enc encryptor(out, myOptions.key);
+          file.run(encryptor);
      }
+     out.flush();
 
-     return check;
+     return 0;
 }
