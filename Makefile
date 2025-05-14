@@ -34,7 +34,7 @@ install: Products
 	sudo cp $(P_EXEC_PATH)CCA_Encrypt.run /usr/bin/ccaenc
 	sudo cp $(P_EXEC_PATH)CCA_Hash.run /usr/bin/ccahash
 	sudo cp $(P_EXEC_PATH)CCA_Wipe.run /usr/bin/ccawipe
-	sudo cp $(P_EXEC_PATH)CCA_Wipe.run /usr/bin/ccakey
+	sudo cp $(P_EXEC_PATH)CCA_Key_Generator.run /usr/bin/ccakey
 
 All: Libs Tests Products
 
