@@ -9,14 +9,15 @@
 int main()
 {
     BitBoardFileReader file("./test_data/test.txt");
-    BitBoardFileWriter out("./test_data/test.trc");
+    BitBoardFileWriter out("./test_data/output/test.ctb");
     CCA_Hash hasher;
     file.run(hasher);
-    CCA_B_Enc encryptor(out, "./test_data/test_key.trk", hasher.get_Hash());
+    CCA_B_Enc encryptor(out, "./test_data/test.ctk", hasher.get_Hash());
     file.run(encryptor);
     out.flush();
-    BitBoardFileWriter out1("./test_data/test-dec.txt");
-    CCA_B_Dec decryptor(out1, "./test_data/test_key.trk");
-    BitBoardFileReader file1("./test_data/test.trc");
+
+    BitBoardFileWriter out1("./test_data/output/test-dec-ctb.txt");
+    CCA_B_Dec decryptor(out1, "./test_data/test.ctk");
+    BitBoardFileReader file1("./test_data/output/test.ctb");
     file1.run(decryptor);
 }

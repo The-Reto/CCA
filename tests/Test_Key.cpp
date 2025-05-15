@@ -8,5 +8,5 @@ int main()
 
     Bit_Board<u_int64_t>::visualize(*test.get_key());
 
-    CCA_Key::write_key_to_file(test, "./test_data/test_key.trk");
+    CCA_Key::write_key_to_file(test, "./test_data/output/test_key.ctk");
 }
