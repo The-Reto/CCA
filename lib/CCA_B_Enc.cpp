@@ -1,5 +1,9 @@
 #include "../include/CCA_B_Enc.h"
 
+CCA_B_Enc::CCA_B_Enc(BitBoardStreamBuf& _next, std::string _key, Bit_Board<u_int64_t> _iv)  : CCA_B(_next, _key) {
+    put(_iv);
+}
+
 bool CCA_B_Enc::put(Bit_Board<u_int64_t> buffer, int size) {
     if (size == BIT_BOARD_STREAM_BUFFER_SIZE) {
         for (short i = 0; i < ROUNDS; i++) {

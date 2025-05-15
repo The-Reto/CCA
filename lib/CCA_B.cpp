@@ -8,6 +8,7 @@ void CCA_B::update_F(Bit_Board<u_int64_t> &buffer, short ofset, short cycle)
         F[0][2*i+1] = CCA_Board::pi[2*i];
     }
     F.step();
+    F.step();
     for (short i = 0; i < 32; i++) { 
         F[0][i] ^= F[0][i+32];
     }

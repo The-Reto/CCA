@@ -28,5 +28,9 @@ bool CCA_B_Dec::put(Bit_Board<u_int64_t> buffer, int size) {
         buffer = buffer ^ key_buf;
     }
     update_Key(key_buf);
+    if (first_block) {
+        first_block = false;
+        return true;
+    }
     return next.put(buffer, size);
 }

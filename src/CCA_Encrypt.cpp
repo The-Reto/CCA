@@ -2,6 +2,7 @@
 #include "../include/CCA_S_Enc.h"
 #include "../include/CCA_B_Enc.h"
 #include "../include/CCA_B_Dec.h"
+#include "../include/CCA_Hash.h"
 #include "../include/BitBoardFileReader.h"
 #include "../include/BitBoardFileWriter.h"
 
@@ -77,9 +78,10 @@ int main(int argc, char *argv[]){ // call -f in-file -m MODE -k Key -o out-file
      BitBoardFileWriter out(myOptions.out_file);
      BitBoardFileReader file(myOptions.in_file);
      if (myOptions.mode[0] == 'B') {
-          
           if (myOptions.mode[1] == 'E') {
-               CCA_B_Enc encryptor(out, myOptions.key);
+               CCA_Hash hasher;
+               file.run(hasher);
+               CCA_B_Enc encryptor(out, myOptions.key, hasher.get_Hash());
                file.run(encryptor);
           }
           if (myOptions.mode[1] == 'D') {
